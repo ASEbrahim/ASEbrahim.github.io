@@ -45,7 +45,7 @@
             overflow-x: hidden;
         }
 
-        /* ─── Noise Texture Overlay ─── */
+        /* Noise Texture */
         body::before {
             content: '';
             position: fixed;
@@ -55,7 +55,19 @@
             z-index: 9999;
         }
 
-        /* ─── Star Field Canvas ─── */
+        /* Scroll Progress */
+        #scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 2px;
+            width: 0%;
+            background: linear-gradient(90deg, var(--accent), var(--accent-secondary));
+            z-index: 200;
+            transition: width 0.05s linear;
+        }
+
+        /* Star Field */
         #stars {
             position: fixed;
             inset: 0;
@@ -63,7 +75,7 @@
             pointer-events: none;
         }
 
-        /* ─── Layout ─── */
+        /* Layout */
         .container {
             max-width: 1100px;
             margin: 0 auto;
@@ -77,7 +89,7 @@
             position: relative;
         }
 
-        /* ─── Navigation ─── */
+        /* Navigation */
         nav {
             position: fixed;
             top: 0;
@@ -108,8 +120,11 @@
             color: var(--accent);
             font-weight: 600;
             letter-spacing: 0.5px;
+            cursor: pointer;
+            transition: text-shadow 0.3s;
         }
 
+        .nav-logo:hover { text-shadow: 0 0 20px var(--accent-glow); }
         .nav-logo span { color: var(--text-dim); }
 
         .nav-links { display: flex; gap: 32px; }
@@ -138,8 +153,10 @@
 
         .nav-links a:hover { color: var(--accent); }
         .nav-links a:hover::after { width: 100%; }
+        .nav-links a.active { color: var(--accent); }
+        .nav-links a.active::after { width: 100%; }
 
-        /* ─── Hero ─── */
+        /* Hero */
         #hero {
             min-height: 100vh;
             display: flex;
@@ -198,164 +215,171 @@
         .hero-subtitle {
             font-size: 18px;
             color: var(--text-secondary);
-            max-width: 560px;
-            line-height: 1.7;
+            max-width: 580px;
+            line-height: 1.75;
             font-weight: 300;
+            margin-bottom: 28px;
             opacity: 0;
             animation: fadeUp 0.8s ease forwards 0.5s;
+            min-height: 60px;
         }
 
-        .hero-subtitle strong {
-            color: var(--text-primary);
-            font-weight: 500;
+        .hero-subtitle strong { color: var(--text-primary); font-weight: 500; }
+
+        .hero-subtitle .typewriter-cursor {
+            display: inline-block;
+            width: 2px;
+            height: 1.1em;
+            background: var(--accent);
+            margin-left: 2px;
+            vertical-align: text-bottom;
+            animation: blink 0.8s step-end infinite;
+        }
+
+        @keyframes blink {
+            50% { opacity: 0; }
         }
 
         .hero-tags {
             display: flex;
             flex-wrap: wrap;
-            gap: 10px;
-            margin-top: 28px;
+            gap: 8px;
+            margin-bottom: 28px;
             opacity: 0;
             animation: fadeUp 0.8s ease forwards 0.65s;
         }
 
         .hero-tag {
             padding: 6px 14px;
-            font-family: var(--font-mono);
-            font-size: 11.5px;
-            color: var(--text-secondary);
-            border: 1px solid var(--border);
+            background: rgba(16, 185, 129, 0.08);
+            border: 1px solid rgba(16, 185, 129, 0.18);
             border-radius: 6px;
-            background: rgba(15, 21, 37, 0.6);
-            white-space: nowrap;
+            font-family: var(--font-mono);
+            font-size: 12px;
+            color: var(--accent);
+            cursor: default;
+            transition: transform 0.2s, background 0.25s, box-shadow 0.25s;
+        }
+
+        .hero-tag:hover {
+            transform: translateY(-2px);
+            background: rgba(16, 185, 129, 0.15);
+            box-shadow: 0 4px 20px rgba(16, 185, 129, 0.12);
         }
 
         .hero-cta {
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            margin-top: 36px;
-            padding: 12px 28px;
-            background: var(--accent);
-            color: var(--bg-deep);
-            font-weight: 600;
-            font-size: 14px;
-            border-radius: 8px;
+            color: var(--text-primary);
             text-decoration: none;
-            letter-spacing: 0.3px;
-            transition: transform 0.2s, box-shadow 0.2s;
+            font-size: 14px;
+            font-weight: 500;
+            padding: 12px 24px;
+            border: 1px solid var(--border-accent);
+            border-radius: 8px;
+            transition: all 0.3s;
             opacity: 0;
             animation: fadeUp 0.8s ease forwards 0.8s;
         }
 
-        .hero-cta:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 30px rgba(16, 185, 129, 0.25);
-        }
+        .hero-cta svg { width: 16px; height: 16px; transition: transform 0.3s; }
+        .hero-cta:hover { background: var(--accent-glow); border-color: var(--accent); }
+        .hero-cta:hover svg { transform: translateY(3px); }
 
-        .hero-cta svg { width: 16px; height: 16px; }
-
-        /* ─── Section Headers ─── */
+        /* Section Labels */
         .section-label {
             font-family: var(--font-mono);
-            font-size: 12px;
+            font-size: 11px;
             color: var(--accent);
-            letter-spacing: 3px;
             text-transform: uppercase;
-            margin-bottom: 12px;
+            letter-spacing: 3px;
+            margin-bottom: 8px;
         }
 
         .section-title {
-            font-size: clamp(28px, 4vw, 42px);
+            font-size: 32px;
             font-weight: 700;
-            letter-spacing: -1px;
-            margin-bottom: 16px;
+            margin-bottom: 12px;
         }
 
         .section-desc {
-            font-size: 16px;
+            font-size: 15px;
             color: var(--text-secondary);
-            max-width: 600px;
+            max-width: 680px;
             line-height: 1.75;
             font-weight: 300;
         }
 
-        /* ─── Project Section ─── */
-        #project { background: rgba(6, 8, 13, 0.88); }
-
-        .project-header { margin-bottom: 60px; }
+        /* Project Header */
+        .project-header { margin-bottom: 32px; }
 
         .project-logo-row {
             display: flex;
             align-items: center;
             gap: 16px;
-            margin-bottom: 24px;
+            margin-bottom: 16px;
         }
 
         .project-logo {
             width: 52px;
             height: 52px;
-            border-radius: 14px;
-            background: linear-gradient(135deg, var(--accent-dim), var(--accent));
+            background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-family: var(--font-mono);
+            font-size: 24px;
             font-weight: 700;
-            font-size: 18px;
-            color: white;
-            box-shadow: 0 4px 20px rgba(16, 185, 129, 0.2);
+            color: var(--bg-deep);
         }
 
         .project-name-block h2 {
-            font-size: 32px;
+            font-size: 28px;
             font-weight: 700;
             letter-spacing: -0.5px;
         }
 
         .project-name-block p {
             font-size: 13px;
-            color: var(--text-dim);
-            font-family: var(--font-mono);
+            color: var(--text-secondary);
+            font-weight: 300;
         }
 
         .project-tagline {
-            font-size: 20px;
+            font-size: 18px;
             color: var(--text-secondary);
-            max-width: 680px;
-            line-height: 1.7;
-            font-weight: 300;
             font-style: italic;
-            border-left: 3px solid var(--accent-dim);
-            padding-left: 20px;
+            padding-left: 16px;
+            border-left: 2px solid var(--accent-dim);
+            line-height: 1.6;
         }
 
-        .project-tagline strong {
-            color: var(--text-primary);
-            font-weight: 500;
-            font-style: normal;
-        }
+        .project-tagline strong { color: var(--text-primary); }
 
-        /* ─── Metrics Grid ─── */
+        /* Metrics Grid */
         .metrics-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 16px;
-            margin: 48px 0;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px;
+            margin: 40px 0;
         }
 
         .metric-card {
             background: var(--bg-card);
             border: 1px solid var(--border);
             border-radius: 12px;
-            padding: 24px;
+            padding: 24px 20px;
             text-align: center;
-            transition: border-color 0.3s, transform 0.2s;
+            transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+            cursor: default;
         }
 
         .metric-card:hover {
+            transform: translateY(-4px);
             border-color: var(--border-accent);
-            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(16, 185, 129, 0.08);
         }
 
         .metric-value {
@@ -363,15 +387,12 @@
             font-size: 32px;
             font-weight: 700;
             color: var(--accent);
-            line-height: 1;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
         }
 
         .metric-label {
-            font-size: 12px;
+            font-size: 13px;
             color: var(--text-secondary);
-            text-transform: uppercase;
-            letter-spacing: 1px;
             font-weight: 500;
         }
 
@@ -382,96 +403,375 @@
             font-family: var(--font-mono);
         }
 
-        /* ─── V1 vs V2 Comparison ─── */
+        /* Comparison Table */
         .comparison-section {
-            margin: 56px 0;
+            margin: 48px 0;
         }
 
         .comparison-section h3 {
-            font-size: 20px;
+            font-size: 18px;
             font-weight: 600;
-            margin-bottom: 24px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .comparison-section h3::before {
-            content: '';
-            width: 3px;
-            height: 20px;
-            background: var(--accent);
-            border-radius: 2px;
+            margin-bottom: 16px;
+            color: var(--text-secondary);
         }
 
         .comparison-table {
             width: 100%;
-            border-collapse: separate;
-            border-spacing: 0;
-            background: var(--bg-card);
-            border-radius: 12px;
-            border: 1px solid var(--border);
-            overflow: hidden;
+            border-collapse: collapse;
+            font-size: 13.5px;
         }
 
         .comparison-table th {
-            padding: 14px 20px;
-            text-align: left;
             font-family: var(--font-mono);
-            font-size: 11px;
-            font-weight: 600;
+            font-size: 10px;
             color: var(--text-dim);
             text-transform: uppercase;
-            letter-spacing: 1px;
-            background: var(--bg-elevated);
+            letter-spacing: 1.5px;
+            text-align: left;
+            padding: 12px 16px;
             border-bottom: 1px solid var(--border);
         }
 
         .comparison-table td {
-            padding: 14px 20px;
-            font-size: 14px;
-            border-bottom: 1px solid rgba(30, 42, 69, 0.5);
-        }
-
-        .comparison-table tr:last-child td { border-bottom: none; }
-
-        .comparison-table td:first-child {
-            font-weight: 500;
+            padding: 12px 16px;
+            border-bottom: 1px solid rgba(30, 42, 69, 0.4);
             color: var(--text-secondary);
         }
 
-        .val-bad { color: var(--text-dim); font-family: var(--font-mono); font-size: 13px; }
-        .val-good { color: var(--accent); font-weight: 600; font-family: var(--font-mono); font-size: 13px; }
-        .val-change { color: var(--accent-secondary); font-family: var(--font-mono); font-size: 11px; }
+        .comparison-table tr {
+            transition: background 0.2s;
+        }
 
-        /* ─── Architecture ─── */
-        .arch-block {
+        .comparison-table tbody tr:hover {
+            background: rgba(16, 185, 129, 0.03);
+        }
+
+        .val-bad { color: #ef4444; font-family: var(--font-mono); font-size: 13px; }
+        .val-good { color: var(--accent); font-weight: 600; font-family: var(--font-mono); font-size: 13px; }
+        .val-change {
+            color: var(--accent-secondary);
+            font-family: var(--font-mono);
+            font-size: 12px;
+            background: rgba(56, 189, 248, 0.08);
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
+
+        /* Profile Awareness Demo */
+        .demo-section {
+            margin: 64px 0;
             background: var(--bg-card);
             border: 1px solid var(--border);
-            border-radius: 14px;
+            border-radius: 16px;
             padding: 36px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .demo-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent), var(--accent-secondary), var(--accent));
+        }
+
+        .demo-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .demo-header h3 {
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .demo-header p {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-top: 4px;
+            font-weight: 300;
+        }
+
+        .demo-badge {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            color: var(--accent);
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            padding: 4px 10px;
+            border-radius: 4px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .demo-article-selector {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 28px;
+        }
+
+        .demo-article-btn {
+            padding: 8px 16px;
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text-secondary);
+            font-size: 12px;
+            font-family: var(--font-display);
+            cursor: pointer;
+            transition: all 0.25s;
+        }
+
+        .demo-article-btn:hover {
+            border-color: var(--text-dim);
+            color: var(--text-primary);
+        }
+
+        .demo-article-btn.active {
+            border-color: var(--accent);
+            background: rgba(16, 185, 129, 0.08);
+            color: var(--accent);
+        }
+
+        .demo-article-title {
+            font-size: 15px;
+            font-weight: 500;
+            margin-bottom: 20px;
+            padding: 12px 16px;
+            background: var(--bg-primary);
+            border-radius: 8px;
+            border-left: 3px solid var(--accent);
+        }
+
+        .demo-bars {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .demo-bar-row {
+            display: grid;
+            grid-template-columns: 200px 1fr 50px;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .demo-bar-label {
+            font-size: 12px;
+            color: var(--text-secondary);
+            font-weight: 400;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .demo-bar-track {
+            height: 28px;
+            background: var(--bg-primary);
+            border-radius: 6px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .demo-bar-fill {
+            height: 100%;
+            border-radius: 6px;
+            transition: width 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+            position: relative;
+            min-width: 0;
+        }
+
+        .demo-bar-fill.high { background: linear-gradient(90deg, var(--accent), #34d399); }
+        .demo-bar-fill.mid { background: linear-gradient(90deg, var(--accent-secondary), #7dd3fc); }
+        .demo-bar-fill.low { background: linear-gradient(90deg, #4a5677, #64748b); }
+
+        .demo-bar-score {
+            font-family: var(--font-mono);
+            font-size: 14px;
+            font-weight: 600;
+            text-align: right;
+        }
+
+        .demo-bar-score.high { color: var(--accent); }
+        .demo-bar-score.mid { color: var(--accent-secondary); }
+        .demo-bar-score.low { color: var(--text-dim); }
+
+        .demo-insight {
+            margin-top: 20px;
+            padding: 12px 16px;
+            background: rgba(16, 185, 129, 0.06);
+            border: 1px solid rgba(16, 185, 129, 0.12);
+            border-radius: 8px;
+            font-size: 13px;
+            color: var(--text-secondary);
+            font-weight: 300;
+            line-height: 1.6;
+        }
+
+        .demo-insight strong { color: var(--accent); font-weight: 500; }
+
+        /* Spearman Rho Chart */
+        .rho-chart-section {
             margin: 48px 0;
+        }
+
+        .rho-chart-section h3 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 4px;
+            color: var(--text-secondary);
+        }
+
+        .rho-chart-section > p {
+            font-size: 12px;
+            color: var(--text-dim);
+            margin-bottom: 20px;
+        }
+
+        .rho-chart {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .rho-row {
+            display: grid;
+            grid-template-columns: 180px 1fr 55px;
+            align-items: center;
+            gap: 10px;
+            cursor: default;
+            padding: 2px 0;
+            border-radius: 4px;
+            transition: background 0.2s;
+        }
+
+        .rho-row:hover { background: rgba(16, 185, 129, 0.03); }
+
+        .rho-label {
+            font-size: 11px;
+            color: var(--text-secondary);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .rho-track {
+            height: 18px;
+            background: var(--bg-card);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .rho-bar {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+            width: 0;
+        }
+
+        .rho-value {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            color: var(--text-dim);
+            text-align: right;
+        }
+
+        /* Profile Chips */
+        .profiles-strip {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .profile-chip {
+            padding: 8px 14px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 12px;
+            color: var(--text-secondary);
+            transition: border-color 0.25s, transform 0.2s;
+            cursor: default;
+        }
+
+        .profile-chip:hover {
+            border-color: var(--border-accent);
+            transform: translateY(-1px);
+        }
+
+        .profile-chip .rho {
+            color: var(--accent);
+            font-family: var(--font-mono);
+            font-weight: 600;
+            margin-left: 6px;
+            font-size: 11px;
+        }
+
+        /* Architecture Block */
+        .arch-block {
+            margin-top: 48px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 28px;
             overflow-x: auto;
         }
 
         .arch-block pre {
             font-family: var(--font-mono);
-            font-size: 12.5px;
-            line-height: 1.7;
+            font-size: 11.5px;
+            line-height: 1.65;
             color: var(--text-secondary);
             white-space: pre;
-            overflow-x: auto;
         }
 
-        .arch-block pre .hl { color: var(--accent); }
-        .arch-block pre .dim { color: var(--text-dim); }
-        .arch-block pre .sec { color: var(--accent-secondary); }
+        .arch-block .dim { color: var(--text-dim); }
+        .arch-block .hl { color: var(--accent); font-weight: 600; }
+        .arch-block .sec { color: var(--accent-secondary); }
 
-        /* ─── Feature Cards ─── */
+        /* Interactive arch highlights */
+        .arch-block [data-highlight] {
+            cursor: pointer;
+            transition: text-shadow 0.2s;
+            position: relative;
+        }
+
+        .arch-block [data-highlight]:hover {
+            text-shadow: 0 0 12px var(--accent-glow);
+        }
+
+        .arch-tooltip {
+            display: none;
+            position: absolute;
+            bottom: calc(100% + 8px);
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--bg-elevated);
+            border: 1px solid var(--border-accent);
+            border-radius: 8px;
+            padding: 10px 14px;
+            font-family: var(--font-display);
+            font-size: 12px;
+            color: var(--text-primary);
+            white-space: nowrap;
+            z-index: 50;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+        }
+
+        /* Features Grid */
         .features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
             margin-top: 48px;
         }
 
@@ -479,229 +779,411 @@
             background: var(--bg-card);
             border: 1px solid var(--border);
             border-radius: 12px;
-            padding: 28px;
-            transition: border-color 0.3s, transform 0.2s, box-shadow 0.3s;
+            padding: 28px 24px;
+            transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+            cursor: default;
+            position: relative;
+            overflow: hidden;
         }
 
+        .feature-card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 12px;
+            background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(16, 185, 129, 0.06), transparent 60%);
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .feature-card:hover::after { opacity: 1; }
+
         .feature-card:hover {
+            transform: translateY(-4px);
             border-color: var(--border-accent);
-            transform: translateY(-3px);
-            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.2);
         }
 
         .feature-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 10px;
-            background: var(--accent-glow);
-            border: 1px solid var(--border-accent);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 16px;
-            font-size: 18px;
+            font-size: 28px;
+            margin-bottom: 14px;
         }
 
         .feature-card h4 {
-            font-size: 16px;
+            font-size: 15px;
             font-weight: 600;
             margin-bottom: 8px;
         }
 
         .feature-card p {
-            font-size: 13.5px;
+            font-size: 13px;
             color: var(--text-secondary);
             line-height: 1.7;
             font-weight: 300;
         }
 
-        /* ─── Screenshots ─── */
+        .feature-card .feature-expand {
+            display: none;
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px solid var(--border);
+            font-size: 12px;
+            color: var(--text-dim);
+            line-height: 1.6;
+        }
+
+        .feature-card.expanded .feature-expand { display: block; }
+
+        .feature-toggle {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            color: var(--text-dim);
+            margin-top: 10px;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .feature-toggle:hover { color: var(--accent); }
+
+        /* Screenshot Gallery */
+        .screenshots-section {
+            margin-top: 72px;
+        }
+
         .screenshot-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
         }
 
         .screenshot-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
             border-radius: 12px;
             overflow: hidden;
-            transition: border-color 0.3s, transform 0.2s;
+            border: 1px solid var(--border);
+            background: var(--bg-card);
             position: relative;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
         }
 
         .screenshot-card:hover {
-            border-color: var(--border-accent);
-            transform: translateY(-3px);
+            transform: scale(1.02);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.3);
         }
 
         .screenshot-card img {
             width: 100%;
             display: block;
-            border-radius: 11px 11px 0 0;
+            aspect-ratio: 16/10;
+            object-fit: cover;
+            transition: filter 0.3s;
         }
 
+        .screenshot-card:hover img { filter: brightness(1.1); }
+
         .screenshot-card.no-img img { display: none; }
-        .screenshot-fallback { display: none; }
-        .screenshot-card.no-img .screenshot-fallback { display: block; }
+        .screenshot-card.no-img .screenshot-fallback { display: flex; }
 
         .screenshot-label {
-            padding: 12px 16px;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 10px 14px;
+            background: linear-gradient(to top, rgba(6,8,13,0.95), transparent);
             font-size: 12px;
-            font-family: var(--font-mono);
-            color: var(--text-dim);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            border-top: 1px solid var(--border);
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        .screenshot-fallback {
+            display: none;
+            aspect-ratio: 16/10;
+            align-items: center;
+            justify-content: center;
+            background: var(--bg-card);
         }
 
         .fallback-mock {
-            padding: 20px;
-            font-family: var(--font-mono);
-            font-size: 12px;
+            width: 100%;
+            padding: 16px;
         }
 
         .mock-header {
-            font-size: 14px;
+            font-family: var(--font-mono);
+            font-size: 11px;
+            color: var(--accent);
+            margin-bottom: 10px;
             font-weight: 600;
-            color: var(--text-primary);
-            margin-bottom: 16px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid var(--border);
         }
 
         .mock-row {
             display: flex;
-            flex-wrap: wrap;
-            align-items: center;
             gap: 6px;
-            padding: 10px 0;
-            border-bottom: 1px solid rgba(30, 42, 69, 0.3);
+            align-items: center;
+            padding: 6px 0;
+            border-bottom: 1px solid rgba(30,42,69,0.3);
+            flex-wrap: wrap;
         }
 
-        .mock-row:last-child { border-bottom: none; }
-
-        .mock-date {
-            color: var(--text-dim);
-            font-size: 11px;
-            min-width: 44px;
-        }
-
-        .mock-count {
-            color: var(--text-primary);
-            font-weight: 600;
-            font-size: 13px;
-            min-width: 56px;
-        }
-
+        .mock-date { font-family: var(--font-mono); font-size: 10px; color: var(--text-dim); }
+        .mock-count { font-size: 11px; color: var(--text-secondary); }
         .mock-badge {
-            padding: 2px 8px;
-            border-radius: 4px;
-            font-size: 10px;
-            color: white;
-            white-space: nowrap;
+            font-family: var(--font-mono);
+            font-size: 9px;
+            padding: 2px 6px;
+            border-radius: 3px;
         }
-
-        .mock-badge.crit { background: #dc2626; }
-        .mock-badge.high { background: #d97706; }
-        .mock-badge.mid { background: #ca8a04; }
-        .mock-badge.noise { background: #4b5563; }
-
-        .mock-meta {
-            color: var(--text-dim);
-            font-size: 10px;
-            margin-left: auto;
-        }
+        .mock-badge.crit { background: rgba(239,68,68,0.15); color: #ef4444; }
+        .mock-badge.high { background: rgba(16,185,129,0.15); color: var(--accent); }
+        .mock-badge.mid { background: rgba(56,189,248,0.15); color: var(--accent-secondary); }
+        .mock-badge.noise { background: rgba(74,86,119,0.2); color: var(--text-dim); }
+        .mock-meta { font-family: var(--font-mono); font-size: 10px; color: var(--text-dim); margin-left: auto; }
 
         .fallback-placeholder {
-            padding: 48px 20px;
             text-align: center;
-            color: var(--text-dim);
-            font-size: 13px;
-            line-height: 2.2;
+            font-size: 32px;
+            line-height: 1.8;
+        }
+        .fallback-placeholder span { font-size: 12px; color: var(--text-dim); }
+
+        /* Lightbox */
+        .lightbox {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 10000;
+            background: rgba(6, 8, 13, 0.95);
+            backdrop-filter: blur(20px);
+            align-items: center;
+            justify-content: center;
+            cursor: zoom-out;
+            padding: 40px;
         }
 
-        /* ─── Tech Stack ─── */
-        #stack { background: rgba(10, 15, 26, 0.88); }
+        .lightbox.open { display: flex; }
 
+        .lightbox img {
+            max-width: 90vw;
+            max-height: 85vh;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+            border: 1px solid var(--border);
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 24px;
+            font-size: 28px;
+            color: var(--text-dim);
+            cursor: pointer;
+            transition: color 0.2s;
+            font-family: var(--font-display);
+            background: none;
+            border: none;
+        }
+
+        .lightbox-close:hover { color: var(--text-primary); }
+
+        /* Stack Grid */
         .stack-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 16px;
-            margin-top: 48px;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-top: 32px;
         }
 
         .stack-item {
             display: flex;
-            align-items: center;
-            gap: 14px;
-            padding: 18px 20px;
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            transition: border-color 0.3s;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 16px;
+            border-radius: 8px;
+            border: 1px solid transparent;
+            transition: background 0.25s, border-color 0.25s, transform 0.2s;
+            cursor: default;
         }
 
-        .stack-item:hover { border-color: var(--border-accent); }
+        .stack-item:hover {
+            background: var(--bg-card);
+            border-color: var(--border);
+            transform: translateX(4px);
+        }
 
         .stack-dot {
             width: 8px;
             height: 8px;
-            border-radius: 50%;
             background: var(--accent);
+            border-radius: 50%;
+            margin-top: 6px;
             flex-shrink: 0;
+            transition: box-shadow 0.3s;
+        }
+
+        .stack-item:hover .stack-dot {
+            box-shadow: 0 0 12px var(--accent);
         }
 
         .stack-item .label {
             font-size: 14px;
             font-weight: 500;
+            margin-bottom: 2px;
         }
 
         .stack-item .detail {
-            font-size: 11.5px;
+            font-size: 12px;
             color: var(--text-dim);
-            font-family: var(--font-mono);
         }
 
-        /* ─── Profile Showcase ─── */
-        .profiles-strip {
+        /* Training Timeline */
+        .timeline-section {
+            margin: 64px 0;
+        }
+
+        .timeline-section h3 {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 8px;
             display: flex;
-            gap: 12px;
-            overflow-x: auto;
-            padding: 8px 0 16px;
-            margin: 32px 0;
-            scrollbar-width: none;
+            align-items: center;
+            gap: 10px;
         }
 
-        .profiles-strip::-webkit-scrollbar { display: none; }
+        .timeline-section h3 .bar {
+            width: 3px;
+            height: 20px;
+            background: var(--accent);
+            border-radius: 2px;
+            display: inline-block;
+        }
 
-        .profile-chip {
-            flex-shrink: 0;
+        .timeline-section > p {
+            font-size: 13px;
+            color: var(--text-secondary);
+            font-weight: 300;
+            margin-bottom: 28px;
+        }
+
+        .timeline {
+            position: relative;
+            padding-left: 32px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 7px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--border);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 32px;
+            padding: 20px 24px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            transition: border-color 0.3s, transform 0.2s;
+            cursor: default;
+        }
+
+        .timeline-item:hover {
+            border-color: var(--border-accent);
+            transform: translateX(4px);
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -29px;
+            top: 24px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--bg-deep);
+            border: 2px solid var(--accent-dim);
+            transition: background 0.3s, border-color 0.3s;
+        }
+
+        .timeline-item:hover::before {
+            background: var(--accent);
+            border-color: var(--accent);
+        }
+
+        .timeline-item.failure::before { border-color: #ef4444; }
+        .timeline-item.failure:hover::before { background: #ef4444; border-color: #ef4444; }
+
+        .timeline-item.success::before { border-color: var(--accent); }
+        .timeline-item.success:hover::before { background: var(--accent); }
+
+        .timeline-date {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 6px;
+        }
+
+        .timeline-item h4 {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+
+        .timeline-item p {
+            font-size: 13px;
+            color: var(--text-secondary);
+            font-weight: 300;
+            line-height: 1.6;
+        }
+
+        .timeline-tag {
+            display: inline-block;
+            font-family: var(--font-mono);
+            font-size: 10px;
+            padding: 2px 8px;
+            border-radius: 4px;
+            margin-top: 8px;
+        }
+
+        .timeline-tag.fail { background: rgba(239,68,68,0.12); color: #ef4444; }
+        .timeline-tag.pass { background: rgba(16,185,129,0.12); color: var(--accent); }
+        .timeline-tag.info { background: rgba(56,189,248,0.12); color: var(--accent-secondary); }
+
+        /* Hardware Chips */
+        .hw-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 24px;
+        }
+
+        .hw-chip {
             padding: 8px 16px;
             background: var(--bg-card);
             border: 1px solid var(--border);
             border-radius: 8px;
+            font-family: var(--font-mono);
             font-size: 12px;
             color: var(--text-secondary);
-            white-space: nowrap;
-            transition: border-color 0.3s, color 0.3s;
+            transition: border-color 0.25s, transform 0.2s;
+            cursor: default;
         }
 
-        .profile-chip:hover {
+        .hw-chip:hover {
             border-color: var(--border-accent);
-            color: var(--accent);
+            transform: translateY(-2px);
         }
 
-        .profile-chip .rho {
-            font-family: var(--font-mono);
-            color: var(--accent);
-            font-weight: 600;
-            margin-left: 6px;
-            font-size: 11px;
-        }
+        .hw-chip .hw-label { color: var(--text-dim); margin-right: 6px; }
 
-        /* ─── About ─── */
+        /* About */
         #about { background: rgba(6, 8, 13, 0.85); }
 
         .about-grid {
@@ -723,7 +1205,7 @@
         .about-details {
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 12px;
         }
 
         .about-detail-item {
@@ -731,6 +1213,13 @@
             background: var(--bg-card);
             border: 1px solid var(--border);
             border-radius: 10px;
+            transition: border-color 0.25s, transform 0.2s;
+            cursor: default;
+        }
+
+        .about-detail-item:hover {
+            border-color: var(--border-accent);
+            transform: translateX(4px);
         }
 
         .about-detail-label {
@@ -750,31 +1239,91 @@
         .about-detail-value a {
             color: var(--accent);
             text-decoration: none;
+            transition: text-shadow 0.2s;
         }
 
-        .about-detail-value a:hover { text-decoration: underline; }
+        .about-detail-value a:hover { text-decoration: underline; text-shadow: 0 0 12px var(--accent-glow); }
 
-        /* ─── Hardware ─── */
-        .hw-row {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-            margin-top: 24px;
+        /* Terminal Contact */
+        .terminal-section {
+            margin-top: 48px;
         }
 
-        .hw-chip {
-            padding: 8px 16px;
+        .terminal {
             background: var(--bg-card);
             border: 1px solid var(--border);
-            border-radius: 8px;
-            font-family: var(--font-mono);
-            font-size: 12px;
-            color: var(--text-secondary);
+            border-radius: 12px;
+            overflow: hidden;
         }
 
-        .hw-chip .hw-label { color: var(--text-dim); margin-right: 6px; }
+        .terminal-bar {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 16px;
+            background: rgba(15, 21, 37, 0.8);
+            border-bottom: 1px solid var(--border);
+        }
 
-        /* ─── Footer ─── */
+        .terminal-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+
+        .terminal-dot.red { background: #ef4444; }
+        .terminal-dot.yellow { background: #f59e0b; }
+        .terminal-dot.green { background: #10b981; }
+
+        .terminal-title {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            color: var(--text-dim);
+            margin-left: 8px;
+        }
+
+        .terminal-body {
+            padding: 20px;
+            font-family: var(--font-mono);
+            font-size: 13px;
+            line-height: 1.8;
+        }
+
+        .terminal-line {
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+        }
+
+        .terminal-prompt { color: var(--accent); }
+        .terminal-cmd { color: var(--text-primary); }
+        .terminal-output { color: var(--text-secondary); padding-left: 20px; }
+        .terminal-link { color: var(--accent-secondary); text-decoration: none; }
+        .terminal-link:hover { text-decoration: underline; }
+
+        .terminal-input-line {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 8px;
+        }
+
+        .terminal-input {
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-family: var(--font-mono);
+            font-size: 13px;
+            outline: none;
+            flex: 1;
+            caret-color: var(--accent);
+        }
+
+        .terminal-input::placeholder {
+            color: var(--text-dim);
+        }
+
+        /* Footer */
         footer {
             padding: 40px 0;
             border-top: 1px solid var(--border);
@@ -790,7 +1339,7 @@
 
         footer p em { font-style: italic; color: var(--text-secondary); }
 
-        /* ─── Animations ─── */
+        /* Animations */
         @keyframes fadeUp {
             from { opacity: 0; transform: translateY(24px); }
             to { opacity: 1; transform: translateY(0); }
@@ -807,7 +1356,7 @@
             transform: translateY(0);
         }
 
-        /* ─── Responsive ─── */
+        /* Responsive */
         @media (max-width: 768px) {
             section { padding: 64px 0; }
             .container { padding: 0 20px; }
@@ -816,9 +1365,17 @@
             .about-grid { grid-template-columns: 1fr; gap: 32px; }
             .metrics-grid { grid-template-columns: repeat(2, 1fr); }
             .features-grid { grid-template-columns: 1fr; }
+            .stack-grid { grid-template-columns: 1fr 1fr; }
             .hero-name { letter-spacing: -1px; }
             .arch-block { padding: 20px; }
             .arch-block pre { font-size: 10.5px; }
+            .screenshot-grid { grid-template-columns: 1fr; }
+            .demo-section { padding: 24px; }
+            .demo-bar-row { grid-template-columns: 120px 1fr 40px; }
+            .demo-bar-label { font-size: 10px; }
+            .rho-row { grid-template-columns: 120px 1fr 45px; }
+            .rho-label { font-size: 10px; }
+            .timeline { padding-left: 28px; }
         }
 
         @media (max-width: 480px) {
@@ -827,38 +1384,48 @@
             .metric-value { font-size: 26px; }
             .nav-links { gap: 14px; }
             .stack-grid { grid-template-columns: 1fr; }
+            .demo-article-selector { flex-direction: column; }
+            .demo-bar-row { grid-template-columns: 1fr 40px; }
+            .demo-bar-label { display: none; }
         }
     </style>
 </head>
 <body>
 
+<div id="scroll-progress"></div>
 <canvas id="stars"></canvas>
 
-<!-- ─── Navigation ─── -->
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox">
+    <button class="lightbox-close" aria-label="Close">&times;</button>
+    <img src="" alt="Screenshot">
+</div>
+
+<!-- Navigation -->
 <nav id="navbar">
     <div class="container">
-        <div class="nav-logo">ahmad<span>@</span>stratos</div>
+        <div class="nav-logo" onclick="window.scrollTo({top:0,behavior:'smooth'})">ahmad<span>@</span>stratos</div>
         <div class="nav-links">
             <a href="#project">Project</a>
+            <a href="#demo">Demo</a>
             <a href="#stack">Stack</a>
+            <a href="#journey">Journey</a>
             <a href="#about">About</a>
         </div>
     </div>
 </nav>
 
-<!-- ─── Hero ─── -->
+<!-- Hero -->
 <section id="hero">
     <div class="container">
         <div class="hero-grid">
             <div>
-                <div class="hero-eyebrow">Systems Engineer · Kuwait</div>
+                <div class="hero-eyebrow">Systems Engineer &middot; Kuwait</div>
                 <h1 class="hero-name">
                     Ahmad Sayed<br>
                     Alsayed <span class="accent">Ebrahim</span>
                 </h1>
-                <p class="hero-subtitle">
-                    Computer Engineering student building <strong>AI-powered intelligence systems</strong> that score, learn, and improve autonomously — running entirely on local hardware.
-                </p>
+                <p class="hero-subtitle" id="hero-typewriter"></p>
                 <div class="hero-tags">
                     <span class="hero-tag">ML Pipelines</span>
                     <span class="hero-tag">Fine-Tuning (DoRA/LoRA)</span>
@@ -876,7 +1443,7 @@
     </div>
 </section>
 
-<!-- ─── Project: StratOS ─── -->
+<!-- Project: StratOS -->
 <section id="project">
     <div class="container">
         <div class="project-header reveal">
@@ -893,10 +1460,10 @@
         </div>
 
         <p class="section-desc reveal" style="margin-bottom: 8px;">
-            A self-hosted intelligence dashboard that aggregates news, tracks markets, and scores content relevance using a locally fine-tuned AI model. The system improves its own scorer through a distillation loop — Claude Opus re-scores articles, disagreements become training data, and LoRA fine-tuning updates the local model.
+            A self-hosted intelligence dashboard that aggregates news, tracks markets, and scores content relevance using a locally fine-tuned AI model. The system improves its own scorer through a distillation loop &mdash; Claude Opus re-scores articles, disagreements become training data, and LoRA fine-tuning updates the local model.
         </p>
         <p class="section-desc reveal" style="color: var(--text-dim); font-family: var(--font-mono); font-size: 13px;">
-            45,000+ lines · 40+ modules · Solo project · Zero cloud dependency for inference
+            45,000+ lines &middot; 40+ modules &middot; Solo project &middot; Zero cloud dependency for inference
         </p>
 
         <!-- Metrics -->
@@ -909,15 +1476,15 @@
             <div class="metric-card">
                 <div class="metric-value" data-count="0.393" data-decimals="3">0</div>
                 <div class="metric-label">Mean Absolute Error</div>
-                <div class="metric-sublabel">V1: 1.553 · 75% reduction</div>
+                <div class="metric-sublabel">V1: 1.553 &middot; 75% reduction</div>
             </div>
             <div class="metric-card">
                 <div class="metric-value" data-count="0.750" data-decimals="3">0</div>
-                <div class="metric-label">Spearman ρ</div>
+                <div class="metric-label">Spearman &rho;</div>
                 <div class="metric-sublabel">Rank correlation</div>
             </div>
             <div class="metric-card">
-                <div class="metric-value" data-count="7.6" data-suffix="×">0×</div>
+                <div class="metric-value" data-count="7.6" data-suffix="&times;">0&times;</div>
                 <div class="metric-label">Profile Awareness</div>
                 <div class="metric-sublabel">V2 spread: 7.90 vs V1: 1.04</div>
             </div>
@@ -935,7 +1502,7 @@
 
         <!-- V1 vs V2 Comparison -->
         <div class="comparison-section reveal">
-            <h3>V1 → V2 Scorer Evolution</h3>
+            <h3>V1 &rarr; V2 Scorer Evolution</h3>
             <table class="comparison-table">
                 <thead>
                     <tr>
@@ -956,19 +1523,19 @@
                         <td>Mean Absolute Error</td>
                         <td class="val-bad">1.553</td>
                         <td class="val-good">0.393</td>
-                        <td class="val-change">−75%</td>
+                        <td class="val-change">&minus;75%</td>
                     </tr>
                     <tr>
                         <td>Profile Sensitivity Ratio</td>
                         <td class="val-bad">39.7%</td>
                         <td class="val-good">24.4%</td>
-                        <td class="val-change">−15.3pp</td>
+                        <td class="val-change">&minus;15.3pp</td>
                     </tr>
                     <tr>
                         <td>Profile Awareness Spread</td>
                         <td class="val-bad">1.04</td>
                         <td class="val-good">7.90</td>
-                        <td class="val-change">7.6× improvement</td>
+                        <td class="val-change">7.6&times; improvement</td>
                     </tr>
                     <tr>
                         <td>Think Block Empty Rate</td>
@@ -978,7 +1545,7 @@
                     </tr>
                     <tr>
                         <td>Parse Failures</td>
-                        <td class="val-bad">—</td>
+                        <td class="val-bad">&mdash;</td>
                         <td class="val-good">0 / 2,048</td>
                         <td class="val-change">Zero</td>
                     </tr>
@@ -986,85 +1553,76 @@
             </table>
         </div>
 
-        <!-- Per-Profile Scroll -->
-        <div class="reveal">
-            <h3 style="font-size: 16px; font-weight: 600; margin-bottom: 8px; color: var(--text-secondary);">Per-Profile Spearman ρ (top performers)</h3>
-            <div class="profiles-strip">
-                <div class="profile-chip">Computer Eng, Kuwait <span class="rho">ρ 0.879</span></div>
-                <div class="profile-chip">Architect, Doha <span class="rho">ρ 0.833</span></div>
-                <div class="profile-chip">Data Scientist, Dubai <span class="rho">ρ 0.822</span></div>
-                <div class="profile-chip">Sophomore, UChicago <span class="rho">ρ 0.813</span></div>
-                <div class="profile-chip">Geophysicist, KOC <span class="rho">ρ 0.803</span></div>
-                <div class="profile-chip">Cybersecurity, Kuwait <span class="rho">ρ 0.790</span></div>
-                <div class="profile-chip">Mining Eng, Santiago <span class="rho">ρ 0.758</span></div>
-                <div class="profile-chip">Finance Student, GUST <span class="rho">ρ 0.759</span></div>
-                <div class="profile-chip">Filmmaker, Mumbai <span class="rho">ρ 0.754</span></div>
-                <div class="profile-chip">HVAC Owner, Houston <span class="rho">ρ 0.751</span></div>
-                <div class="profile-chip">Welder, Edmonton <span class="rho">ρ 0.746</span></div>
-                <div class="profile-chip">Mech Eng, NEOM <span class="rho">ρ 0.738</span></div>
-                <div class="profile-chip">UX Designer, Tokyo <span class="rho">ρ 0.736</span></div>
-                <div class="profile-chip">CTO Payments, Lagos <span class="rho">ρ 0.723</span></div>
-            </div>
-        </div>
-
         <!-- Architecture -->
         <div class="arch-block reveal">
-<pre><span class="dim">┌──────────────────────────────────────────────────────────────────────────────┐</span>
-<span class="dim">│</span>                          <span class="hl">StratOS Architecture</span>                              <span class="dim">│</span>
-<span class="dim">├──────────────────────────────────────────────────────────────────────────────┤</span>
-<span class="dim">│</span>                                                                              <span class="dim">│</span>
-<span class="dim">│</span>  <span class="sec">News Sources</span> (DDG, Serper, RSS, Scrapers)                                  <span class="dim">│</span>
-<span class="dim">│</span>       │                                                                      <span class="dim">│</span>
-<span class="dim">│</span>       ▼                                                                      <span class="dim">│</span>
-<span class="dim">│</span>  <span class="hl">NewsFetcher</span> (ThreadPoolExecutor, parallel)                                 <span class="dim">│</span>
-<span class="dim">│</span>       │                                                                      <span class="dim">│</span>
-<span class="dim">│</span>       ▼                                                                      <span class="dim">│</span>
-<span class="dim">│</span>  <span class="hl">AI Scorer</span> (3-phase pipeline)                                               <span class="dim">│</span>
-<span class="dim">│</span>  [Phase 1: Rules] → [Phase 2: Batch LLM] → [Phase 3: Re-score cascade]      <span class="dim">│</span>
-<span class="dim">│</span>       │                                         ▲                             <span class="dim">│</span>
-<span class="dim">│</span>       ▼                                         │                             <span class="dim">│</span>
-<span class="dim">│</span>  <span class="sec">SQLite</span> (WAL) → <span class="sec">JSON API</span> → <span class="hl">Frontend SPA</span>         │                             <span class="dim">│</span>
-<span class="dim">│</span>                              │               <span class="sec">Feedback Loop</span>                    <span class="dim">│</span>
-<span class="dim">│</span>                              ▼                   │                             <span class="dim">│</span>
-<span class="dim">│</span>                        User Feedback ──────► <span class="hl">Distillation</span> (Claude Opus)        <span class="dim">│</span>
-<span class="dim">│</span>                        (save/dismiss/rate)       │                             <span class="dim">│</span>
-<span class="dim">│</span>                                                  ▼                             <span class="dim">│</span>
-<span class="dim">│</span>                                          <span class="hl">DoRA Fine-Tuning</span> ─► GGUF ─► Ollama  <span class="dim">│</span>
-<span class="dim">│</span>                                                                              <span class="dim">│</span>
-<span class="dim">└──────────────────────────────────────────────────────────────────────────────┘</span></pre>
+<pre><span class="dim">&boxdr;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxdl;</span>
+<span class="dim">&boxv;</span>                          <span class="hl">StratOS Architecture</span>                              <span class="dim">&boxv;</span>
+<span class="dim">&boxvr;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxvl;</span>
+<span class="dim">&boxv;</span>                                                                              <span class="dim">&boxv;</span>
+<span class="dim">&boxv;</span>  <span class="sec">News Sources</span> (DDG, Serper, RSS, Scrapers)                                  <span class="dim">&boxv;</span>
+<span class="dim">&boxv;</span>       &boxv;                                                                      <span class="dim">&boxv;</span>
+<span class="dim">&boxv;</span>       &darr;                                                                      <span class="dim">&boxv;</span>
+<span class="dim">&boxv;</span>  <span class="hl">NewsFetcher</span> (ThreadPoolExecutor, parallel)                                 <span class="dim">&boxv;</span>
+<span class="dim">&boxv;</span>       &boxv;                                                                      <span class="dim">&boxv;</span>
+<span class="dim">&boxv;</span>       &darr;                                                                      <span class="dim">&boxv;</span>
+<span class="dim">&boxv;</span>  <span class="hl">AI Scorer</span> (3-phase pipeline)                                               <span class="dim">&boxv;</span>
+<span class="dim">&boxv;</span>  [Phase 1: Rules] &rarr; [Phase 2: Batch LLM] &rarr; [Phase 3: Re-score cascade]      <span class="dim">&boxv;</span>
+<span class="dim">&boxv;</span>       &boxv;                                         &uarr;                             <span class="dim">&boxv;</span>
+<span class="dim">&boxv;</span>       &darr;                                         &boxv;                             <span class="dim">&boxv;</span>
+<span class="dim">&boxv;</span>  <span class="sec">SQLite</span> (WAL) &rarr; <span class="sec">JSON API</span> &rarr; <span class="hl">Frontend SPA</span>         &boxv;                             <span class="dim">&boxv;</span>
+<span class="dim">&boxv;</span>                              &boxv;               <span class="sec">Feedback Loop</span>                    <span class="dim">&boxv;</span>
+<span class="dim">&boxv;</span>                              &darr;                   &boxv;                             <span class="dim">&boxv;</span>
+<span class="dim">&boxv;</span>                        User Feedback &rarr; <span class="hl">Distillation</span> (Claude Opus)              <span class="dim">&boxv;</span>
+<span class="dim">&boxv;</span>                        (save/dismiss/rate)       &boxv;                             <span class="dim">&boxv;</span>
+<span class="dim">&boxv;</span>                                                  &darr;                             <span class="dim">&boxv;</span>
+<span class="dim">&boxv;</span>                                          <span class="hl">DoRA Fine-Tuning</span> &rarr; GGUF &rarr; Ollama  <span class="dim">&boxv;</span>
+<span class="dim">&boxv;</span>                                                                              <span class="dim">&boxv;</span>
+<span class="dim">&boxul;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxur;</span></pre>
         </div>
 
         <!-- Features -->
         <div class="features-grid reveal">
-            <div class="feature-card">
-                <div class="feature-icon">🧠</div>
+            <div class="feature-card" onmousemove="this.style.setProperty('--mouse-x', (event.offsetX/this.offsetWidth*100)+'%'); this.style.setProperty('--mouse-y', (event.offsetY/this.offsetHeight*100)+'%');">
+                <div class="feature-icon">&#129504;</div>
                 <h4>Self-Improving Scorer</h4>
-                <p>Two-tier feedback loop: implicit user signals (save/dismiss/rate) plus Claude Opus distillation at ~$0.40/cycle. Disagreements become training data that permanently updates the local model's weights via DoRA fine-tuning.</p>
+                <p>Two-tier feedback loop: implicit user signals (save/dismiss/rate) plus Claude Opus distillation at ~$0.40/cycle. Disagreements become training data.</p>
+                <div class="feature-expand">DoRA fine-tuning permanently updates local model weights. V2 was trained on 20,550 examples across 30 profiles spanning 20 countries. The scorer achieves 98.1% direction accuracy with 0.393 MAE.</div>
+                <div class="feature-toggle" onclick="this.parentElement.classList.toggle('expanded')">[ more ]</div>
             </div>
-            <div class="feature-card">
-                <div class="feature-icon">👤</div>
+            <div class="feature-card" onmousemove="this.style.setProperty('--mouse-x', (event.offsetX/this.offsetWidth*100)+'%'); this.style.setProperty('--mouse-y', (event.offsetY/this.offsetHeight*100)+'%');">
+                <div class="feature-icon">&#128100;</div>
                 <h4>Profile-Aware Scoring</h4>
-                <p>Same article, different score depending on who's reading. A K-pop agency manager gets 8.5 on idol news; a pipeline welder in Edmonton gets 0.0. The model learned this from 30 profiles across 20 countries.</p>
+                <p>Same article, different score depending on who's reading. A K-pop manager gets 8.5 on idol news; a pipeline welder in Edmonton gets 0.0.</p>
+                <div class="feature-expand">Context hash (role + context + location) uniquely identifies each intelligence context. SHA-256 normalized, 12-char hex prefix. Retention system filters signals by active profile.</div>
+                <div class="feature-toggle" onclick="this.parentElement.classList.toggle('expanded')">[ more ]</div>
             </div>
-            <div class="feature-card">
-                <div class="feature-icon">📊</div>
+            <div class="feature-card" onmousemove="this.style.setProperty('--mouse-x', (event.offsetX/this.offsetWidth*100)+'%'); this.style.setProperty('--mouse-y', (event.offsetY/this.offsetHeight*100)+'%');">
+                <div class="feature-icon">&#128200;</div>
                 <h4>Markets + Charts</h4>
-                <p>Real-time candlestick/line/area charts via TradingView with 20 drawing tools, Fibonacci retracement, auto-trend lines, pattern detection, and fullscreen focus mode. Side-by-side comparison across any asset class.</p>
+                <p>Real-time candlestick/line/area charts via TradingView with 20 drawing tools, Fibonacci retracement, auto-trend lines, and fullscreen focus mode.</p>
+                <div class="feature-expand">Side-by-side comparison across any asset class. Five timeframes, draggable cards, PNG export, keyboard shortcuts. Two-tier mobile toolbar with lockable full panel.</div>
+                <div class="feature-toggle" onclick="this.parentElement.classList.toggle('expanded')">[ more ]</div>
             </div>
-            <div class="feature-card">
-                <div class="feature-icon">🤖</div>
+            <div class="feature-card" onmousemove="this.style.setProperty('--mouse-x', (event.offsetX/this.offsetWidth*100)+'%'); this.style.setProperty('--mouse-y', (event.offsetY/this.offsetHeight*100)+'%');">
+                <div class="feature-icon">&#129302;</div>
                 <h4>Strat Agent</h4>
-                <p>Context-aware AI chat with tool use — web search, watchlist management, category management. Ticker commands ($NVDA, $BTC) for instant lookups. Full portfolio and profile context in every response.</p>
+                <p>Context-aware AI chat with tool use &mdash; web search, watchlist and category management. Ticker commands ($NVDA, $BTC) for instant lookups.</p>
+                <div class="feature-expand">Powered by Qwen3 30b MoE (3.3B active params/token). Achieves 0.97 F1 on tool calling. Full portfolio and profile context in every response. Streaming via SSE.</div>
+                <div class="feature-toggle" onclick="this.parentElement.classList.toggle('expanded')">[ more ]</div>
             </div>
-            <div class="feature-card">
-                <div class="feature-icon">📱</div>
+            <div class="feature-card" onmousemove="this.style.setProperty('--mouse-x', (event.offsetX/this.offsetWidth*100)+'%'); this.style.setProperty('--mouse-y', (event.offsetY/this.offsetHeight*100)+'%');">
+                <div class="feature-icon">&#128241;</div>
                 <h4>Mobile PWA</h4>
-                <p>Installable progressive web app with touch gestures (swipe to save/dismiss, pull-to-refresh, edge swipe navigation), bottom navigation, fullscreen charts, and a two-tier mobile drawing toolbar.</p>
+                <p>Installable progressive web app with touch gestures (swipe to save/dismiss, pull-to-refresh, edge swipe navigation), bottom nav, and fullscreen charts.</p>
+                <div class="feature-expand">Two-tier drawing toolbar on mobile: always-visible 48px hotbar + lockable full panel with all 20 tools in a 4-column grid. Works offline via service worker.</div>
+                <div class="feature-toggle" onclick="this.parentElement.classList.toggle('expanded')">[ more ]</div>
             </div>
-            <div class="feature-card">
-                <div class="feature-icon">🎨</div>
+            <div class="feature-card" onmousemove="this.style.setProperty('--mouse-x', (event.offsetX/this.offsetWidth*100)+'%'); this.style.setProperty('--mouse-y', (event.offsetY/this.offsetHeight*100)+'%');">
+                <div class="feature-icon">&#127912;</div>
                 <h4>8 Themes + Dark Mode</h4>
-                <p>Midnight, Noir, Coffee, Rose, Cosmos, Nebula, Aurora, Sakura — each with normal and "Deeper" ultra-dark OLED variants. Animated star particles with scroll parallax. Sakura has petal-shaped particles.</p>
+                <p>Midnight, Noir, Coffee, Rose, Cosmos, Nebula, Aurora, Sakura &mdash; each with normal and "Deeper" ultra-dark OLED variants (16 total).</p>
+                <div class="feature-expand">Animated star particles with scroll parallax. Sakura has petal-shaped particles. Live theme editor for per-variable customization. Extra Large font size option (20px).</div>
+                <div class="feature-toggle" onclick="this.parentElement.classList.toggle('expanded')">[ more ]</div>
             </div>
         </div>
 
@@ -1074,14 +1632,14 @@
                 <span style="width: 3px; height: 20px; background: var(--accent); border-radius: 2px; display: inline-block;"></span>
                 In Action
             </h3>
-            <p style="font-size: 13.5px; color: var(--text-secondary); margin-bottom: 24px; font-weight: 300;">143 articles scored in a single scan — 3 critical signals, 64 high-relevance, all profile-aware.</p>
+            <p style="font-size: 13.5px; color: var(--text-secondary); margin-bottom: 24px; font-weight: 300;">Click any screenshot to view full-size. 143 articles scored in a single scan &mdash; 3 critical signals, 64 high-relevance, all profile-aware.</p>
             <div class="screenshot-grid">
-                <div class="screenshot-card">
+                <div class="screenshot-card" onclick="openLightbox(this)">
                     <img src="screenshots/scan-history.png" alt="StratOS Scan History" onerror="this.parentElement.classList.add('no-img')">
                     <div class="screenshot-label">Scan History</div>
                     <div class="screenshot-fallback">
                         <div class="fallback-mock">
-                            <div class="mock-header">⏱ Scan History</div>
+                            <div class="mock-header">Scan History</div>
                             <div class="mock-row">
                                 <span class="mock-date">26 Feb</span>
                                 <span class="mock-count">143 items</span>
@@ -1103,18 +1661,18 @@
                         </div>
                     </div>
                 </div>
-                <div class="screenshot-card">
+                <div class="screenshot-card" onclick="openLightbox(this)">
                     <img src="screenshots/dashboard.png" alt="StratOS Dashboard" onerror="this.parentElement.classList.add('no-img')">
                     <div class="screenshot-label">Dashboard Feed</div>
                     <div class="screenshot-fallback">
-                        <div class="fallback-placeholder">📊<br><span>Add screenshot</span></div>
+                        <div class="fallback-placeholder">&#128202;<br><span>Dashboard</span></div>
                     </div>
                 </div>
-                <div class="screenshot-card">
+                <div class="screenshot-card" onclick="openLightbox(this)">
                     <img src="screenshots/markets.png" alt="StratOS Markets Panel" onerror="this.parentElement.classList.add('no-img')">
                     <div class="screenshot-label">Markets Panel</div>
                     <div class="screenshot-fallback">
-                        <div class="fallback-placeholder">📈<br><span>Add screenshot</span></div>
+                        <div class="fallback-placeholder">&#128200;<br><span>Markets</span></div>
                     </div>
                 </div>
             </div>
@@ -1122,7 +1680,49 @@
     </div>
 </section>
 
-<!-- ─── Tech Stack ─── -->
+<!-- Interactive Demo -->
+<section id="demo">
+    <div class="container">
+        <div class="reveal">
+            <div class="section-label">Interactive</div>
+            <div class="section-title">Profile Awareness in Action</div>
+            <p class="section-desc" style="margin-bottom: 32px;">The same article gets a completely different score depending on who's reading. Select an article below to see real V2 evaluation data across different profiles.</p>
+        </div>
+
+        <div class="demo-section reveal" id="awareness-demo">
+            <div class="demo-header">
+                <div>
+                    <h3>Live Scoring Demo</h3>
+                    <p>Real evaluation results from the V2 scorer (2,048 test examples)</p>
+                </div>
+                <div class="demo-badge">Real Data</div>
+            </div>
+
+            <div class="demo-article-selector" id="demo-selector">
+                <!-- Populated by JS -->
+            </div>
+
+            <div class="demo-article-title" id="demo-title"></div>
+
+            <div class="demo-bars" id="demo-bars">
+                <!-- Populated by JS -->
+            </div>
+
+            <div class="demo-insight" id="demo-insight"></div>
+        </div>
+
+        <!-- Spearman Rho Chart -->
+        <div class="rho-chart-section reveal">
+            <h3>Per-Profile Spearman &rho; &mdash; All 30 Profiles</h3>
+            <p>Rank correlation between V2 predictions and ground truth. All positive, no flagged profiles. Hover to see details.</p>
+            <div class="rho-chart" id="rho-chart">
+                <!-- Populated by JS -->
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Tech Stack -->
 <section id="stack">
     <div class="container">
         <div class="reveal">
@@ -1136,14 +1736,14 @@
                 <div class="stack-dot"></div>
                 <div>
                     <div class="label">Python 3.12</div>
-                    <div class="detail">Backend · stdlib http.server</div>
+                    <div class="detail">Backend &middot; stdlib http.server</div>
                 </div>
             </div>
             <div class="stack-item">
                 <div class="stack-dot"></div>
                 <div>
                     <div class="label">Vanilla JavaScript</div>
-                    <div class="detail">Frontend SPA · ~18,800 lines</div>
+                    <div class="detail">Frontend SPA &middot; ~18,800 lines</div>
                 </div>
             </div>
             <div class="stack-item">
@@ -1157,14 +1757,14 @@
                 <div class="stack-dot"></div>
                 <div>
                     <div class="label">Qwen3-8B + DoRA</div>
-                    <div class="detail">Fine-tuned scorer · Q8_0 GGUF</div>
+                    <div class="detail">Fine-tuned scorer &middot; Q8_0 GGUF</div>
                 </div>
             </div>
             <div class="stack-item">
                 <div class="stack-dot"></div>
                 <div>
                     <div class="label">Claude Opus 4.5</div>
-                    <div class="detail">Teacher model · distillation</div>
+                    <div class="detail">Teacher model &middot; distillation</div>
                 </div>
             </div>
             <div class="stack-item">
@@ -1192,28 +1792,28 @@
                 <div class="stack-dot"></div>
                 <div>
                     <div class="label">Tailwind CSS</div>
-                    <div class="detail">8 themes · dark mode · stars</div>
+                    <div class="detail">8 themes &middot; dark mode &middot; stars</div>
                 </div>
             </div>
             <div class="stack-item">
                 <div class="stack-dot"></div>
                 <div>
                     <div class="label">DuckDuckGo + Serper</div>
-                    <div class="detail">News search · free tier first</div>
+                    <div class="detail">News search &middot; free tier first</div>
                 </div>
             </div>
             <div class="stack-item">
                 <div class="stack-dot"></div>
                 <div>
                     <div class="label">yfinance</div>
-                    <div class="detail">Market data · OHLCV</div>
+                    <div class="detail">Market data &middot; OHLCV</div>
                 </div>
             </div>
             <div class="stack-item">
                 <div class="stack-dot"></div>
                 <div>
                     <div class="label">Cloudflare Tunnel</div>
-                    <div class="detail">Public access · free</div>
+                    <div class="detail">Public access &middot; free</div>
                 </div>
             </div>
         </div>
@@ -1228,7 +1828,55 @@
     </div>
 </section>
 
-<!-- ─── About ─── -->
+<!-- Training Journey -->
+<section id="journey">
+    <div class="container">
+        <div class="reveal">
+            <div class="section-label">Evolution</div>
+            <div class="section-title">Training Journey</div>
+            <p class="section-desc" style="margin-bottom: 32px;">19 failed training runs. Each one taught something the documentation never mentioned. The path from a flat scorer to 98.1% accuracy wasn't straight.</p>
+        </div>
+
+        <div class="timeline reveal">
+            <div class="timeline-item failure">
+                <div class="timeline-date">V1 &middot; Runs 15&ndash;18</div>
+                <h4>Answer-Only Training &mdash; The Flat Scorer</h4>
+                <p>5,679 examples with Sonnet distillation. Answer-only format (SCORE: X | REASON: Y) without reasoning traces. Model memorized patterns, gave everything 8.0&ndash;8.5. Profile awareness spread: 1.04 &mdash; essentially random.</p>
+                <span class="timeline-tag fail">~$17 &middot; Failed</span>
+            </div>
+
+            <div class="timeline-item failure">
+                <div class="timeline-date">Investigation</div>
+                <h4>Diagnosis: Imitation vs. Reasoning</h4>
+                <p>Research confirmed the issue: Orca showed imitation models learn style, not reasoning. Only explanation tuning transfers capability. The model needed to see the "thinking" process, not just the answer.</p>
+                <span class="timeline-tag info">Key insight</span>
+            </div>
+
+            <div class="timeline-item failure">
+                <div class="timeline-date">AMD ROCm</div>
+                <h4>AOTRITON NaN Gradients</h4>
+                <p>TORCH_ROCM_AOTRITON_ENABLE_EXPERIMENTAL=1 causes NaN during backward pass with DoRA + gradient checkpointing + bf16 on 7900 XTX. Days of debugging. Solution: keep disabled for training.</p>
+                <span class="timeline-tag fail">Hardware pain</span>
+            </div>
+
+            <div class="timeline-item success">
+                <div class="timeline-date">V2 Design &middot; Run 19</div>
+                <h4>Chain-of-Thought with Native Think Blocks</h4>
+                <p>Switched to Opus Batch API for teacher scoring. 20,550 examples across 30 profiles in 20 countries. Qwen3's native &lt;think&gt; blocks enabled natural CoT training. DeepSeek-R1 showed distillation into 8B could beat GPT-4o.</p>
+                <span class="timeline-tag pass">~$52 &middot; Breakthrough</span>
+            </div>
+
+            <div class="timeline-item success">
+                <div class="timeline-date">V2 &middot; Production</div>
+                <h4>98.1% Direction Accuracy</h4>
+                <p>10.7 hours training on 7900 XTX. MAE dropped from 1.553 to 0.393 (75% reduction). Profile awareness jumped from 1.04 to 7.90 (7.6&times;). Zero parse failures across 2,048 eval examples. Deployed to production.</p>
+                <span class="timeline-tag pass">Deployed</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- About -->
 <section id="about">
     <div class="container">
         <div class="reveal">
@@ -1239,10 +1887,10 @@
         <div class="about-grid reveal">
             <div class="about-text">
                 <p>
-                    I'm a Computer Engineering student at the American University of Kuwait, graduating Spring 2027. StratOS started because I was tired of opening a dozen tabs every morning — jobs, news, stocks, tech — just to feel caught up. I wanted <strong>one place</strong> to be "in the know" on everything I care about, ranked by how much it actually matters to me. So I built it.
+                    I'm a Computer Engineering student at the American University of Kuwait, graduating Spring 2027. StratOS started because I was tired of opening a dozen tabs every morning &mdash; jobs, news, stocks, tech &mdash; just to feel caught up. I wanted <strong>one place</strong> to be "in the know" on everything I care about, ranked by how much it actually matters to me. So I built it.
                 </p>
                 <p>
-                    That "one place" somehow turned into 45,000 lines of code with a self-improving AI scorer, a distillation pipeline that costs $0.40 per improvement cycle, and 19 failed training runs that each taught me something the documentation never mentioned. I focus on ML pipelines, full-stack systems with local-first principles, and getting GPU training to work on AMD hardware — which, if you know ROCm, you know is its own adventure.
+                    That "one place" somehow turned into 45,000 lines of code with a self-improving AI scorer, a distillation pipeline that costs $0.40 per improvement cycle, and 19 failed training runs that each taught me something the documentation never mentioned. I focus on ML pipelines, full-stack systems with local-first principles, and getting GPU training to work on AMD hardware &mdash; which, if you know ROCm, you know is its own adventure.
                 </p>
                 <p>
                     I'm looking for systems and ML engineering roles in Kuwait's energy sector, where AI meets industrial operations and the problems are actually interesting.
@@ -1267,14 +1915,51 @@
                 </div>
                 <div class="about-detail-item">
                     <div class="about-detail-label">GitHub</div>
-                    <div class="about-detail-value"><a href="https://github.com/ASEbrahim" target="_blank">github.com/ASEbrahim</a></div>
+                    <div class="about-detail-value"><a href="https://github.com/ASEbrahim" target="_blank" rel="noopener">github.com/ASEbrahim</a></div>
+                </div>
+                <div class="about-detail-item">
+                    <div class="about-detail-label">Project</div>
+                    <div class="about-detail-value"><a href="https://github.com/ASEbrahim/stratos" target="_blank" rel="noopener">github.com/ASEbrahim/stratos</a></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Terminal Contact -->
+        <div class="terminal-section reveal">
+            <div class="terminal">
+                <div class="terminal-bar">
+                    <div class="terminal-dot red"></div>
+                    <div class="terminal-dot yellow"></div>
+                    <div class="terminal-dot green"></div>
+                    <span class="terminal-title">ahmad@stratos ~ </span>
+                </div>
+                <div class="terminal-body" id="terminal-body">
+                    <div class="terminal-line">
+                        <span class="terminal-prompt">$</span>
+                        <span class="terminal-cmd">whoami</span>
+                    </div>
+                    <div class="terminal-output">Ahmad Sayed Alsayed Ebrahim &mdash; Systems Engineer, Kuwait</div>
+                    <div class="terminal-line" style="margin-top: 8px;">
+                        <span class="terminal-prompt">$</span>
+                        <span class="terminal-cmd">cat interests.txt</span>
+                    </div>
+                    <div class="terminal-output">ML Pipelines, DoRA/LoRA Fine-Tuning, Full-Stack, AMD ROCm, Local-First AI</div>
+                    <div class="terminal-line" style="margin-top: 8px;">
+                        <span class="terminal-prompt">$</span>
+                        <span class="terminal-cmd">ls projects/</span>
+                    </div>
+                    <div class="terminal-output"><a class="terminal-link" href="https://github.com/ASEbrahim/stratos" target="_blank" rel="noopener">stratos/</a>&nbsp;&nbsp;&nbsp;&nbsp;<a class="terminal-link" href="https://github.com/ASEbrahim" target="_blank" rel="noopener">more-coming-soon/</a></div>
+                    <div class="terminal-input-line" style="margin-top: 12px;">
+                        <span class="terminal-prompt">$</span>
+                        <input class="terminal-input" id="terminal-input" type="text" placeholder="Type a command... (try: help, stack, stats, links)" autocomplete="off" spellcheck="false">
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </section>
 
-<!-- ─── Footer ─── -->
+<!-- Footer -->
 <footer>
     <div class="container">
         <p><em>Built with stubbornness and an unreasonable number of late nights.</em></p>
@@ -1282,12 +1967,16 @@
 </footer>
 
 <script>
-// ─── Star Field ───
+// ========================
+// STAR FIELD (Mouse-reactive)
+// ========================
 (function() {
     const canvas = document.getElementById('stars');
     const ctx = canvas.getContext('2d');
     let stars = [];
-    const COUNT = 350;
+    const COUNT = 400;
+    let mouseX = -1000, mouseY = -1000;
+    const MOUSE_RADIUS = 180;
 
     function resize() {
         canvas.width = window.innerWidth;
@@ -1302,12 +1991,16 @@
             stars.push({
                 x: Math.random() * canvas.width,
                 y: Math.random() * canvas.height * 2,
+                baseX: 0,
+                baseY: 0,
                 r: isBright ? Math.random() * 2.0 + 0.8 : Math.random() * 1.2 + 0.2,
                 a: isBright ? Math.random() * 0.35 + 0.5 : Math.random() * 0.4 + 0.1,
                 speed: Math.random() * 0.15 + 0.02,
                 phase: Math.random() * Math.PI * 2,
                 color: isBright && Math.random() < 0.35 ? '#10b981' : Math.random() < 0.08 ? '#38bdf8' : '#c8d6e5'
             });
+            stars[i].baseX = stars[i].x;
+            stars[i].baseY = stars[i].y;
         }
     }
 
@@ -1317,31 +2010,196 @@
         const t = Date.now() * 0.001;
 
         for (const s of stars) {
-            const y = s.y - scroll;
-            if (y < -10 || y > canvas.height + 10) continue;
+            let y = s.baseY - scroll;
+            let x = s.baseX;
+
+            // Mouse attraction
+            const dy = y - mouseY;
+            const dx = x - mouseX;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            if (dist < MOUSE_RADIUS && dist > 0) {
+                const force = (1 - dist / MOUSE_RADIUS) * 30;
+                x += (dx / dist) * force;
+                y += (dy / dist) * force;
+            }
+
+            // Smooth interpolation
+            s.x += (x - s.x) * 0.08;
+            s.y += (y - (s.baseY - scroll)) * 0.08;
+            const drawY = s.baseY - scroll + (s.y - (s.baseY - scroll));
+            const drawX = s.x;
+
+            if (drawY < -10 || drawY > canvas.height + 10) continue;
             const flicker = 0.7 + 0.3 * Math.sin(t * s.speed * 4 + s.phase);
-            ctx.globalAlpha = s.a * flicker;
+            const proximityBoost = dist < MOUSE_RADIUS ? 1 + (1 - dist / MOUSE_RADIUS) * 0.5 : 1;
+            ctx.globalAlpha = Math.min(1, s.a * flicker * proximityBoost);
             ctx.fillStyle = s.color;
             ctx.beginPath();
-            ctx.arc(s.x, y, s.r, 0, Math.PI * 2);
+            ctx.arc(drawX, drawY, s.r * (dist < MOUSE_RADIUS ? 1 + (1 - dist / MOUSE_RADIUS) * 0.5 : 1), 0, Math.PI * 2);
             ctx.fill();
         }
         ctx.globalAlpha = 1;
         requestAnimationFrame(draw);
     }
 
-    window.addEventListener('resize', resize);
+    document.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+    });
+
+    document.addEventListener('mouseleave', () => {
+        mouseX = -1000;
+        mouseY = -1000;
+    });
+
+    window.addEventListener('resize', () => {
+        resize();
+        // Redistribute stars on resize
+        for (const s of stars) {
+            s.baseX = Math.random() * canvas.width;
+        }
+    });
+
     init();
     draw();
 })();
 
-// ─── Nav Scroll ───
-const nav = document.getElementById('navbar');
-window.addEventListener('scroll', () => {
-    nav.classList.toggle('scrolled', window.scrollY > 40);
-});
+// ========================
+// SCROLL PROGRESS
+// ========================
+(function() {
+    const bar = document.getElementById('scroll-progress');
+    function update() {
+        const scrollTop = window.scrollY;
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        bar.style.width = (docHeight > 0 ? (scrollTop / docHeight) * 100 : 0) + '%';
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    update();
+})();
 
-// ─── Reveal on Scroll ───
+// ========================
+// NAV SCROLL + ACTIVE SECTION
+// ========================
+(function() {
+    const nav = document.getElementById('navbar');
+    const navLinks = document.querySelectorAll('.nav-links a');
+    const sections = document.querySelectorAll('section[id]');
+
+    function update() {
+        nav.classList.toggle('scrolled', window.scrollY > 40);
+
+        let current = '';
+        for (const section of sections) {
+            const top = section.offsetTop - 120;
+            if (window.scrollY >= top) current = section.id;
+        }
+        navLinks.forEach(a => {
+            a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+        });
+    }
+
+    window.addEventListener('scroll', update, { passive: true });
+    update();
+})();
+
+// ========================
+// TYPEWRITER HERO
+// ========================
+(function() {
+    const el = document.getElementById('hero-typewriter');
+    const phrases = [
+        'Computer Engineering student building <strong>AI-powered intelligence systems</strong> that score, learn, and improve autonomously — running entirely on local hardware.',
+        'Building a <strong>self-improving AI scorer</strong> that learns from Claude Opus and permanently bakes improvements into local model weights.',
+        'Training <strong>custom LLMs on AMD GPUs</strong> — DoRA fine-tuning, chain-of-thought distillation, and 30-profile evaluation pipelines.',
+        '45,000 lines of code. <strong>19 failed training runs.</strong> One system that tells you what matters today.'
+    ];
+    let phraseIdx = 0;
+    let charIdx = 0;
+    let isDeleting = false;
+    let currentText = '';
+    const TYPING_SPEED = 28;
+    const DELETE_SPEED = 14;
+    const PAUSE_BEFORE_DELETE = 3500;
+    const PAUSE_BEFORE_TYPE = 500;
+
+    function getPlainLength(html) {
+        return html.replace(/<[^>]*>/g, '').length;
+    }
+
+    function sliceHTML(html, len) {
+        let result = '';
+        let textCount = 0;
+        let inTag = false;
+        let tagBuffer = '';
+        let openTags = [];
+
+        for (let i = 0; i < html.length && textCount < len; i++) {
+            const ch = html[i];
+            if (ch === '<') {
+                inTag = true;
+                tagBuffer = '<';
+            } else if (ch === '>' && inTag) {
+                tagBuffer += '>';
+                inTag = false;
+                result += tagBuffer;
+                if (tagBuffer.startsWith('</')) {
+                    openTags.pop();
+                } else if (!tagBuffer.endsWith('/>')) {
+                    const m = tagBuffer.match(/^<(\w+)/);
+                    if (m) openTags.push(m[1]);
+                }
+                tagBuffer = '';
+            } else if (inTag) {
+                tagBuffer += ch;
+            } else {
+                result += ch;
+                textCount++;
+            }
+        }
+        // Close any open tags
+        for (let i = openTags.length - 1; i >= 0; i--) {
+            result += '</' + openTags[i] + '>';
+        }
+        return result;
+    }
+
+    function tick() {
+        const phrase = phrases[phraseIdx];
+        const plainLen = getPlainLength(phrase);
+
+        if (!isDeleting) {
+            charIdx++;
+            currentText = sliceHTML(phrase, charIdx);
+            el.innerHTML = currentText + '<span class="typewriter-cursor"></span>';
+
+            if (charIdx >= plainLen) {
+                setTimeout(() => { isDeleting = true; tick(); }, PAUSE_BEFORE_DELETE);
+                return;
+            }
+            setTimeout(tick, TYPING_SPEED);
+        } else {
+            charIdx--;
+            currentText = sliceHTML(phrase, charIdx);
+            el.innerHTML = currentText + '<span class="typewriter-cursor"></span>';
+
+            if (charIdx <= 0) {
+                isDeleting = false;
+                phraseIdx = (phraseIdx + 1) % phrases.length;
+                setTimeout(tick, PAUSE_BEFORE_TYPE);
+                return;
+            }
+            setTimeout(tick, DELETE_SPEED);
+        }
+    }
+
+    // Delay start to sync with hero animation
+    setTimeout(tick, 1200);
+})();
+
+// ========================
+// REVEAL ON SCROLL
+// ========================
 const reveals = document.querySelectorAll('.reveal');
 const observer = new IntersectionObserver((entries) => {
     entries.forEach(e => {
@@ -1353,7 +2211,9 @@ const observer = new IntersectionObserver((entries) => {
 }, { threshold: 0.12 });
 reveals.forEach(el => observer.observe(el));
 
-// ─── Animated Counters ───
+// ========================
+// ANIMATED COUNTERS
+// ========================
 const counterObserver = new IntersectionObserver((entries) => {
     entries.forEach(e => {
         if (e.isIntersecting) {
@@ -1387,6 +2247,326 @@ const counterObserver = new IntersectionObserver((entries) => {
 document.querySelectorAll('.metric-value[data-count]').forEach(el => {
     counterObserver.observe(el);
 });
+
+// ========================
+// PROFILE AWARENESS DEMO
+// ========================
+(function() {
+    const articles = [
+        {
+            id: 'kpop',
+            label: 'K-pop Debut',
+            title: '"NCT JNJM Debuts \'BOTH SIDES\' with Dual Charms"',
+            profiles: [
+                { name: 'K-pop Marketing Mgr, Seoul', score: 8.5, v1: 2.0 },
+                { name: 'CompEng Student, Kuwait', score: 1.0, v1: 0.0 },
+                { name: 'Corporate Lawyer, London', score: 1.0, v1: 0.0 },
+                { name: 'Data Scientist, Dubai', score: 1.0, v1: 0.0 },
+                { name: 'Marine Electrician, Norway', score: 0.0, v1: 0.0 }
+            ],
+            insight: 'The K-pop marketing manager gets <strong>8.5/10</strong> — this is directly actionable for their work. Everyone else gets 0-1. V1 gave the manager only 2.0 (nearly blind to the relevance).'
+        },
+        {
+            id: 'gamescom',
+            label: 'Gamescom Indie',
+            title: '"Home of Indies auf der Gamescom 2026: Das neue Standkonzept"',
+            profiles: [
+                { name: 'Indie Game Dev, Berlin', score: 8.5, v1: null },
+                { name: 'Corporate Lawyer, London', score: 1.0, v1: 0.0 },
+                { name: 'Documentary Filmmaker, Mumbai', score: 1.0, v1: 0.2 },
+                { name: 'Marine Electrician, Norway', score: 0.0, v1: 0.0 },
+                { name: 'Pipeline Welder, Edmonton', score: 0.0, v1: 0.0 }
+            ],
+            insight: 'The Berlin indie game developer gets <strong>8.5</strong> for a Gamescom article about indie showcases — their core business. The documentary filmmaker gets 1.0 (tangentially related to media). V1 spread was only 0.2.'
+        },
+        {
+            id: 'finance',
+            label: 'Kuwait Finance',
+            title: '"SC appoints Abdulkader inaugural fellow"',
+            profiles: [
+                { name: 'Finance Student, GUST Kuwait', score: 8.5, v1: 3.0 },
+                { name: 'Sophomore, UChicago', score: 3.5, v1: 0.5 },
+                { name: 'Architect, Doha', score: 1.0, v1: 0.2 },
+                { name: 'Nurse Practitioner, Toronto', score: 1.0, v1: 0.0 },
+                { name: 'Bonsai Artist, Kyoto', score: 1.0, v1: 0.0 }
+            ],
+            insight: 'Kuwait finance news hits <strong>8.5</strong> for the GUST finance student — directly relevant to their career. The UChicago sophomore gets 3.5 (somewhat relevant to an undeclared student exploring finance). V1 only gave the finance student 3.0.'
+        },
+        {
+            id: 'clinical',
+            label: 'Clinical Trials',
+            title: '"Diversity In Clinical Trials: Current Gaps And How To Fix Them"',
+            profiles: [
+                { name: 'Pediatric Oncologist, Riyadh', score: 8.5, v1: null },
+                { name: 'Documentary Filmmaker, Mumbai', score: 3.5, v1: 0.2 },
+                { name: 'UN Diplomat, Vienna', score: 1.0, v1: 0.2 },
+                { name: 'CTO Payments, Lagos', score: 1.0, v1: 0.2 },
+                { name: 'Pipeline Welder, Edmonton', score: 1.0, v1: 0.2 }
+            ],
+            insight: 'Clinical trial diversity research scores <strong>8.5</strong> for the pediatric oncologist — directly impacts their field. The Mumbai filmmaker gets 3.5 (documentary potential). V1 spread was 0.0 — completely profile-blind.'
+        },
+        {
+            id: 'faan',
+            label: 'Nigeria Payments',
+            title: '"FAAN bans cash transactions for revenue payments effective Feb. 28"',
+            profiles: [
+                { name: 'CTO Mobile Payments, Lagos', score: 8.5, v1: null },
+                { name: 'Hospital Pharmacist, Paris', score: 1.0, v1: 0.0 },
+                { name: 'Mining Engineer, Santiago', score: 1.0, v1: 0.0 },
+                { name: 'K-pop Marketing Mgr, Seoul', score: 1.0, v1: 0.0 },
+                { name: 'Pipeline Welder, Edmonton', score: 1.0, v1: 0.0 }
+            ],
+            insight: 'Nigeria banning cash at airports is <strong>critical</strong> (8.5) for a Lagos mobile payments CTO — this creates immediate business opportunity. Everyone else: 0-1. V1 had zero spread.'
+        }
+    ];
+
+    const selector = document.getElementById('demo-selector');
+    const titleEl = document.getElementById('demo-title');
+    const barsEl = document.getElementById('demo-bars');
+    const insightEl = document.getElementById('demo-insight');
+
+    // Build article selector buttons
+    articles.forEach((art, i) => {
+        const btn = document.createElement('button');
+        btn.className = 'demo-article-btn' + (i === 0 ? ' active' : '');
+        btn.textContent = art.label;
+        btn.onclick = () => selectArticle(i);
+        selector.appendChild(btn);
+    });
+
+    function selectArticle(idx) {
+        const art = articles[idx];
+
+        // Update active button
+        selector.querySelectorAll('.demo-article-btn').forEach((b, i) => {
+            b.classList.toggle('active', i === idx);
+        });
+
+        titleEl.textContent = art.title;
+        insightEl.innerHTML = art.insight;
+
+        // Build bars
+        barsEl.innerHTML = '';
+        art.profiles.forEach((p, i) => {
+            const row = document.createElement('div');
+            row.className = 'demo-bar-row';
+
+            const label = document.createElement('div');
+            label.className = 'demo-bar-label';
+            label.textContent = p.name;
+
+            const track = document.createElement('div');
+            track.className = 'demo-bar-track';
+
+            const fill = document.createElement('div');
+            const level = p.score >= 7 ? 'high' : p.score >= 3 ? 'mid' : 'low';
+            fill.className = 'demo-bar-fill ' + level;
+            fill.style.width = '0%';
+            track.appendChild(fill);
+
+            const score = document.createElement('div');
+            score.className = 'demo-bar-score ' + level;
+            score.textContent = p.score.toFixed(1);
+
+            row.appendChild(label);
+            row.appendChild(track);
+            row.appendChild(score);
+            barsEl.appendChild(row);
+
+            // Animate
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    fill.style.width = (p.score / 10 * 100) + '%';
+                });
+            });
+        });
+    }
+
+    // Initialize with first article
+    selectArticle(0);
+})();
+
+// ========================
+// SPEARMAN RHO BAR CHART
+// ========================
+(function() {
+    const profiles = [
+        { name: 'Computer Eng, Kuwait', rho: 0.879 },
+        { name: 'Architect, Doha', rho: 0.833 },
+        { name: 'Data Scientist, Dubai', rho: 0.822 },
+        { name: 'Sophomore, UChicago', rho: 0.813 },
+        { name: 'Geophysicist, KOC', rho: 0.803 },
+        { name: 'Cybersecurity, Kuwait', rho: 0.790 },
+        { name: 'Finance Student, GUST', rho: 0.759 },
+        { name: 'Mining Eng, Santiago', rho: 0.758 },
+        { name: 'Filmmaker, Mumbai', rho: 0.754 },
+        { name: 'HVAC Owner, Houston', rho: 0.751 },
+        { name: 'Welder, Edmonton', rho: 0.746 },
+        { name: 'Mech Eng, NEOM', rho: 0.738 },
+        { name: 'UX Designer, Tokyo', rho: 0.736 },
+        { name: 'Petrol Eng, Kuwait U', rho: 0.732 },
+        { name: 'CTO Payments, Lagos', rho: 0.723 },
+        { name: 'Nurse, Toronto', rho: 0.717 },
+        { name: 'UN Diplomat, Vienna', rho: 0.716 },
+        { name: 'Lawyer, London', rho: 0.704 },
+        { name: 'IT Consultant, Lisbon', rho: 0.702 },
+        { name: 'Supply Chain, Bahrain', rho: 0.696 },
+        { name: 'Marine Elect, Norway', rho: 0.689 },
+        { name: 'Pharmacist, Paris', rho: 0.675 },
+        { name: 'Oncologist, Riyadh', rho: 0.674 },
+        { name: 'Sports Physio, Sydney', rho: 0.669 },
+        { name: 'Chef, Mexico City', rho: 0.650 },
+        { name: 'Biotech, KAUST', rho: 0.621 },
+        { name: 'Indie Dev, Berlin', rho: 0.615 },
+        { name: 'Ag Trader, Sao Paulo', rho: 0.589 },
+        { name: 'K-pop Mgr, Seoul', rho: 0.524 },
+        { name: 'Bonsai Artist, Kyoto', rho: 0.416 }
+    ];
+
+    const chart = document.getElementById('rho-chart');
+
+    profiles.forEach(p => {
+        const row = document.createElement('div');
+        row.className = 'rho-row';
+
+        const label = document.createElement('div');
+        label.className = 'rho-label';
+        label.textContent = p.name;
+
+        const track = document.createElement('div');
+        track.className = 'rho-track';
+
+        const bar = document.createElement('div');
+        bar.className = 'rho-bar';
+        const hue = p.rho >= 0.75 ? '160' : p.rho >= 0.65 ? '190' : p.rho >= 0.55 ? '210' : '220';
+        const sat = Math.round(40 + (p.rho - 0.4) * 100);
+        const light = Math.round(30 + (p.rho - 0.4) * 40);
+        bar.style.background = `hsl(${hue}, ${sat}%, ${light}%)`;
+        bar.dataset.width = (p.rho * 100) + '%';
+        track.appendChild(bar);
+
+        const value = document.createElement('div');
+        value.className = 'rho-value';
+        value.textContent = p.rho.toFixed(3);
+
+        row.appendChild(label);
+        row.appendChild(track);
+        row.appendChild(value);
+        chart.appendChild(row);
+    });
+
+    // Animate on scroll
+    const rhoObserver = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+            if (e.isIntersecting) {
+                const bars = e.target.querySelectorAll('.rho-bar');
+                bars.forEach((bar, i) => {
+                    setTimeout(() => {
+                        bar.style.width = bar.dataset.width;
+                    }, i * 30);
+                });
+                rhoObserver.unobserve(e.target);
+            }
+        });
+    }, { threshold: 0.1 });
+
+    rhoObserver.observe(chart);
+})();
+
+// ========================
+// LIGHTBOX
+// ========================
+function openLightbox(card) {
+    const img = card.querySelector('img');
+    if (!img || card.classList.contains('no-img')) return;
+    const lb = document.getElementById('lightbox');
+    lb.querySelector('img').src = img.src;
+    lb.classList.add('open');
+    document.body.style.overflow = 'hidden';
+}
+
+document.getElementById('lightbox').addEventListener('click', function(e) {
+    if (e.target === this || e.target.classList.contains('lightbox-close')) {
+        this.classList.remove('open');
+        document.body.style.overflow = '';
+    }
+});
+
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        const lb = document.getElementById('lightbox');
+        if (lb.classList.contains('open')) {
+            lb.classList.remove('open');
+            document.body.style.overflow = '';
+        }
+    }
+});
+
+// ========================
+// TERMINAL
+// ========================
+(function() {
+    const input = document.getElementById('terminal-input');
+    const body = document.getElementById('terminal-body');
+
+    const commands = {
+        help: 'Available commands: whoami, stack, stats, links, stratos, clear, help',
+        whoami: 'Ahmad Sayed Alsayed Ebrahim — Computer Engineering student at AUK, Kuwait. Building AI-powered intelligence systems.',
+        stack: 'Python 3.12 · Vanilla JS · Ollama · Qwen3-8B + DoRA · Claude Opus 4.5 · PyTorch + PEFT · SQLite · TradingView · ROCm 6.2',
+        stats: '45,000+ lines · 40+ modules · 20,550 training examples · 30 profiles · 20 countries · 98.1% accuracy · $0.40/improvement cycle',
+        links: '<a class="terminal-link" href="https://github.com/ASEbrahim" target="_blank" rel="noopener">GitHub</a> · <a class="terminal-link" href="https://github.com/ASEbrahim/stratos" target="_blank" rel="noopener">StratOS Repo</a>',
+        stratos: '"Tell the system who you are, and it tells you what matters today." — A self-hosted strategic intelligence platform with a self-improving AI scorer.',
+        clear: '__CLEAR__',
+        ls: 'stratos/    portfolio/    training-data/    .env (not showing this one)',
+        cat: 'Nice try.',
+        sudo: 'Ahmad is not in the sudoers file. This incident will be reported.',
+        rm: 'I appreciate the enthusiasm, but no.',
+        pwd: '/home/ahmad/stratos',
+        echo: 'echo echo echo...',
+        exit: 'You can check out any time you like, but you can never leave.',
+        ping: 'PONG — 0.393ms (that\'s also our MAE)',
+        neofetch: 'ahmad@stratos — OS: StratOS v2.1 · CPU: Ryzen 7 7800X3D · GPU: RX 7900 XTX 24GB · RAM: 32GB DDR5 · Shell: bash'
+    };
+
+    input.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') {
+            const cmd = this.value.trim().toLowerCase();
+            if (!cmd) return;
+
+            // Add command line
+            const cmdLine = document.createElement('div');
+            cmdLine.className = 'terminal-line';
+            cmdLine.style.marginTop = '8px';
+            cmdLine.innerHTML = '<span class="terminal-prompt">$</span> <span class="terminal-cmd">' + this.value.replace(/</g, '&lt;') + '</span>';
+            body.insertBefore(cmdLine, this.parentElement);
+
+            // Add output
+            const output = document.createElement('div');
+            output.className = 'terminal-output';
+
+            const response = commands[cmd.split(' ')[0]];
+            if (response === '__CLEAR__') {
+                // Clear everything except the input line
+                const inputLine = this.parentElement;
+                body.innerHTML = '';
+                body.appendChild(inputLine);
+                this.value = '';
+                return;
+            }
+
+            output.innerHTML = response || 'Command not found: ' + cmd.replace(/</g, '&lt;') + '. Type "help" for available commands.';
+            body.insertBefore(output, this.parentElement);
+
+            this.value = '';
+            body.scrollTop = body.scrollHeight;
+        }
+    });
+
+    // Focus terminal on click
+    document.querySelector('.terminal').addEventListener('click', function() {
+        input.focus();
+    });
+})();
 </script>
 
 </body>
