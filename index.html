@@ -836,23 +836,45 @@
             z-index: 100;
             background: var(--bg-elevated);
             border: 1px solid var(--border-accent);
-            border-radius: 8px;
-            padding: 10px 14px;
+            border-radius: 10px;
+            padding: 12px 16px;
             font-size: 12px;
-            color: var(--text-primary);
-            max-width: 280px;
-            line-height: 1.5;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+            color: var(--text-secondary);
+            max-width: 300px;
+            line-height: 1.55;
+            box-shadow: 0 12px 32px rgba(0,0,0,0.5);
             opacity: 0;
             pointer-events: none;
-            transform: translateY(4px);
-            transition: opacity 0.2s, transform 0.2s;
+            transform: translateY(6px);
+            transition: opacity 0.18s, transform 0.18s;
         }
 
         .arch-tip.show {
             opacity: 1;
             transform: translateY(0);
         }
+
+        .arch-tip-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .arch-tip-title::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            border-radius: 2px;
+            flex-shrink: 0;
+        }
+
+        .arch-tip--green .arch-tip-title::before { background: #10b981; }
+        .arch-tip--blue .arch-tip-title::before { background: #38bdf8; }
+        .arch-tip--purple .arch-tip-title::before { background: #a78bfa; }
 
         /* Mobile arch fallback */
         .arch-mobile {
@@ -1005,8 +1027,8 @@
         }
 
         .screenshot-card { grid-column: span 2; }
-        .screenshot-card:nth-child(4) { grid-column: 2 / span 2; }
-        .screenshot-card:nth-child(5) { grid-column: 4 / span 2; }
+        .screenshot-card:nth-child(7) { grid-column: 2 / span 2; }
+        .screenshot-card:nth-child(8) { grid-column: 4 / span 2; }
 
         .screenshot-card {
             border-radius: 12px;
@@ -1563,10 +1585,10 @@
             .features-grid { grid-template-columns: 1fr; }
             .stack-grid { grid-template-columns: 1fr 1fr; }
             .hero-name { letter-spacing: -1px; }
-            .screenshot-grid { grid-template-columns: 1fr; }
+            .screenshot-grid { grid-template-columns: 1fr 1fr; }
             .screenshot-card,
-            .screenshot-card:nth-child(4),
-            .screenshot-card:nth-child(5) { grid-column: 1; }
+            .screenshot-card:nth-child(7),
+            .screenshot-card:nth-child(8) { grid-column: auto; }
             .demo-section { padding: 24px; }
             .demo-bar-row { grid-template-columns: 120px 1fr 40px; }
             .demo-bar-label { font-size: 10px; }
@@ -1842,7 +1864,7 @@
                 <span class="bar"></span>
                 In Action
             </h3>
-            <p class="section-sub-desc">Click any screenshot to view full-size. Desktop dashboard, market charts, fullscreen analysis, and mobile PWA with guided onboarding.</p>
+            <p class="section-sub-desc">Click any screenshot to view full-size. Desktop dashboard, market charts, fullscreen analysis, guided tour, onboarding wizard, and mobile PWA.</p>
             <div class="screenshot-grid">
                 <div class="screenshot-card" onclick="openLightbox(this)">
                     <img src="screenshots/dashboard.png" alt="StratOS Dashboard" onerror="this.parentElement.classList.add('no-img')">
@@ -1865,18 +1887,39 @@
                         <div class="fallback-placeholder">&#128200;<br><span>Chart</span></div>
                     </div>
                 </div>
-                <div class="screenshot-card portrait" onclick="openLightbox(this)">
-                    <img src="screenshots/mobile-onboarding.jpg" alt="StratOS Mobile Onboarding" onerror="this.parentElement.classList.add('no-img')">
-                    <div class="screenshot-label">Mobile Onboarding</div>
+                <div class="screenshot-card" onclick="openLightbox(this)">
+                    <img src="screenshots/guided-tour.png" alt="StratOS Guided Tour" onerror="this.parentElement.classList.add('no-img')">
+                    <div class="screenshot-label">Guided Tour</div>
                     <div class="screenshot-fallback">
-                        <div class="fallback-placeholder">&#128241;<br><span>Mobile</span></div>
+                        <div class="fallback-placeholder">&#128161;<br><span>Tour</span></div>
+                    </div>
+                </div>
+                <div class="screenshot-card portrait" onclick="openLightbox(this)">
+                    <img src="screenshots/wizard-priorities.png" alt="StratOS Wizard Priorities" onerror="this.parentElement.classList.add('no-img')">
+                    <div class="screenshot-label">Wizard Priorities</div>
+                    <div class="screenshot-fallback">
+                        <div class="fallback-placeholder">&#127919;<br><span>Wizard</span></div>
                     </div>
                 </div>
                 <div class="screenshot-card portrait" onclick="openLightbox(this)">
                     <img src="screenshots/mobile-wizard.jpg" alt="StratOS Setup Wizard" onerror="this.parentElement.classList.add('no-img')">
                     <div class="screenshot-label">Setup Wizard</div>
                     <div class="screenshot-fallback">
-                        <div class="fallback-placeholder">&#127919;<br><span>Wizard</span></div>
+                        <div class="fallback-placeholder">&#128736;<br><span>Setup</span></div>
+                    </div>
+                </div>
+                <div class="screenshot-card portrait" onclick="openLightbox(this)">
+                    <img src="screenshots/mobile-overview.jpg" alt="StratOS Mobile Overview" onerror="this.parentElement.classList.add('no-img')">
+                    <div class="screenshot-label">Mobile Overview</div>
+                    <div class="screenshot-fallback">
+                        <div class="fallback-placeholder">&#128241;<br><span>Mobile</span></div>
+                    </div>
+                </div>
+                <div class="screenshot-card portrait" onclick="openLightbox(this)">
+                    <img src="screenshots/mobile-onboarding.jpg" alt="StratOS Mobile Onboarding" onerror="this.parentElement.classList.add('no-img')">
+                    <div class="screenshot-label">Mobile Onboarding</div>
+                    <div class="screenshot-fallback">
+                        <div class="fallback-placeholder">&#128241;<br><span>Onboarding</span></div>
                     </div>
                 </div>
             </div>
@@ -2887,7 +2930,7 @@ document.querySelectorAll('.metric-value[data-count]').forEach(el => {
     var nodeGroup = el('g', { 'class':'nodes' });
     nodes.forEach(function(n, i) {
         var p = n._pos;
-        var g = el('g', { 'class': 'node-group', 'data-id': n.id, 'data-tip': n.tip });
+        var g = el('g', { 'class': 'node-group', 'data-id': n.id, 'data-tip': n.tip, 'data-label': n.label, 'data-color': n.color });
         g.style.opacity = '0';
 
         // Box with colored left border effect
@@ -2933,32 +2976,43 @@ document.querySelectorAll('.metric-value[data-count]').forEach(el => {
         g.addEventListener('mouseenter', function() {
             // Show tooltip
             var tipText = this.getAttribute('data-tip');
+            var nodeLabel = this.getAttribute('data-label');
+            var nodeColor = this.getAttribute('data-color');
             if (tipText && tip) {
-                tip.textContent = tipText;
+                tip.className = 'arch-tip arch-tip--' + (nodeColor || 'green');
+                tip.innerHTML = '<div class="arch-tip-title">' + (nodeLabel || '') + '</div><div class="arch-tip-body">' + tipText + '</div>';
                 var svgRect = svg.getBoundingClientRect();
-                var boxRect = this.querySelector('.node-box');
-                var bx = parseFloat(boxRect.getAttribute('x'));
-                var by = parseFloat(boxRect.getAttribute('y'));
-                var bw = parseFloat(boxRect.getAttribute('width'));
-                // Convert SVG coords to screen
-                var scaleX = svgRect.width / W;
-                var scaleY = svgRect.height / totalH;
-                var screenX = svgRect.left + bx * scaleX;
-                var screenY = svgRect.top + by * scaleY;
+                var boxEl = this.querySelector('.node-box');
+                var bx = parseFloat(boxEl.getAttribute('x'));
+                var by = parseFloat(boxEl.getAttribute('y'));
+                var bw = parseFloat(boxEl.getAttribute('width'));
+                // Correct SVG-to-screen: account for preserveAspectRatio meet offset
+                var scale = Math.min(svgRect.width / W, svgRect.height / totalH);
+                var offX = (svgRect.width - W * scale) / 2;
+                var offY = (svgRect.height - totalH * scale) / 2;
+                var screenX = svgRect.left + offX + (bx + bw / 2) * scale;
+                var screenY = svgRect.top + offY + by * scale;
+                var screenBotY = screenY + NH * scale;
+                // Position centered above node
                 tip.style.left = screenX + 'px';
-                tip.style.top = (screenY - 8) + 'px';
-                tip.style.transform = 'translateY(-100%)';
+                tip.style.top = (screenY - 10) + 'px';
+                tip.style.transform = 'translate(-50%, -100%)';
                 tip.classList.add('show');
                 requestAnimationFrame(function() {
                     var tipRect = tip.getBoundingClientRect();
+                    // Flip below node if clipped at top
                     if (tipRect.top < 8) {
-                        tip.style.top = (screenY + NH * scaleY + 8) + 'px';
-                        tip.style.transform = 'translateY(0)';
+                        tip.style.top = (screenBotY + 10) + 'px';
+                        tip.style.transform = 'translate(-50%, 0)';
                     }
+                    // Clamp horizontal edges
+                    tipRect = tip.getBoundingClientRect();
                     if (tipRect.right > window.innerWidth - 12) {
-                        tip.style.left = (window.innerWidth - tipRect.width - 12) + 'px';
+                        tip.style.left = (window.innerWidth - tipRect.width / 2 - 12) + 'px';
                     }
-                    if (tipRect.left < 12) tip.style.left = '12px';
+                    if (tipRect.left < 12) {
+                        tip.style.left = (tipRect.width / 2 + 12) + 'px';
+                    }
                 });
             }
             // Highlight connected paths
