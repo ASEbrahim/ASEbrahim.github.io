@@ -695,87 +695,154 @@
             text-align: right;
         }
 
-        /* Profile Chips */
-        .profiles-strip {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin-top: 12px;
-        }
-
-        .profile-chip {
-            padding: 8px 14px;
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            font-size: 12px;
-            color: var(--text-secondary);
-            transition: border-color 0.25s, transform 0.2s;
-            cursor: default;
-        }
-
-        .profile-chip:hover {
-            border-color: var(--border-accent);
-            transform: translateY(-1px);
-        }
-
-        .profile-chip .rho {
-            color: var(--accent);
-            font-family: var(--font-mono);
-            font-weight: 600;
-            margin-left: 6px;
-            font-size: 11px;
-        }
-
-        /* Architecture Block */
-        .arch-block {
+        /* Architecture Diagram */
+        .arch-diagram {
             margin-top: 48px;
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 28px;
-            overflow-x: auto;
-        }
-
-        .arch-block pre {
-            font-family: var(--font-mono);
-            font-size: 11.5px;
-            line-height: 1.65;
-            color: var(--text-secondary);
-            white-space: pre;
-        }
-
-        .arch-block .dim { color: var(--text-dim); }
-        .arch-block .hl { color: var(--accent); font-weight: 600; }
-        .arch-block .sec { color: var(--accent-secondary); }
-
-        /* Interactive arch highlights */
-        .arch-block [data-highlight] {
-            cursor: pointer;
-            transition: text-shadow 0.2s;
             position: relative;
         }
 
-        .arch-block [data-highlight]:hover {
-            text-shadow: 0 0 12px var(--accent-glow);
+        .arch-diagram-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
-        .arch-tooltip {
-            display: none;
+        .arch-diagram-title .bar {
+            width: 3px;
+            height: 16px;
+            background: var(--accent);
+            border-radius: 2px;
+            display: inline-block;
+        }
+
+        .arch-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            position: relative;
+        }
+
+        .arch-node {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 14px 16px;
+            border-left: 3px solid var(--border);
+            cursor: default;
+            opacity: 0;
+            transform: translateY(16px);
+            transition: border-color 0.25s, box-shadow 0.25s, opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1), transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .arch-node.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .arch-node:hover {
+            border-color: var(--border-accent);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+        }
+
+        .arch-node--green { border-left-color: var(--accent); }
+        .arch-node--blue { border-left-color: var(--accent-secondary); }
+        .arch-node--purple { border-left-color: #a78bfa; }
+
+        .arch-node--full {
+            grid-column: 1 / -1;
+        }
+
+        .arch-node-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 4px;
+        }
+
+        .arch-node-icon {
+            font-size: 16px;
+            line-height: 1;
+        }
+
+        .arch-node-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .arch-node-sub {
+            font-size: 11.5px;
+            color: var(--text-dim);
+            font-family: var(--font-mono);
+            line-height: 1.4;
+            padding-left: 24px;
+        }
+
+        /* SVG connection lines */
+        .arch-svg {
             position: absolute;
-            bottom: calc(100% + 8px);
-            left: 50%;
-            transform: translateX(-50%);
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .arch-line {
+            fill: none;
+            stroke: var(--border);
+            stroke-width: 1.5;
+            stroke-dasharray: 1000;
+            stroke-dashoffset: 1000;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .arch-line.visible {
+            opacity: 0.6;
+            animation: archLineDraw 1s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+
+        .arch-line--loop {
+            stroke: #a78bfa;
+            stroke-dasharray: 6, 4;
+        }
+
+        .arch-line--loop.visible {
+            opacity: 0.5;
+        }
+
+        @keyframes archLineDraw {
+            to { stroke-dashoffset: 0; }
+        }
+
+        /* Architecture tooltip */
+        .arch-tip {
+            position: fixed;
+            z-index: 100;
             background: var(--bg-elevated);
             border: 1px solid var(--border-accent);
             border-radius: 8px;
             padding: 10px 14px;
-            font-family: var(--font-display);
             font-size: 12px;
             color: var(--text-primary);
-            white-space: nowrap;
-            z-index: 50;
+            max-width: 280px;
+            line-height: 1.5;
             box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(4px);
+            transition: opacity 0.2s, transform 0.2s;
+        }
+
+        .arch-tip.show {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         /* Features Grid */
@@ -857,6 +924,15 @@
 
         .feature-toggle:hover { color: var(--accent); }
 
+        /* Utility classes for inline style cleanup */
+        .section-desc--tight { margin-bottom: 8px; }
+        .section-desc--mono { color: var(--text-dim); font-family: var(--font-mono); font-size: 13px; }
+        .section-desc--spaced { margin-bottom: 32px; }
+        .section-heading-bar { font-size: 20px; font-weight: 600; margin-bottom: 8px; display: flex; align-items: center; gap: 10px; }
+        .section-heading-bar .bar { width: 3px; height: 20px; background: var(--accent); border-radius: 2px; display: inline-block; }
+        .section-sub-desc { font-size: 13.5px; color: var(--text-secondary); margin-bottom: 24px; font-weight: 300; }
+        .hw-row-label { font-family: var(--font-mono); font-size: 11px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 1.5px; margin-right: 8px; align-self: center; }
+
         /* Screenshot Gallery */
         .screenshots-section {
             margin-top: 72px;
@@ -864,9 +940,13 @@
 
         .screenshot-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(6, 1fr);
             gap: 16px;
         }
+
+        .screenshot-card { grid-column: span 2; }
+        .screenshot-card:nth-child(4) { grid-column: 2 / span 2; }
+        .screenshot-card:nth-child(5) { grid-column: 4 / span 2; }
 
         .screenshot-card {
             border-radius: 12px;
@@ -962,19 +1042,26 @@
 
         /* Lightbox */
         .lightbox {
-            display: none;
+            display: flex;
             position: fixed;
             inset: 0;
             z-index: 10000;
             background: rgba(6, 8, 13, 0.95);
-            backdrop-filter: blur(20px);
+            backdrop-filter: blur(0px);
             align-items: center;
             justify-content: center;
             cursor: zoom-out;
             padding: 40px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s cubic-bezier(0.22, 1, 0.36, 1), backdrop-filter 0.3s;
         }
 
-        .lightbox.open { display: flex; }
+        .lightbox.open {
+            opacity: 1;
+            pointer-events: auto;
+            backdrop-filter: blur(20px);
+        }
 
         .lightbox img {
             max-width: 90vw;
@@ -982,6 +1069,12 @@
             border-radius: 12px;
             box-shadow: 0 20px 60px rgba(0,0,0,0.5);
             border: 1px solid var(--border);
+            transform: scale(0.92);
+            transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .lightbox.open img {
+            transform: scale(1);
         }
 
         .lightbox-close {
@@ -1173,7 +1266,7 @@
             display: flex;
             flex-wrap: wrap;
             gap: 12px;
-            margin-top: 24px;
+            margin-top: 48px;
         }
 
         .hw-chip {
@@ -1379,9 +1472,14 @@
             .features-grid { grid-template-columns: 1fr; }
             .stack-grid { grid-template-columns: 1fr 1fr; }
             .hero-name { letter-spacing: -1px; }
-            .arch-block { padding: 20px; }
-            .arch-block pre { font-size: 10.5px; }
+            .arch-grid { grid-template-columns: 1fr; }
+            .arch-node--full { grid-column: 1; }
+            .arch-svg { display: none; }
+            .arch-node + .arch-node { margin-top: 0; }
             .screenshot-grid { grid-template-columns: 1fr; }
+            .screenshot-card,
+            .screenshot-card:nth-child(4),
+            .screenshot-card:nth-child(5) { grid-column: 1; }
             .demo-section { padding: 24px; }
             .demo-bar-row { grid-template-columns: 120px 1fr 40px; }
             .demo-bar-label { font-size: 10px; }
@@ -1399,6 +1497,7 @@
             .demo-article-selector { flex-direction: column; }
             .demo-bar-row { grid-template-columns: 1fr 40px; }
             .demo-bar-label { display: none; }
+            .feature-card { padding: 20px 16px; }
         }
     </style>
 </head>
@@ -1471,10 +1570,10 @@
             </p>
         </div>
 
-        <p class="section-desc reveal" style="margin-bottom: 8px;">
+        <p class="section-desc section-desc--tight reveal">
             A self-hosted intelligence dashboard that aggregates news, tracks markets, and scores content relevance using a locally fine-tuned AI model. The system improves its own scorer through a distillation loop &mdash; Claude Opus re-scores articles, disagreements become training data, and LoRA fine-tuning updates the local model.
         </p>
-        <p class="section-desc reveal" style="color: var(--text-dim); font-family: var(--font-mono); font-size: 13px;">
+        <p class="section-desc section-desc--mono reveal">
             53,000+ lines &middot; 50+ modules &middot; Solo project &middot; Zero cloud dependency for inference
         </p>
 
@@ -1566,97 +1665,131 @@
         </div>
 
         <!-- Architecture -->
-        <div class="arch-block reveal">
-<pre><span class="dim">&boxdr;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxdl;</span>
-<span class="dim">&boxv;</span>                      <span class="hl">StratOS Architecture (v3)</span>                             <span class="dim">&boxv;</span>
-<span class="dim">&boxvr;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxvl;</span>
-<span class="dim">&boxv;</span>                                                                              <span class="dim">&boxv;</span>
-<span class="dim">&boxv;</span>  <span class="hl">Auth Layer</span> (email verify, sessions, rate limiting, profile isolation)      <span class="dim">&boxv;</span>
-<span class="dim">&boxv;</span>       &boxv;  per-request self._profile_id on ThreadingMixIn handler           <span class="dim">&boxv;</span>
-<span class="dim">&boxv;</span>       &darr;                                                                      <span class="dim">&boxv;</span>
-<span class="dim">&boxv;</span>  <span class="sec">News Sources</span> (DDG, Serper, RSS)    <span class="sec">Market Data</span> (yfinance OHLCV)           <span class="dim">&boxv;</span>
-<span class="dim">&boxv;</span>       &boxv;                                    &boxv;                                <span class="dim">&boxv;</span>
-<span class="dim">&boxv;</span>       &darr;                                    &darr;                                <span class="dim">&boxv;</span>
-<span class="dim">&boxv;</span>  <span class="hl">NewsFetcher</span> (ThreadPool)      <span class="hl">MarketFetcher</span> (5 intervals)              <span class="dim">&boxv;</span>
-<span class="dim">&boxv;</span>       &boxv;                                                                      <span class="dim">&boxv;</span>
-<span class="dim">&boxv;</span>       &darr;                                                                      <span class="dim">&boxv;</span>
-<span class="dim">&boxv;</span>  <span class="hl">AI Scorer</span> (3-phase pipeline)                                               <span class="dim">&boxv;</span>
-<span class="dim">&boxv;</span>  [Phase 1: Rules] &rarr; [Phase 2: Batch LLM] &rarr; [Phase 3: Re-score]             <span class="dim">&boxv;</span>
-<span class="dim">&boxv;</span>       &boxv;                                         &uarr;                             <span class="dim">&boxv;</span>
-<span class="dim">&boxv;</span>       &darr;                                         &boxv;                             <span class="dim">&boxv;</span>
-<span class="dim">&boxv;</span>  <span class="sec">SQLite</span> (WAL) &rarr; <span class="sec">JSON API</span> (57 endpoints)       &boxv;                             <span class="dim">&boxv;</span>
-<span class="dim">&boxv;</span>       &boxv;              &boxv;               <span class="sec">Feedback Loop</span>                    <span class="dim">&boxv;</span>
-<span class="dim">&boxv;</span>       &boxv;              &darr;                   &boxv;                             <span class="dim">&boxv;</span>
-<span class="dim">&boxv;</span>  <span class="hl">SSE Bus</span>    <span class="hl">Frontend SPA</span>              &boxv;                             <span class="dim">&boxv;</span>
-<span class="dim">&boxv;</span>  (live push)   (Vanilla JS)              &boxv;                             <span class="dim">&boxv;</span>
-<span class="dim">&boxv;</span>                     &boxv;                   &boxv;                             <span class="dim">&boxv;</span>
-<span class="dim">&boxv;</span>               User Feedback &rarr; <span class="hl">Distillation</span> (Claude Opus)              <span class="dim">&boxv;</span>
-<span class="dim">&boxv;</span>               (save/dismiss/rate)       &boxv;                             <span class="dim">&boxv;</span>
-<span class="dim">&boxv;</span>                                         &darr;                             <span class="dim">&boxv;</span>
-<span class="dim">&boxv;</span>                                 <span class="hl">DoRA Fine-Tuning</span> &rarr; GGUF &rarr; Ollama  <span class="dim">&boxv;</span>
-<span class="dim">&boxv;</span>                                                                              <span class="dim">&boxv;</span>
-<span class="dim">&boxul;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxur;</span></pre>
+        <div class="arch-diagram reveal" id="arch-diagram">
+            <div class="arch-diagram-title"><span class="bar"></span> Architecture (v3)</div>
+            <div class="arch-grid" id="arch-grid">
+                <div class="arch-node arch-node--green arch-node--full" data-node="auth" data-tip="Email verification, hashed PINs, session tokens (7-day TTL), per-request profile isolation via ThreadingMixIn, rate limiting on all mutation endpoints.">
+                    <div class="arch-node-header"><div class="arch-node-icon">&#128274;</div><div class="arch-node-title">Auth Layer</div></div>
+                    <div class="arch-node-sub">email verify &middot; sessions &middot; rate limiting &middot; profile isolation</div>
+                </div>
+
+                <div class="arch-node arch-node--blue" data-node="news-src" data-tip="DuckDuckGo instant answers, Serper.dev Google search API, 30+ curated RSS feeds. Parallel fetching via ThreadPoolExecutor.">
+                    <div class="arch-node-header"><div class="arch-node-icon">&#128240;</div><div class="arch-node-title">News Sources</div></div>
+                    <div class="arch-node-sub">DDG &middot; Serper &middot; RSS feeds</div>
+                </div>
+                <div class="arch-node arch-node--blue" data-node="market-src" data-tip="Yahoo Finance via yfinance. OHLCV data across 5 intervals (1m, 5m, 1h, 1d, 1wk). Supports watchlist tickers per profile.">
+                    <div class="arch-node-header"><div class="arch-node-icon">&#128200;</div><div class="arch-node-title">Market Data</div></div>
+                    <div class="arch-node-sub">yfinance OHLCV &middot; 5 intervals</div>
+                </div>
+
+                <div class="arch-node arch-node--green" data-node="news-fetch" data-tip="Multi-source fetcher with ThreadPoolExecutor. Deduplicates by URL, normalizes dates, extracts metadata. Handles source failures gracefully.">
+                    <div class="arch-node-header"><div class="arch-node-icon">&#9889;</div><div class="arch-node-title">NewsFetcher</div></div>
+                    <div class="arch-node-sub">ThreadPool &middot; dedup &middot; normalize</div>
+                </div>
+                <div class="arch-node arch-node--green" data-node="market-fetch" data-tip="Fetches OHLCV candles for all watched tickers. 5 interval tiers from 1-minute to weekly. Caches with configurable TTL.">
+                    <div class="arch-node-header"><div class="arch-node-icon">&#128202;</div><div class="arch-node-title">MarketFetcher</div></div>
+                    <div class="arch-node-sub">5 intervals &middot; TTL cache</div>
+                </div>
+
+                <div class="arch-node arch-node--green arch-node--full" data-node="scorer" data-tip="3-phase pipeline: (1) Rule-based noise filters, (2) Batch LLM scoring via Ollama, (3) Calibration re-score. Profile-adaptive prompts built from user categories/keywords/role.">
+                    <div class="arch-node-header"><div class="arch-node-icon">&#129504;</div><div class="arch-node-title">AI Scorer</div></div>
+                    <div class="arch-node-sub">Phase 1: Rules &rarr; Phase 2: Batch LLM &rarr; Phase 3: Re-score</div>
+                </div>
+
+                <div class="arch-node arch-node--blue" data-node="sqlite" data-tip="SQLite with WAL mode. Tables: news_items, market_snapshots, entities, entity_mentions, scan_log, briefings, user_feedback, profiles, sessions. Thread-safe via lock.">
+                    <div class="arch-node-header"><div class="arch-node-icon">&#128451;</div><div class="arch-node-title">SQLite (WAL)</div></div>
+                    <div class="arch-node-sub">7 tables &middot; thread-safe &middot; WAL mode</div>
+                </div>
+                <div class="arch-node arch-node--blue" data-node="api" data-tip="57 REST endpoints served via ThreadingMixIn HTTP server. Gzipped responses, SSE for live updates, per-request profile scoping.">
+                    <div class="arch-node-header"><div class="arch-node-icon">&#128268;</div><div class="arch-node-title">JSON API</div></div>
+                    <div class="arch-node-sub">57 endpoints &middot; gzip &middot; SSE</div>
+                </div>
+
+                <div class="arch-node arch-node--green" data-node="sse" data-tip="Server-Sent Events bus for live dashboard updates. Pushes scan progress, briefing completion, market refreshes. Per-client tracking with auto-cleanup.">
+                    <div class="arch-node-header"><div class="arch-node-icon">&#128225;</div><div class="arch-node-title">SSE Bus</div></div>
+                    <div class="arch-node-sub">live push &middot; scan progress &middot; auto-cleanup</div>
+                </div>
+                <div class="arch-node arch-node--green" data-node="frontend" data-tip="Vanilla JS SPA: app.js, market.js, mobile.js, settings.js. 8 themes x 3 modes = 24 variants. Lightweight Charts for markets. PWA with offline support.">
+                    <div class="arch-node-header"><div class="arch-node-icon">&#127912;</div><div class="arch-node-title">Frontend SPA</div></div>
+                    <div class="arch-node-sub">Vanilla JS &middot; 24 theme variants &middot; PWA</div>
+                </div>
+
+                <div class="arch-node arch-node--purple arch-node--full" data-node="feedback" data-tip="Users save, dismiss, or rate articles. Feedback stored in user_feedback table with profile hash. Drives the distillation loop.">
+                    <div class="arch-node-header"><div class="arch-node-icon">&#128172;</div><div class="arch-node-title">User Feedback</div></div>
+                    <div class="arch-node-sub">save &middot; dismiss &middot; rate &rarr; feeds distillation loop</div>
+                </div>
+
+                <div class="arch-node arch-node--purple" data-node="distill" data-tip="Claude Opus re-scores locally-scored articles. Disagreements (delta >= 2.0) become training corrections. Cost: ~$0.40 per cycle.">
+                    <div class="arch-node-header"><div class="arch-node-icon">&#129514;</div><div class="arch-node-title">Distillation</div></div>
+                    <div class="arch-node-sub">Claude Opus &middot; $0.40/cycle &middot; corrections</div>
+                </div>
+                <div class="arch-node arch-node--purple" data-node="training" data-tip="DoRA/LoRA fine-tuning on AMD ROCm. Auto-selects model tier by VRAM. Pipeline: train -> merge -> GGUF export -> Ollama register. Loops back to scorer.">
+                    <div class="arch-node-header"><div class="arch-node-icon">&#127891;</div><div class="arch-node-title">DoRA Fine-Tuning</div></div>
+                    <div class="arch-node-sub">LoRA &rarr; merge &rarr; GGUF &rarr; Ollama &circlearrowleft;</div>
+                </div>
+            </div>
+            <div class="arch-tip" id="arch-tip"></div>
         </div>
 
         <!-- Features -->
         <div class="features-grid reveal">
-            <div class="feature-card" onmousemove="this.style.setProperty('--mouse-x', (event.offsetX/this.offsetWidth*100)+'%'); this.style.setProperty('--mouse-y', (event.offsetY/this.offsetHeight*100)+'%');">
+            <div class="feature-card">
                 <div class="feature-icon">&#129504;</div>
                 <h4>Self-Improving Scorer</h4>
                 <p>Two-tier feedback loop: implicit user signals (save/dismiss/rate) plus Claude Opus distillation at ~$0.40/cycle. Disagreements become training data.</p>
                 <div class="feature-expand">DoRA fine-tuning permanently updates local model weights. V2 was trained on 20,550 examples across 30 profiles spanning 20 countries. The scorer achieves 98.1% direction accuracy with 0.393 MAE.</div>
                 <div class="feature-toggle" onclick="this.parentElement.classList.toggle('expanded')">[ more ]</div>
             </div>
-            <div class="feature-card" onmousemove="this.style.setProperty('--mouse-x', (event.offsetX/this.offsetWidth*100)+'%'); this.style.setProperty('--mouse-y', (event.offsetY/this.offsetHeight*100)+'%');">
+            <div class="feature-card">
                 <div class="feature-icon">&#128100;</div>
                 <h4>Profile-Aware Scoring</h4>
                 <p>Same article, different score depending on who's reading. A K-pop manager gets 8.5 on idol news; a pipeline welder in Edmonton gets 0.0.</p>
                 <div class="feature-expand">Context hash (role + context + location) uniquely identifies each intelligence context. SHA-256 normalized, 12-char hex prefix. Retention system filters signals by active profile.</div>
                 <div class="feature-toggle" onclick="this.parentElement.classList.toggle('expanded')">[ more ]</div>
             </div>
-            <div class="feature-card" onmousemove="this.style.setProperty('--mouse-x', (event.offsetX/this.offsetWidth*100)+'%'); this.style.setProperty('--mouse-y', (event.offsetY/this.offsetHeight*100)+'%');">
+            <div class="feature-card">
                 <div class="feature-icon">&#128200;</div>
                 <h4>Markets + Charts</h4>
                 <p>Real-time candlestick/line/area charts via TradingView with 20 drawing tools, Fibonacci retracement, auto-trend lines, and fullscreen focus mode.</p>
                 <div class="feature-expand">Side-by-side comparison across any asset class. Five timeframes, draggable cards, PNG export, keyboard shortcuts. Two-tier mobile toolbar with lockable full panel.</div>
                 <div class="feature-toggle" onclick="this.parentElement.classList.toggle('expanded')">[ more ]</div>
             </div>
-            <div class="feature-card" onmousemove="this.style.setProperty('--mouse-x', (event.offsetX/this.offsetWidth*100)+'%'); this.style.setProperty('--mouse-y', (event.offsetY/this.offsetHeight*100)+'%');">
+            <div class="feature-card">
                 <div class="feature-icon">&#129302;</div>
                 <h4>Strat Agent</h4>
                 <p>Context-aware AI chat with tool use &mdash; web search, watchlist and category management. Ticker commands ($NVDA, $BTC) for instant lookups.</p>
                 <div class="feature-expand">Powered by Qwen3 30b MoE (3.3B active params/token). Achieves 0.97 F1 on tool calling. Full portfolio and profile context in every response. Streaming via SSE.</div>
                 <div class="feature-toggle" onclick="this.parentElement.classList.toggle('expanded')">[ more ]</div>
             </div>
-            <div class="feature-card" onmousemove="this.style.setProperty('--mouse-x', (event.offsetX/this.offsetWidth*100)+'%'); this.style.setProperty('--mouse-y', (event.offsetY/this.offsetHeight*100)+'%');">
+            <div class="feature-card">
                 <div class="feature-icon">&#128241;</div>
                 <h4>Mobile PWA</h4>
                 <p>Installable progressive web app with touch gestures (swipe to save/dismiss, pull-to-refresh, edge swipe navigation), bottom nav, and fullscreen charts.</p>
                 <div class="feature-expand">Two-tier drawing toolbar on mobile: always-visible 48px hotbar + lockable full panel with all 20 tools in a 4-column grid. Works offline via service worker.</div>
                 <div class="feature-toggle" onclick="this.parentElement.classList.toggle('expanded')">[ more ]</div>
             </div>
-            <div class="feature-card" onmousemove="this.style.setProperty('--mouse-x', (event.offsetX/this.offsetWidth*100)+'%'); this.style.setProperty('--mouse-y', (event.offsetY/this.offsetHeight*100)+'%');">
+            <div class="feature-card">
                 <div class="feature-icon">&#127912;</div>
                 <h4>8 Themes &times; 3 Modes</h4>
                 <p>Midnight, Noir, Coffee, Rose, Cosmos, Nebula, Aurora, Sakura &mdash; each with Normal, Brighter, and Deeper OLED variants (24 total).</p>
                 <div class="feature-expand">Animated star particles with scroll parallax. Sakura has petal-shaped particles. Live theme editor for per-variable customization. Extra Large font size option (20px). Cross-device theme sync via DB.</div>
                 <div class="feature-toggle" onclick="this.parentElement.classList.toggle('expanded')">[ more ]</div>
             </div>
-            <div class="feature-card" onmousemove="this.style.setProperty('--mouse-x', (event.offsetX/this.offsetWidth*100)+'%'); this.style.setProperty('--mouse-y', (event.offsetY/this.offsetHeight*100)+'%');">
+            <div class="feature-card">
                 <div class="feature-icon">&#128274;</div>
                 <h4>Multi-User Auth</h4>
                 <p>Email-based authentication with verification codes, forgot-password flow, session management, and per-user rate limiting. PIN fallback for local access.</p>
                 <div class="feature-expand">Session tokens stored in SQLite with expiry. Per-request profile isolation prevents concurrent users from seeing each other's data &mdash; even during 30-180s LLM inference windows. Invite-code registration for controlled access.</div>
                 <div class="feature-toggle" onclick="this.parentElement.classList.toggle('expanded')">[ more ]</div>
             </div>
-            <div class="feature-card" onmousemove="this.style.setProperty('--mouse-x', (event.offsetX/this.offsetWidth*100)+'%'); this.style.setProperty('--mouse-y', (event.offsetY/this.offsetHeight*100)+'%');">
+            <div class="feature-card">
                 <div class="feature-icon">&#128260;</div>
                 <h4>Cross-Device Sync</h4>
                 <p>Theme, avatar, and UI state persist across devices via DB-backed sync. Log in from your phone and pick up exactly where you left off.</p>
                 <div class="feature-expand">UI state stored per-profile in SQLite. Avatars (including custom image uploads) sync alongside theme preference, brightness mode, and font size. Zero external dependencies &mdash; all local.</div>
                 <div class="feature-toggle" onclick="this.parentElement.classList.toggle('expanded')">[ more ]</div>
             </div>
-            <div class="feature-card" onmousemove="this.style.setProperty('--mouse-x', (event.offsetX/this.offsetWidth*100)+'%'); this.style.setProperty('--mouse-y', (event.offsetY/this.offsetHeight*100)+'%');">
+            <div class="feature-card">
                 <div class="feature-icon">&#127919;</div>
                 <h4>Guided Onboarding</h4>
                 <p>3-step wizard walks new users from zero to a fully configured intelligence dashboard in under 2 minutes. AI generates categories from your role.</p>
@@ -1666,12 +1799,12 @@
         </div>
 
         <!-- Screenshot Showcase -->
-        <div class="screenshots-section reveal" style="margin-top: 72px;">
-            <h3 style="font-size: 20px; font-weight: 600; margin-bottom: 8px; display: flex; align-items: center; gap: 10px;">
-                <span style="width: 3px; height: 20px; background: var(--accent); border-radius: 2px; display: inline-block;"></span>
+        <div class="screenshots-section reveal">
+            <h3 class="section-heading-bar">
+                <span class="bar"></span>
                 In Action
             </h3>
-            <p style="font-size: 13.5px; color: var(--text-secondary); margin-bottom: 24px; font-weight: 300;">Click any screenshot to view full-size. Desktop dashboard, market charts, fullscreen analysis, and mobile PWA with guided onboarding.</p>
+            <p class="section-sub-desc">Click any screenshot to view full-size. Desktop dashboard, market charts, fullscreen analysis, and mobile PWA with guided onboarding.</p>
             <div class="screenshot-grid">
                 <div class="screenshot-card" onclick="openLightbox(this)">
                     <img src="screenshots/dashboard.png" alt="StratOS Dashboard" onerror="this.parentElement.classList.add('no-img')">
@@ -1719,7 +1852,7 @@
         <div class="reveal">
             <div class="section-label">Interactive</div>
             <div class="section-title">Profile Awareness in Action</div>
-            <p class="section-desc" style="margin-bottom: 32px;">The same article gets a completely different score depending on who's reading. Select an article below to see real V2 evaluation data across different profiles.</p>
+            <p class="section-desc section-desc--spaced">The same article gets a completely different score depending on who's reading. Select an article below to see real V2 evaluation data across different profiles.</p>
         </div>
 
         <div class="demo-section reveal" id="awareness-demo">
@@ -1851,8 +1984,8 @@
             </div>
         </div>
 
-        <div class="hw-row reveal" style="margin-top: 48px;">
-            <span style="font-family: var(--font-mono); font-size: 11px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 1.5px; margin-right: 8px; align-self: center;">Hardware:</span>
+        <div class="hw-row reveal">
+            <span class="hw-row-label">Hardware:</span>
             <div class="hw-chip"><span class="hw-label">CPU</span> Ryzen 7 7800X3D</div>
             <div class="hw-chip"><span class="hw-label">GPU</span> RX 7900 XTX 24GB</div>
             <div class="hw-chip"><span class="hw-label">RAM</span> 32GB DDR5-6000</div>
@@ -1867,7 +2000,7 @@
         <div class="reveal">
             <div class="section-label">Evolution</div>
             <div class="section-title">Training Journey</div>
-            <p class="section-desc" style="margin-bottom: 32px;">19 failed training runs. Each one taught something the documentation never mentioned. The path from a flat scorer to 98.1% accuracy wasn't straight.</p>
+            <p class="section-desc section-desc--spaced">19 failed training runs. Each one taught something the documentation never mentioned. The path from a flat scorer to 98.1% accuracy wasn't straight.</p>
         </div>
 
         <div class="timeline reveal">
@@ -2513,6 +2646,171 @@ document.querySelectorAll('.metric-value[data-count]').forEach(el => {
     }, { threshold: 0.1 });
 
     rhoObserver.observe(chart);
+})();
+
+// ========================
+// FEATURE CARD GLOW (event delegation)
+// ========================
+(function() {
+    var grid = document.querySelector('.features-grid');
+    if (!grid) return;
+    grid.addEventListener('mousemove', function(e) {
+        var card = e.target.closest('.feature-card');
+        if (!card) return;
+        var rect = card.getBoundingClientRect();
+        card.style.setProperty('--mouse-x', ((e.clientX - rect.left) / rect.width * 100) + '%');
+        card.style.setProperty('--mouse-y', ((e.clientY - rect.top) / rect.height * 100) + '%');
+    });
+})();
+
+// ========================
+// ARCHITECTURE DIAGRAM
+// ========================
+(function() {
+    var diagram = document.getElementById('arch-diagram');
+    var grid = document.getElementById('arch-grid');
+    var tip = document.getElementById('arch-tip');
+    if (!diagram || !grid) return;
+
+    // Connection definitions: [fromNode, toNode, isLoop]
+    var connections = [
+        ['auth', 'news-src'], ['auth', 'market-src'],
+        ['news-src', 'news-fetch'], ['market-src', 'market-fetch'],
+        ['news-fetch', 'scorer'], ['market-fetch', 'scorer'],
+        ['scorer', 'sqlite'], ['sqlite', 'api'],
+        ['api', 'sse'], ['api', 'frontend'],
+        ['frontend', 'feedback'],
+        ['feedback', 'distill'],
+        ['distill', 'training'],
+        ['training', 'scorer', true]
+    ];
+
+    var svg = null;
+
+    function drawConnections() {
+        if (svg) svg.remove();
+        // Only draw on desktop
+        if (window.innerWidth <= 768) return;
+
+        svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        svg.classList.add('arch-svg');
+        var gridRect = grid.getBoundingClientRect();
+        svg.setAttribute('width', gridRect.width);
+        svg.setAttribute('height', gridRect.height);
+        svg.style.width = gridRect.width + 'px';
+        svg.style.height = gridRect.height + 'px';
+
+        connections.forEach(function(conn) {
+            var fromEl = grid.querySelector('[data-node="' + conn[0] + '"]');
+            var toEl = grid.querySelector('[data-node="' + conn[1] + '"]');
+            if (!fromEl || !toEl) return;
+
+            var fromRect = fromEl.getBoundingClientRect();
+            var toRect = toEl.getBoundingClientRect();
+
+            var x1 = fromRect.left + fromRect.width / 2 - gridRect.left;
+            var y1 = fromRect.bottom - gridRect.top;
+            var x2 = toRect.left + toRect.width / 2 - gridRect.left;
+            var y2 = toRect.top - gridRect.top;
+
+            var path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+            var isLoop = conn[2];
+
+            if (isLoop) {
+                // Feedback loop: curve from training back up to scorer
+                var cpOffset = 80;
+                var d = 'M' + x1 + ',' + y1 + ' C' + (x1 + cpOffset) + ',' + (y1 + cpOffset) + ' ' + (x2 + cpOffset) + ',' + (y2 - cpOffset) + ' ' + x2 + ',' + y2;
+                path.setAttribute('d', d);
+                path.classList.add('arch-line', 'arch-line--loop');
+            } else {
+                var midY = (y1 + y2) / 2;
+                var d = 'M' + x1 + ',' + y1 + ' C' + x1 + ',' + midY + ' ' + x2 + ',' + midY + ' ' + x2 + ',' + y2;
+                path.setAttribute('d', d);
+                path.classList.add('arch-line');
+            }
+
+            // Set dasharray to actual path length
+            svg.appendChild(path);
+            var len = path.getTotalLength();
+            path.style.strokeDasharray = len;
+            path.style.strokeDashoffset = len;
+        });
+
+        grid.insertBefore(svg, grid.firstChild);
+    }
+
+    // Tooltip
+    var nodes = grid.querySelectorAll('.arch-node');
+    nodes.forEach(function(node) {
+        node.addEventListener('mouseenter', function(e) {
+            var text = this.getAttribute('data-tip');
+            if (!text || !tip) return;
+            tip.textContent = text;
+            var rect = this.getBoundingClientRect();
+            tip.style.left = rect.left + 'px';
+            tip.style.top = (rect.top - 8) + 'px';
+            tip.style.transform = 'translateY(-100%)';
+            tip.classList.add('show');
+
+            // If tooltip goes off top, show below
+            requestAnimationFrame(function() {
+                var tipRect = tip.getBoundingClientRect();
+                if (tipRect.top < 8) {
+                    tip.style.top = (rect.bottom + 8) + 'px';
+                    tip.style.transform = 'translateY(0)';
+                }
+            });
+        });
+        node.addEventListener('mouseleave', function() {
+            if (tip) tip.classList.remove('show');
+        });
+    });
+
+    // IntersectionObserver for scroll reveal
+    var revealed = false;
+    var observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+            if (entry.isIntersecting && !revealed) {
+                revealed = true;
+                // Stagger node reveal
+                var allNodes = grid.querySelectorAll('.arch-node');
+                allNodes.forEach(function(node, i) {
+                    setTimeout(function() {
+                        node.classList.add('visible');
+                    }, i * 80);
+                });
+                // Draw lines after nodes settle
+                setTimeout(function() {
+                    drawConnections();
+                    var lines = grid.querySelectorAll('.arch-line');
+                    lines.forEach(function(line, i) {
+                        setTimeout(function() {
+                            line.classList.add('visible');
+                        }, i * 60);
+                    });
+                }, allNodes.length * 80 + 300);
+
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.15 });
+
+    observer.observe(diagram);
+
+    // Redraw on resize
+    var resizeTimer;
+    window.addEventListener('resize', function() {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(function() {
+            if (revealed) drawConnections();
+            // Re-apply visible class to lines after redraw
+            setTimeout(function() {
+                grid.querySelectorAll('.arch-line').forEach(function(l) {
+                    l.classList.add('visible');
+                });
+            }, 50);
+        }, 200);
+    });
 })();
 
 // ========================
