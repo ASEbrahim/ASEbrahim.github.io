@@ -698,7 +698,7 @@
             text-align: right;
         }
 
-        /* Architecture Diagram */
+        /* Architecture Diagram — Full SVG flowchart */
         .arch-diagram {
             margin-top: 48px;
             position: relative;
@@ -722,106 +722,112 @@
             display: inline-block;
         }
 
-        .arch-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-            position: relative;
-        }
-
-        .arch-node {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 14px 16px;
-            border-left: 3px solid var(--border);
-            cursor: default;
-            opacity: 0;
-            transform: translateY(16px);
-            transition: border-color 0.25s, box-shadow 0.25s, opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1), transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
-        }
-
-        .arch-node.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .arch-node:hover {
-            border-color: var(--border-accent);
-            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-        }
-
-        .arch-node--green { border-left-color: var(--accent); }
-        .arch-node--blue { border-left-color: var(--accent-secondary); }
-        .arch-node--purple { border-left-color: var(--color-purple); }
-
-        .arch-node--full {
-            grid-column: 1 / -1;
-        }
-
-        .arch-node-header {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 4px;
-        }
-
-        .arch-node-icon {
-            font-size: 16px;
-            line-height: 1;
-        }
-
-        .arch-node-title {
-            font-size: 13px;
-            font-weight: 600;
-            color: var(--text-primary);
-        }
-
-        .arch-node-sub {
-            font-size: 11.5px;
-            color: var(--text-dim);
-            font-family: var(--font-mono);
-            line-height: 1.4;
-            padding-left: 24px;
-        }
-
-        /* SVG connection lines */
-        .arch-svg {
-            position: absolute;
-            top: 0;
-            left: 0;
+        .arch-canvas {
             width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 0;
+            display: block;
+            overflow: visible;
         }
 
-        .arch-line {
+        /* SVG node styling */
+        .arch-canvas .node-box {
+            fill: var(--bg-card);
+            stroke: var(--border);
+            stroke-width: 1;
+            rx: 10;
+            transition: fill 0.3s, stroke 0.3s;
+            cursor: default;
+        }
+
+        .arch-canvas .node-group:hover .node-box {
+            fill: var(--bg-card-hover);
+            stroke: var(--border-accent);
+        }
+
+        .arch-canvas .node-group.highlight .node-box {
+            stroke: var(--accent);
+            stroke-width: 1.5;
+            filter: drop-shadow(0 0 8px rgba(16, 185, 129, 0.2));
+        }
+
+        .arch-canvas .node-label {
+            fill: var(--text-primary);
+            font-family: var(--font-display);
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .arch-canvas .node-sub {
+            fill: var(--text-dim);
+            font-family: var(--font-mono);
+            font-size: 9.5px;
+        }
+
+        .arch-canvas .node-icon {
+            font-size: 14px;
+        }
+
+        /* Connection lines */
+        .arch-canvas .conn-line {
             fill: none;
             stroke: var(--border);
-            stroke-width: 1.5;
-            stroke-dasharray: 1000;
-            stroke-dashoffset: 1000;
+            stroke-width: 1.2;
             opacity: 0;
-            transition: opacity 0.3s;
         }
 
-        .arch-line.visible {
-            opacity: 0.6;
-            animation: archLineDraw 1s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        .arch-canvas .conn-line.drawn {
+            opacity: 0.5;
         }
 
-        .arch-line--loop {
+        .arch-canvas .conn-line.highlight {
+            stroke: var(--accent);
+            opacity: 0.8;
+            stroke-width: 1.5;
+        }
+
+        .arch-canvas .conn-line--loop {
             stroke: var(--color-purple);
             stroke-dasharray: 6, 4;
         }
 
-        .arch-line--loop.visible {
-            opacity: 0.5;
+        .arch-canvas .conn-line--loop.highlight {
+            stroke: var(--color-purple);
+            opacity: 0.9;
         }
 
-        @keyframes archLineDraw {
-            to { stroke-dashoffset: 0; }
+        /* Animated flow dots */
+        .arch-canvas .flow-dot {
+            fill: var(--accent);
+            opacity: 0;
+        }
+
+        .arch-canvas .flow-dot.active {
+            opacity: 0.7;
+        }
+
+        .arch-canvas .flow-dot--loop {
+            fill: var(--color-purple);
+        }
+
+        /* Arrow markers */
+        .arch-canvas .arrow-head {
+            fill: var(--border);
+            transition: fill 0.3s;
+        }
+
+        /* Layer labels */
+        .arch-canvas .layer-label {
+            fill: var(--text-dim);
+            font-family: var(--font-mono);
+            font-size: 8px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            opacity: 0.4;
+        }
+
+        .arch-canvas .layer-band {
+            fill: var(--bg-primary);
+            opacity: 0.3;
+            rx: 6;
         }
 
         /* Architecture tooltip */
@@ -846,6 +852,48 @@
         .arch-tip.show {
             opacity: 1;
             transform: translateY(0);
+        }
+
+        /* Mobile arch fallback */
+        .arch-mobile {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .arch-canvas { display: none; }
+            .arch-mobile { display: block; }
+            .arch-mobile-node {
+                background: var(--bg-card);
+                border: 1px solid var(--border);
+                border-left: 3px solid var(--accent);
+                border-radius: 8px;
+                padding: 12px 14px;
+                margin-bottom: 8px;
+                position: relative;
+            }
+            .arch-mobile-node::after {
+                content: '';
+                position: absolute;
+                left: 18px;
+                bottom: -9px;
+                width: 1px;
+                height: 9px;
+                background: var(--border);
+            }
+            .arch-mobile-node:last-child::after { display: none; }
+            .arch-mobile-node--blue { border-left-color: var(--accent-secondary); }
+            .arch-mobile-node--purple { border-left-color: var(--color-purple); }
+            .arch-mobile-title {
+                font-size: 12px;
+                font-weight: 600;
+                color: var(--text-primary);
+            }
+            .arch-mobile-sub {
+                font-size: 10px;
+                color: var(--text-dim);
+                font-family: var(--font-mono);
+                margin-top: 2px;
+            }
         }
 
         /* Features Grid */
@@ -1515,10 +1563,6 @@
             .features-grid { grid-template-columns: 1fr; }
             .stack-grid { grid-template-columns: 1fr 1fr; }
             .hero-name { letter-spacing: -1px; }
-            .arch-grid { grid-template-columns: 1fr; }
-            .arch-node--full { grid-column: 1; }
-            .arch-svg { display: none; }
-            .arch-node + .arch-node { margin-top: 0; }
             .screenshot-grid { grid-template-columns: 1fr; }
             .screenshot-card,
             .screenshot-card:nth-child(4),
@@ -1711,66 +1755,16 @@
         <!-- Architecture -->
         <div class="arch-diagram reveal" id="arch-diagram">
             <div class="arch-diagram-title"><span class="bar"></span> Architecture (v3)</div>
-            <div class="arch-grid" id="arch-grid">
-                <div class="arch-node arch-node--green arch-node--full" data-node="auth" data-tip="Email verification, hashed PINs, session tokens (7-day TTL), per-request profile isolation via ThreadingMixIn, rate limiting on all mutation endpoints.">
-                    <div class="arch-node-header"><div class="arch-node-icon">&#128274;</div><div class="arch-node-title">Auth Layer</div></div>
-                    <div class="arch-node-sub">email verify &middot; sessions &middot; rate limiting &middot; profile isolation</div>
-                </div>
-
-                <div class="arch-node arch-node--blue" data-node="news-src" data-tip="DuckDuckGo instant answers, Serper.dev Google search API, 30+ curated RSS feeds. Parallel fetching via ThreadPoolExecutor.">
-                    <div class="arch-node-header"><div class="arch-node-icon">&#128240;</div><div class="arch-node-title">News Sources</div></div>
-                    <div class="arch-node-sub">DDG &middot; Serper &middot; RSS feeds</div>
-                </div>
-                <div class="arch-node arch-node--blue" data-node="market-src" data-tip="Yahoo Finance via yfinance. OHLCV data across 5 intervals (1m, 5m, 1h, 1d, 1wk). Supports watchlist tickers per profile.">
-                    <div class="arch-node-header"><div class="arch-node-icon">&#128200;</div><div class="arch-node-title">Market Data</div></div>
-                    <div class="arch-node-sub">yfinance OHLCV &middot; 5 intervals</div>
-                </div>
-
-                <div class="arch-node arch-node--green" data-node="news-fetch" data-tip="Multi-source fetcher with ThreadPoolExecutor. Deduplicates by URL, normalizes dates, extracts metadata. Handles source failures gracefully.">
-                    <div class="arch-node-header"><div class="arch-node-icon">&#9889;</div><div class="arch-node-title">NewsFetcher</div></div>
-                    <div class="arch-node-sub">ThreadPool &middot; dedup &middot; normalize</div>
-                </div>
-                <div class="arch-node arch-node--green" data-node="market-fetch" data-tip="Fetches OHLCV candles for all watched tickers. 5 interval tiers from 1-minute to weekly. Caches with configurable TTL.">
-                    <div class="arch-node-header"><div class="arch-node-icon">&#128202;</div><div class="arch-node-title">MarketFetcher</div></div>
-                    <div class="arch-node-sub">5 intervals &middot; TTL cache</div>
-                </div>
-
-                <div class="arch-node arch-node--green arch-node--full" data-node="scorer" data-tip="3-phase pipeline: (1) Rule-based noise filters, (2) Batch LLM scoring via Ollama, (3) Calibration re-score. Profile-adaptive prompts built from user categories/keywords/role.">
-                    <div class="arch-node-header"><div class="arch-node-icon">&#129504;</div><div class="arch-node-title">AI Scorer</div></div>
-                    <div class="arch-node-sub">Phase 1: Rules &rarr; Phase 2: Batch LLM &rarr; Phase 3: Re-score</div>
-                </div>
-
-                <div class="arch-node arch-node--blue" data-node="sqlite" data-tip="SQLite with WAL mode. Tables: news_items, market_snapshots, entities, entity_mentions, scan_log, briefings, user_feedback, profiles, sessions. Thread-safe via lock.">
-                    <div class="arch-node-header"><div class="arch-node-icon">&#128451;</div><div class="arch-node-title">SQLite (WAL)</div></div>
-                    <div class="arch-node-sub">7 tables &middot; thread-safe &middot; WAL mode</div>
-                </div>
-                <div class="arch-node arch-node--blue" data-node="api" data-tip="57 REST endpoints served via ThreadingMixIn HTTP server. Gzipped responses, SSE for live updates, per-request profile scoping.">
-                    <div class="arch-node-header"><div class="arch-node-icon">&#128268;</div><div class="arch-node-title">JSON API</div></div>
-                    <div class="arch-node-sub">57 endpoints &middot; gzip &middot; SSE</div>
-                </div>
-
-                <div class="arch-node arch-node--green" data-node="sse" data-tip="Server-Sent Events bus for live dashboard updates. Pushes scan progress, briefing completion, market refreshes. Per-client tracking with auto-cleanup.">
-                    <div class="arch-node-header"><div class="arch-node-icon">&#128225;</div><div class="arch-node-title">SSE Bus</div></div>
-                    <div class="arch-node-sub">live push &middot; scan progress &middot; auto-cleanup</div>
-                </div>
-                <div class="arch-node arch-node--green" data-node="frontend" data-tip="Vanilla JS SPA: app.js, market.js, mobile.js, settings.js. 8 themes x 3 modes = 24 variants. Lightweight Charts for markets. PWA with offline support.">
-                    <div class="arch-node-header"><div class="arch-node-icon">&#127912;</div><div class="arch-node-title">Frontend SPA</div></div>
-                    <div class="arch-node-sub">Vanilla JS &middot; 24 theme variants &middot; PWA</div>
-                </div>
-
-                <div class="arch-node arch-node--purple arch-node--full" data-node="feedback" data-tip="Users save, dismiss, or rate articles. Feedback stored in user_feedback table with profile hash. Drives the distillation loop.">
-                    <div class="arch-node-header"><div class="arch-node-icon">&#128172;</div><div class="arch-node-title">User Feedback</div></div>
-                    <div class="arch-node-sub">save &middot; dismiss &middot; rate &rarr; feeds distillation loop</div>
-                </div>
-
-                <div class="arch-node arch-node--purple" data-node="distill" data-tip="Claude Opus re-scores locally-scored articles. Disagreements (delta >= 2.0) become training corrections. Cost: ~$0.40 per cycle.">
-                    <div class="arch-node-header"><div class="arch-node-icon">&#129514;</div><div class="arch-node-title">Distillation</div></div>
-                    <div class="arch-node-sub">Claude Opus &middot; $0.40/cycle &middot; corrections</div>
-                </div>
-                <div class="arch-node arch-node--purple" data-node="training" data-tip="DoRA/LoRA fine-tuning on AMD ROCm. Auto-selects model tier by VRAM. Pipeline: train -> merge -> GGUF export -> Ollama register. Loops back to scorer.">
-                    <div class="arch-node-header"><div class="arch-node-icon">&#127891;</div><div class="arch-node-title">DoRA Fine-Tuning</div></div>
-                    <div class="arch-node-sub">LoRA &rarr; merge &rarr; GGUF &rarr; Ollama &circlearrowleft;</div>
-                </div>
+            <svg class="arch-canvas" id="arch-canvas" viewBox="0 0 720 612" preserveAspectRatio="xMidYMid meet"></svg>
+            <!-- Mobile fallback (shown < 768px) -->
+            <div class="arch-mobile">
+                <div class="arch-mobile-node"><div class="arch-mobile-title">Auth Layer</div><div class="arch-mobile-sub">email verify &middot; sessions &middot; profile isolation</div></div>
+                <div class="arch-mobile-node arch-mobile-node--blue"><div class="arch-mobile-title">News Sources + Market Data</div><div class="arch-mobile-sub">DDG &middot; Serper &middot; RSS &middot; yfinance</div></div>
+                <div class="arch-mobile-node"><div class="arch-mobile-title">NewsFetcher + MarketFetcher</div><div class="arch-mobile-sub">ThreadPool &middot; dedup &middot; 5 intervals</div></div>
+                <div class="arch-mobile-node"><div class="arch-mobile-title">AI Scorer (3-phase)</div><div class="arch-mobile-sub">Rules &rarr; Batch LLM &rarr; Re-score</div></div>
+                <div class="arch-mobile-node arch-mobile-node--blue"><div class="arch-mobile-title">SQLite + JSON API</div><div class="arch-mobile-sub">WAL mode &middot; 57 endpoints &middot; SSE</div></div>
+                <div class="arch-mobile-node"><div class="arch-mobile-title">Frontend SPA + SSE Bus</div><div class="arch-mobile-sub">Vanilla JS &middot; 24 themes &middot; live push</div></div>
+                <div class="arch-mobile-node arch-mobile-node--purple"><div class="arch-mobile-title">Feedback &rarr; Distillation &rarr; Training</div><div class="arch-mobile-sub">Claude Opus &middot; DoRA fine-tuning &rarr; loops back to scorer</div></div>
             </div>
             <div class="arch-tip" id="arch-tip"></div>
         </div>
@@ -2728,163 +2722,307 @@ document.querySelectorAll('.metric-value[data-count]').forEach(el => {
 })();
 
 // ========================
-// ARCHITECTURE DIAGRAM
+// ARCHITECTURE DIAGRAM (SVG flowchart)
 // ========================
 (function() {
+    var svg = document.getElementById('arch-canvas');
     var diagram = document.getElementById('arch-diagram');
-    var grid = document.getElementById('arch-grid');
     var tip = document.getElementById('arch-tip');
-    if (!diagram || !grid) return;
+    if (!svg || !diagram) return;
+    var NS = 'http://www.w3.org/2000/svg';
 
-    // Connection definitions: [fromNode, toNode, isLoop]
-    var connections = [
-        ['auth', 'news-src'], ['auth', 'market-src'],
-        ['news-src', 'news-fetch'], ['market-src', 'market-fetch'],
-        ['news-fetch', 'scorer'], ['market-fetch', 'scorer'],
-        ['scorer', 'sqlite'], ['sqlite', 'api'],
-        ['api', 'sse'], ['api', 'frontend'],
-        ['frontend', 'feedback'],
-        ['feedback', 'distill'],
-        ['distill', 'training'],
-        ['training', 'scorer', true]
+    // Layout constants
+    var W = 720, PAD = 20;
+    var NW = 160, NH = 48, NWfull = 340;
+    var GAP_X = 40, GAP_Y = 28;
+    var cx = W / 2;
+
+    // Color map
+    var C = { green: '#10b981', blue: '#38bdf8', purple: '#a78bfa' };
+
+    // Node definitions: id, label, sub, color, tier, col (0=left, 1=right, 'full'=centered)
+    var nodes = [
+        { id:'auth',      label:'Auth Layer',       sub:'email verify \u00b7 sessions \u00b7 rate limiting',    color:'green', tier:0, col:'full',
+          tip:'Email verification, hashed PINs, session tokens (7-day TTL), per-request profile isolation via ThreadingMixIn, rate limiting on all mutation endpoints.' },
+        { id:'news-src',  label:'News Sources',     sub:'DDG \u00b7 Serper \u00b7 RSS',                        color:'blue',  tier:1, col:0,
+          tip:'DuckDuckGo instant answers, Serper.dev Google search API, 30+ curated RSS feeds. Parallel fetching via ThreadPoolExecutor.' },
+        { id:'market-src',label:'Market Data',      sub:'yfinance OHLCV \u00b7 5 intervals',                   color:'blue',  tier:1, col:1,
+          tip:'Yahoo Finance via yfinance. OHLCV data across 5 intervals (1m, 5m, 1h, 1d, 1wk). Supports watchlist tickers per profile.' },
+        { id:'news-fetch',label:'NewsFetcher',      sub:'ThreadPool \u00b7 dedup',                             color:'green', tier:2, col:0,
+          tip:'Multi-source fetcher with ThreadPoolExecutor. Deduplicates by URL, normalizes dates, extracts metadata.' },
+        { id:'mkt-fetch', label:'MarketFetcher',    sub:'5 intervals \u00b7 TTL cache',                        color:'green', tier:2, col:1,
+          tip:'Fetches OHLCV candles for all watched tickers. 5 interval tiers from 1-minute to weekly. Caches with configurable TTL.' },
+        { id:'scorer',    label:'AI Scorer',        sub:'Rules \u2192 Batch LLM \u2192 Re-score',              color:'green', tier:3, col:'full',
+          tip:'3-phase pipeline: (1) Rule-based noise filters, (2) Batch LLM scoring via Ollama, (3) Calibration re-score. Profile-adaptive.' },
+        { id:'sqlite',    label:'SQLite (WAL)',     sub:'7 tables \u00b7 thread-safe',                         color:'blue',  tier:4, col:0,
+          tip:'SQLite with WAL mode. Tables: news_items, market_snapshots, entities, scan_log, briefings, user_feedback, sessions. Thread-safe.' },
+        { id:'api',       label:'JSON API',         sub:'57 endpoints \u00b7 gzip \u00b7 SSE',                 color:'blue',  tier:4, col:1,
+          tip:'57 REST endpoints served via ThreadingMixIn HTTP server. Gzipped responses, SSE for live updates, per-request profile scoping.' },
+        { id:'sse',       label:'SSE Bus',          sub:'live push \u00b7 auto-cleanup',                       color:'green', tier:5, col:0,
+          tip:'Server-Sent Events bus for live dashboard updates. Pushes scan progress, briefing completion, market refreshes.' },
+        { id:'frontend',  label:'Frontend SPA',     sub:'Vanilla JS \u00b7 24 themes \u00b7 PWA',              color:'green', tier:5, col:1,
+          tip:'Vanilla JS SPA: app.js, market.js, mobile.js, settings.js. 8 themes x 3 modes = 24 variants. PWA with offline support.' },
+        { id:'feedback',  label:'User Feedback',    sub:'save \u00b7 dismiss \u00b7 rate',                     color:'purple',tier:6, col:'full',
+          tip:'Users save, dismiss, or rate articles. Feedback stored in user_feedback table with profile hash. Drives the distillation loop.' },
+        { id:'distill',   label:'Distillation',     sub:'Claude Opus \u00b7 $0.40/cycle',                      color:'purple',tier:7, col:0,
+          tip:'Claude Opus re-scores locally-scored articles. Disagreements (delta >= 2.0) become training corrections. Cost: ~$0.40 per cycle.' },
+        { id:'training',  label:'DoRA Fine-Tuning', sub:'LoRA \u2192 GGUF \u2192 Ollama',                      color:'purple',tier:7, col:1,
+          tip:'DoRA/LoRA fine-tuning on AMD ROCm. Auto-selects model tier by VRAM. Pipeline: train \u2192 merge \u2192 GGUF export \u2192 Ollama register.' }
     ];
 
-    var svg = null;
+    // Connections: [fromId, toId, isLoop]
+    var conns = [
+        ['auth','news-src'],['auth','market-src'],
+        ['news-src','news-fetch'],['market-src','mkt-fetch'],
+        ['news-fetch','scorer'],['mkt-fetch','scorer'],
+        ['scorer','sqlite'],['sqlite','api'],
+        ['api','sse'],['api','frontend'],
+        ['frontend','feedback'],
+        ['feedback','distill'],['distill','training'],
+        ['training','scorer',true]
+    ];
 
-    function drawConnections() {
-        if (svg) svg.remove();
-        // Only draw on desktop
-        if (window.innerWidth <= 768) return;
+    // Compute node positions
+    var tierY = [];
+    var startY = 16;
+    for (var t = 0; t <= 7; t++) {
+        tierY[t] = startY + t * (NH + GAP_Y);
+    }
+    var totalH = tierY[7] + NH + 16;
+    svg.setAttribute('viewBox', '0 0 ' + W + ' ' + totalH);
 
-        svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-        svg.classList.add('arch-svg');
-        var gridRect = grid.getBoundingClientRect();
-        svg.setAttribute('width', gridRect.width);
-        svg.setAttribute('height', gridRect.height);
-        svg.style.width = gridRect.width + 'px';
-        svg.style.height = gridRect.height + 'px';
+    var posMap = {};
+    nodes.forEach(function(n) {
+        var w = n.col === 'full' ? NWfull : NW;
+        var x;
+        if (n.col === 'full') {
+            x = cx - w / 2;
+        } else if (n.col === 0) {
+            x = cx - GAP_X / 2 - NW;
+        } else {
+            x = cx + GAP_X / 2;
+        }
+        var y = tierY[n.tier];
+        posMap[n.id] = { x: x, y: y, w: w, h: NH, cx: x + w / 2, cy: y + NH / 2 };
+        n._pos = posMap[n.id];
+    });
 
-        connections.forEach(function(conn) {
-            var fromEl = grid.querySelector('[data-node="' + conn[0] + '"]');
-            var toEl = grid.querySelector('[data-node="' + conn[1] + '"]');
-            if (!fromEl || !toEl) return;
-
-            var fromRect = fromEl.getBoundingClientRect();
-            var toRect = toEl.getBoundingClientRect();
-
-            var x1 = fromRect.left + fromRect.width / 2 - gridRect.left;
-            var y1 = fromRect.bottom - gridRect.top;
-            var x2 = toRect.left + toRect.width / 2 - gridRect.left;
-            var y2 = toRect.top - gridRect.top;
-
-            var path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-            var isLoop = conn[2];
-
-            if (isLoop) {
-                // Feedback loop: curve from training back up to scorer
-                var cpOffset = 80;
-                var d = 'M' + x1 + ',' + y1 + ' C' + (x1 + cpOffset) + ',' + (y1 + cpOffset) + ' ' + (x2 + cpOffset) + ',' + (y2 - cpOffset) + ' ' + x2 + ',' + y2;
-                path.setAttribute('d', d);
-                path.classList.add('arch-line', 'arch-line--loop');
-            } else {
-                var midY = (y1 + y2) / 2;
-                var d = 'M' + x1 + ',' + y1 + ' C' + x1 + ',' + midY + ' ' + x2 + ',' + midY + ' ' + x2 + ',' + y2;
-                path.setAttribute('d', d);
-                path.classList.add('arch-line');
-            }
-
-            // Set dasharray to actual path length
-            svg.appendChild(path);
-            var len = path.getTotalLength();
-            path.style.strokeDasharray = len;
-            path.style.strokeDashoffset = len;
-        });
-
-        grid.insertBefore(svg, grid.firstChild);
+    // Helper: create SVG element
+    function el(tag, attrs) {
+        var e = document.createElementNS(NS, tag);
+        for (var k in attrs) {
+            if (k === 'text') continue;
+            e.setAttribute(k, attrs[k]);
+        }
+        if (attrs.text) e.textContent = attrs.text;
+        return e;
     }
 
-    // Tooltip
-    var nodes = grid.querySelectorAll('.arch-node');
-    nodes.forEach(function(node) {
-        node.addEventListener('mouseenter', function(e) {
-            var text = this.getAttribute('data-tip');
-            if (!text || !tip) return;
-            tip.textContent = text;
-            var rect = this.getBoundingClientRect();
-            var left = rect.left;
-            tip.style.left = left + 'px';
-            tip.style.top = (rect.top - 8) + 'px';
-            tip.style.transform = 'translateY(-100%)';
-            tip.classList.add('show');
+    // Draw layer bands (subtle background stripes)
+    var layers = [
+        { tiers:[0], label:'AUTH' },
+        { tiers:[1,2], label:'INGESTION' },
+        { tiers:[3], label:'PROCESSING' },
+        { tiers:[4,5], label:'DELIVERY' },
+        { tiers:[6,7], label:'LEARNING' }
+    ];
+    var bandGroup = el('g', { 'class':'layer-bands' });
+    layers.forEach(function(layer) {
+        var y0 = tierY[layer.tiers[0]] - 8;
+        var y1 = tierY[layer.tiers[layer.tiers.length - 1]] + NH + 8;
+        bandGroup.appendChild(el('rect', {
+            x: PAD - 4, y: y0, width: W - PAD * 2 + 8, height: y1 - y0,
+            'class': 'layer-band'
+        }));
+        bandGroup.appendChild(el('text', {
+            x: PAD + 2, y: y0 + 11, 'class': 'layer-label', text: layer.label
+        }));
+    });
+    svg.appendChild(bandGroup);
 
-            // Reposition if overflows screen edges
-            requestAnimationFrame(function() {
-                var tipRect = tip.getBoundingClientRect();
-                // Off top → show below
-                if (tipRect.top < 8) {
-                    tip.style.top = (rect.bottom + 8) + 'px';
-                    tip.style.transform = 'translateY(0)';
-                }
-                // Off right → clamp to right edge
-                if (tipRect.right > window.innerWidth - 12) {
-                    tip.style.left = (window.innerWidth - tipRect.width - 12) + 'px';
-                }
-                // Off left → clamp to left edge
-                if (tipRect.left < 12) {
-                    tip.style.left = '12px';
+    // Draw connections
+    var connPaths = [];
+    var connGroup = el('g', { 'class':'connections' });
+    conns.forEach(function(c) {
+        var from = posMap[c[0]], to = posMap[c[1]];
+        if (!from || !to) return;
+        var x1 = from.cx, y1 = from.y + from.h;
+        var x2 = to.cx, y2 = to.y;
+        var isLoop = c[2];
+        var d;
+        if (isLoop) {
+            // Feedback loop: wide arc on the right side
+            var loopX = W - PAD + 10;
+            d = 'M' + x1 + ',' + (y1) + ' C' + loopX + ',' + y1 + ' ' + loopX + ',' + y2 + ' ' + x2 + ',' + y2;
+        } else {
+            var midY = (y1 + y2) / 2;
+            d = 'M' + x1 + ',' + y1 + ' C' + x1 + ',' + midY + ' ' + x2 + ',' + midY + ' ' + x2 + ',' + y2;
+        }
+        var path = el('path', { d: d, 'class': 'conn-line' + (isLoop ? ' conn-line--loop' : '') });
+        connGroup.appendChild(path);
+
+        // Flow dot
+        var dot = el('circle', { r: 2.5, 'class': 'flow-dot' + (isLoop ? ' flow-dot--loop' : '') });
+        connGroup.appendChild(dot);
+
+        connPaths.push({ path: path, dot: dot, from: c[0], to: c[1], isLoop: isLoop });
+    });
+    svg.appendChild(connGroup);
+
+    // Draw arrow markers at connection endpoints
+    conns.forEach(function(c) {
+        var to = posMap[c[1]];
+        if (!to) return;
+        var x2 = to.cx, y2 = to.y;
+        var arr = el('polygon', {
+            points: (x2 - 4) + ',' + (y2 - 1) + ' ' + x2 + ',' + (y2 + 5) + ' ' + (x2 + 4) + ',' + (y2 - 1),
+            'class': 'arrow-head',
+            fill: c[2] ? '#a78bfa' : ''
+        });
+        connGroup.appendChild(arr);
+    });
+
+    // Draw nodes
+    var nodeGroups = {};
+    var nodeGroup = el('g', { 'class':'nodes' });
+    nodes.forEach(function(n, i) {
+        var p = n._pos;
+        var g = el('g', { 'class': 'node-group', 'data-id': n.id, 'data-tip': n.tip });
+        g.style.opacity = '0';
+
+        // Box with colored left border effect
+        var box = el('rect', { x: p.x, y: p.y, width: p.w, height: p.h, 'class': 'node-box' });
+        g.appendChild(box);
+
+        // Color accent bar on left
+        var bar = el('rect', { x: p.x, y: p.y + 6, width: 3, height: p.h - 12, rx: 1.5, fill: C[n.color] });
+        g.appendChild(bar);
+
+        // Label
+        g.appendChild(el('text', {
+            x: p.x + 14, y: p.y + 20, 'class': 'node-label', text: n.label
+        }));
+
+        // Subtitle
+        g.appendChild(el('text', {
+            x: p.x + 14, y: p.y + 34, 'class': 'node-sub', text: n.sub
+        }));
+
+        nodeGroup.appendChild(g);
+        nodeGroups[n.id] = g;
+    });
+    svg.appendChild(nodeGroup);
+
+    // Animate flow dots along paths
+    var flowActive = false;
+    function animateFlowDots() {
+        if (!flowActive) return;
+        var t = (Date.now() % 3000) / 3000; // 3s loop
+        connPaths.forEach(function(cp) {
+            var len = cp.path.getTotalLength();
+            var pt = cp.path.getPointAtLength(t * len);
+            cp.dot.setAttribute('cx', pt.x);
+            cp.dot.setAttribute('cy', pt.y);
+        });
+        requestAnimationFrame(animateFlowDots);
+    }
+
+    // Hover: highlight connected nodes and paths
+    Object.keys(nodeGroups).forEach(function(id) {
+        var g = nodeGroups[id];
+        g.addEventListener('mouseenter', function() {
+            // Show tooltip
+            var tipText = this.getAttribute('data-tip');
+            if (tipText && tip) {
+                tip.textContent = tipText;
+                var svgRect = svg.getBoundingClientRect();
+                var boxRect = this.querySelector('.node-box');
+                var bx = parseFloat(boxRect.getAttribute('x'));
+                var by = parseFloat(boxRect.getAttribute('y'));
+                var bw = parseFloat(boxRect.getAttribute('width'));
+                // Convert SVG coords to screen
+                var scaleX = svgRect.width / W;
+                var scaleY = svgRect.height / totalH;
+                var screenX = svgRect.left + bx * scaleX;
+                var screenY = svgRect.top + by * scaleY;
+                tip.style.left = screenX + 'px';
+                tip.style.top = (screenY - 8) + 'px';
+                tip.style.transform = 'translateY(-100%)';
+                tip.classList.add('show');
+                requestAnimationFrame(function() {
+                    var tipRect = tip.getBoundingClientRect();
+                    if (tipRect.top < 8) {
+                        tip.style.top = (screenY + NH * scaleY + 8) + 'px';
+                        tip.style.transform = 'translateY(0)';
+                    }
+                    if (tipRect.right > window.innerWidth - 12) {
+                        tip.style.left = (window.innerWidth - tipRect.width - 12) + 'px';
+                    }
+                    if (tipRect.left < 12) tip.style.left = '12px';
+                });
+            }
+            // Highlight connected paths
+            this.classList.add('highlight');
+            connPaths.forEach(function(cp) {
+                if (cp.from === id || cp.to === id) {
+                    cp.path.classList.add('highlight');
+                    // Also highlight the other node
+                    var otherId = cp.from === id ? cp.to : cp.from;
+                    if (nodeGroups[otherId]) nodeGroups[otherId].classList.add('highlight');
                 }
             });
         });
-        node.addEventListener('mouseleave', function() {
+        g.addEventListener('mouseleave', function() {
             if (tip) tip.classList.remove('show');
+            this.classList.remove('highlight');
+            connPaths.forEach(function(cp) {
+                cp.path.classList.remove('highlight');
+            });
+            Object.keys(nodeGroups).forEach(function(nid) {
+                nodeGroups[nid].classList.remove('highlight');
+            });
         });
     });
 
-    // IntersectionObserver for scroll reveal
+    // Scroll reveal animation
     var revealed = false;
-    var observer = new IntersectionObserver(function(entries) {
+    var archObserver = new IntersectionObserver(function(entries) {
         entries.forEach(function(entry) {
             if (entry.isIntersecting && !revealed) {
                 revealed = true;
-                // Stagger node reveal
-                var allNodes = grid.querySelectorAll('.arch-node');
-                allNodes.forEach(function(node, i) {
+                // Stagger node fade-in
+                var allG = svg.querySelectorAll('.node-group');
+                allG.forEach(function(g, i) {
                     setTimeout(function() {
-                        node.classList.add('visible');
-                    }, i * 120);
+                        g.style.transition = 'opacity 0.5s cubic-bezier(0.22,1,0.36,1)';
+                        g.style.opacity = '1';
+                    }, i * 100);
                 });
-                // Draw lines after nodes settle
+                // Draw connection lines after nodes
                 setTimeout(function() {
-                    drawConnections();
-                    var lines = grid.querySelectorAll('.arch-line');
-                    lines.forEach(function(line, i) {
+                    connPaths.forEach(function(cp, i) {
+                        var len = cp.path.getTotalLength();
+                        cp.path.style.strokeDasharray = len;
+                        cp.path.style.strokeDashoffset = len;
+                        cp.path.classList.add('drawn');
                         setTimeout(function() {
-                            line.classList.add('visible');
-                        }, i * 80);
+                            cp.path.style.transition = 'stroke-dashoffset 0.8s cubic-bezier(0.22,1,0.36,1)';
+                            cp.path.style.strokeDashoffset = '0';
+                        }, i * 60);
                     });
-                }, allNodes.length * 120 + 300);
+                    // Start flow dots after lines drawn
+                    setTimeout(function() {
+                        flowActive = true;
+                        connPaths.forEach(function(cp) { cp.dot.classList.add('active'); });
+                        animateFlowDots();
+                    }, connPaths.length * 60 + 400);
+                }, allG.length * 100 + 200);
 
-                observer.unobserve(entry.target);
+                archObserver.unobserve(entry.target);
             }
         });
-    }, { threshold: 0.15 });
-
-    observer.observe(diagram);
-
-    // Redraw on resize
-    var resizeTimer;
-    window.addEventListener('resize', function() {
-        clearTimeout(resizeTimer);
-        resizeTimer = setTimeout(function() {
-            if (revealed) drawConnections();
-            // Re-apply visible class to lines after redraw
-            setTimeout(function() {
-                grid.querySelectorAll('.arch-line').forEach(function(l) {
-                    l.classList.add('visible');
-                });
-            }, 50);
-        }, 200);
-    });
+    }, { threshold: 0.12 });
+    archObserver.observe(diagram);
 })();
 
 // ========================
