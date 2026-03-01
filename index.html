@@ -1027,8 +1027,6 @@
         }
 
         .screenshot-card { grid-column: span 2; }
-        .screenshot-card:nth-child(7) { grid-column: 2 / span 2; }
-        .screenshot-card:nth-child(8) { grid-column: 4 / span 2; }
 
         .screenshot-card {
             border-radius: 12px;
@@ -1054,7 +1052,6 @@
         }
 
         .screenshot-card:hover img { filter: brightness(1.1); }
-        .screenshot-card.portrait img { aspect-ratio: 9/16; object-fit: cover; object-position: top; }
 
         .screenshot-card.no-img img { display: none; }
         .screenshot-card.no-img .screenshot-fallback { display: flex; }
@@ -1586,9 +1583,7 @@
             .stack-grid { grid-template-columns: 1fr 1fr; }
             .hero-name { letter-spacing: -1px; }
             .screenshot-grid { grid-template-columns: 1fr 1fr; }
-            .screenshot-card,
-            .screenshot-card:nth-child(7),
-            .screenshot-card:nth-child(8) { grid-column: auto; }
+            .screenshot-card { grid-column: auto; }
             .demo-section { padding: 24px; }
             .demo-bar-row { grid-template-columns: 120px 1fr 40px; }
             .demo-bar-label { font-size: 10px; }
@@ -1864,7 +1859,7 @@
                 <span class="bar"></span>
                 In Action
             </h3>
-            <p class="section-sub-desc">Click any screenshot to view full-size. Desktop dashboard, market charts, fullscreen analysis, guided tour, onboarding wizard, and mobile PWA.</p>
+            <p class="section-sub-desc">Click any screenshot to view full-size. Desktop dashboard, market charts, fullscreen analysis, guided tour, setup wizard, and mobile PWA.</p>
             <div class="screenshot-grid">
                 <div class="screenshot-card" onclick="openLightbox(this)">
                     <img src="screenshots/dashboard.png" alt="StratOS Dashboard" onerror="this.parentElement.classList.add('no-img')">
@@ -1894,32 +1889,18 @@
                         <div class="fallback-placeholder">&#128161;<br><span>Tour</span></div>
                     </div>
                 </div>
-                <div class="screenshot-card portrait" onclick="openLightbox(this)">
-                    <img src="screenshots/wizard-priorities.png" alt="StratOS Wizard Priorities" onerror="this.parentElement.classList.add('no-img')">
-                    <div class="screenshot-label">Wizard Priorities</div>
+                <div class="screenshot-card" onclick="openLightbox(this)">
+                    <img src="screenshots/wizard-priorities.png" alt="StratOS Setup Wizard" onerror="this.parentElement.classList.add('no-img')">
+                    <div class="screenshot-label">Setup Wizard</div>
                     <div class="screenshot-fallback">
                         <div class="fallback-placeholder">&#127919;<br><span>Wizard</span></div>
                     </div>
                 </div>
-                <div class="screenshot-card portrait" onclick="openLightbox(this)">
-                    <img src="screenshots/mobile-wizard.jpg" alt="StratOS Setup Wizard" onerror="this.parentElement.classList.add('no-img')">
-                    <div class="screenshot-label">Setup Wizard</div>
-                    <div class="screenshot-fallback">
-                        <div class="fallback-placeholder">&#128736;<br><span>Setup</span></div>
-                    </div>
-                </div>
-                <div class="screenshot-card portrait" onclick="openLightbox(this)">
+                <div class="screenshot-card" onclick="openLightbox(this)">
                     <img src="screenshots/mobile-overview.jpg" alt="StratOS Mobile Overview" onerror="this.parentElement.classList.add('no-img')">
                     <div class="screenshot-label">Mobile Overview</div>
                     <div class="screenshot-fallback">
                         <div class="fallback-placeholder">&#128241;<br><span>Mobile</span></div>
-                    </div>
-                </div>
-                <div class="screenshot-card portrait" onclick="openLightbox(this)">
-                    <img src="screenshots/mobile-onboarding.jpg" alt="StratOS Mobile Onboarding" onerror="this.parentElement.classList.add('no-img')">
-                    <div class="screenshot-label">Mobile Onboarding</div>
-                    <div class="screenshot-fallback">
-                        <div class="fallback-placeholder">&#128241;<br><span>Onboarding</span></div>
                     </div>
                 </div>
             </div>
@@ -2776,8 +2757,8 @@ document.querySelectorAll('.metric-value[data-count]').forEach(el => {
 
     // Layout constants
     var W = 720, PAD = 20;
-    var NW = 160, NH = 48, NWfull = 340;
-    var GAP_X = 40, GAP_Y = 28;
+    var NW = 190, NH = 48, NWfull = 380;
+    var GAP_X = 20, GAP_Y = 28;
     var cx = W / 2;
 
     // Color map
@@ -2933,6 +2914,12 @@ document.querySelectorAll('.metric-value[data-count]').forEach(el => {
         var g = el('g', { 'class': 'node-group', 'data-id': n.id, 'data-tip': n.tip, 'data-label': n.label, 'data-color': n.color });
         g.style.opacity = '0';
 
+        // Clip path to contain text within box
+        var clipId = 'clip-' + n.id;
+        var clipPath = el('clipPath', { id: clipId });
+        clipPath.appendChild(el('rect', { x: p.x + 4, y: p.y, width: p.w - 8, height: p.h }));
+        g.appendChild(clipPath);
+
         // Box with colored left border effect
         var box = el('rect', { x: p.x, y: p.y, width: p.w, height: p.h, 'class': 'node-box' });
         g.appendChild(box);
@@ -2941,15 +2928,15 @@ document.querySelectorAll('.metric-value[data-count]').forEach(el => {
         var bar = el('rect', { x: p.x, y: p.y + 6, width: 3, height: p.h - 12, rx: 1.5, fill: C[n.color] });
         g.appendChild(bar);
 
-        // Label
-        g.appendChild(el('text', {
+        // Label (clipped to box)
+        var textGroup = el('g', { 'clip-path': 'url(#' + clipId + ')' });
+        textGroup.appendChild(el('text', {
             x: p.x + 14, y: p.y + 20, 'class': 'node-label', text: n.label
         }));
-
-        // Subtitle
-        g.appendChild(el('text', {
+        textGroup.appendChild(el('text', {
             x: p.x + 14, y: p.y + 34, 'class': 'node-sub', text: n.sub
         }));
+        g.appendChild(textGroup);
 
         nodeGroup.appendChild(g);
         nodeGroups[n.id] = g;
@@ -2993,17 +2980,17 @@ document.querySelectorAll('.metric-value[data-count]').forEach(el => {
                 var screenX = svgRect.left + offX + (bx + bw / 2) * scale;
                 var screenY = svgRect.top + offY + by * scale;
                 var screenBotY = screenY + NH * scale;
-                // Position centered above node
+                // Position centered directly below node
                 tip.style.left = screenX + 'px';
-                tip.style.top = (screenY - 10) + 'px';
-                tip.style.transform = 'translate(-50%, -100%)';
+                tip.style.top = (screenBotY + 6) + 'px';
+                tip.style.transform = 'translate(-50%, 0)';
                 tip.classList.add('show');
                 requestAnimationFrame(function() {
                     var tipRect = tip.getBoundingClientRect();
-                    // Flip below node if clipped at top
-                    if (tipRect.top < 8) {
-                        tip.style.top = (screenBotY + 10) + 'px';
-                        tip.style.transform = 'translate(-50%, 0)';
+                    // Flip above node if clipped at bottom
+                    if (tipRect.bottom > window.innerHeight - 8) {
+                        tip.style.top = (screenY - 6) + 'px';
+                        tip.style.transform = 'translate(-50%, -100%)';
                     }
                     // Clamp horizontal edges
                     tipRect = tip.getBoundingClientRect();
