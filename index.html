@@ -1754,7 +1754,7 @@
 
         <!-- Architecture -->
         <div class="arch-diagram reveal" id="arch-diagram">
-            <div class="arch-diagram-title"><span class="bar"></span> Architecture (v3)</div>
+            <div class="arch-diagram-title"><span class="bar"></span> Architecture</div>
             <svg class="arch-canvas" id="arch-canvas" viewBox="0 0 720 612" preserveAspectRatio="xMidYMid meet"></svg>
             <!-- Mobile fallback (shown < 768px) -->
             <div class="arch-mobile">
@@ -2754,8 +2754,8 @@ document.querySelectorAll('.metric-value[data-count]').forEach(el => {
           tip:'Fetches OHLCV candles for all watched tickers. 5 interval tiers from 1-minute to weekly. Caches with configurable TTL.' },
         { id:'scorer',    label:'AI Scorer',        sub:'Rules \u2192 Batch LLM \u2192 Re-score',              color:'green', tier:3, col:'full',
           tip:'3-phase pipeline: (1) Rule-based noise filters, (2) Batch LLM scoring via Ollama, (3) Calibration re-score. Profile-adaptive.' },
-        { id:'sqlite',    label:'SQLite (WAL)',     sub:'7 tables \u00b7 thread-safe',                         color:'blue',  tier:4, col:0,
-          tip:'SQLite with WAL mode. Tables: news_items, market_snapshots, entities, scan_log, briefings, user_feedback, sessions. Thread-safe.' },
+        { id:'sqlite',    label:'SQLite (WAL)',     sub:'14 tables \u00b7 thread-safe',                        color:'blue',  tier:4, col:0,
+          tip:'SQLite with WAL mode. 14 tables: news_items, market_snapshots, entities, entity_mentions, scan_log, briefings, user_feedback, shadow_scores, users, profiles, sessions, invite_codes, pending_registrations, schema_version. Thread-safe via lock.' },
         { id:'api',       label:'JSON API',         sub:'57 endpoints \u00b7 gzip \u00b7 SSE',                 color:'blue',  tier:4, col:1,
           tip:'57 REST endpoints served via ThreadingMixIn HTTP server. Gzipped responses, SSE for live updates, per-request profile scoping.' },
         { id:'sse',       label:'SSE Bus',          sub:'live push \u00b7 auto-cleanup',                       color:'green', tier:5, col:0,
@@ -3077,7 +3077,7 @@ document.addEventListener('keydown', function(e) {
         echo: 'echo echo echo...',
         exit: 'You can check out any time you like, but you can never leave.',
         ping: 'PONG — 0.393ms (that\'s also our MAE)',
-        neofetch: 'ahmad@stratos — OS: StratOS v3.0 · CPU: Ryzen 7 7800X3D · GPU: RX 7900 XTX 24GB · RAM: 32GB DDR5 · Shell: bash'
+        neofetch: 'ahmad@stratos — OS: StratOS v2.1 · CPU: Ryzen 7 7800X3D · GPU: RX 7900 XTX 24GB · RAM: 32GB DDR5 · Shell: bash'
     };
 
     input.addEventListener('keydown', function(e) {
