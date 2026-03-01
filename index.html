@@ -5,6 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ahmad Sayed Alsayed Ebrahim — Systems Engineer</title>
     <meta name="description" content="Computer Engineering student building AI-powered intelligence systems. Creator of StratOS — a self-hosted strategic intelligence platform with a self-improving scorer.">
+    <!-- Open Graph -->
+    <meta property="og:title" content="Ahmad Sayed Alsayed Ebrahim — Systems Engineer">
+    <meta property="og:description" content="Creator of StratOS — a self-hosted strategic intelligence platform with a self-improving AI scorer. 53,000+ lines, 30 trained profiles, 98.1% accuracy.">
+    <meta property="og:image" content="https://asebrahim.github.io/screenshots/dashboard.png">
+    <meta property="og:url" content="https://asebrahim.github.io/">
+    <meta property="og:type" content="website">
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Ahmad Sayed Alsayed Ebrahim — Systems Engineer">
+    <meta name="twitter:description" content="Creator of StratOS — a self-hosted strategic intelligence platform with a self-improving AI scorer.">
+    <meta name="twitter:image" content="https://asebrahim.github.io/screenshots/dashboard.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -881,6 +892,7 @@
         }
 
         .screenshot-card:hover img { filter: brightness(1.1); }
+        .screenshot-card.portrait img { aspect-ratio: 9/16; object-fit: cover; object-position: top; }
 
         .screenshot-card.no-img img { display: none; }
         .screenshot-card.no-img .screenshot-fallback { display: flex; }
@@ -1463,7 +1475,7 @@
             A self-hosted intelligence dashboard that aggregates news, tracks markets, and scores content relevance using a locally fine-tuned AI model. The system improves its own scorer through a distillation loop &mdash; Claude Opus re-scores articles, disagreements become training data, and LoRA fine-tuning updates the local model.
         </p>
         <p class="section-desc reveal" style="color: var(--text-dim); font-family: var(--font-mono); font-size: 13px;">
-            45,000+ lines &middot; 40+ modules &middot; Solo project &middot; Zero cloud dependency for inference
+            53,000+ lines &middot; 50+ modules &middot; Solo project &middot; Zero cloud dependency for inference
         </p>
 
         <!-- Metrics -->
@@ -1556,26 +1568,32 @@
         <!-- Architecture -->
         <div class="arch-block reveal">
 <pre><span class="dim">&boxdr;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxdl;</span>
-<span class="dim">&boxv;</span>                          <span class="hl">StratOS Architecture</span>                              <span class="dim">&boxv;</span>
+<span class="dim">&boxv;</span>                      <span class="hl">StratOS Architecture (v3)</span>                             <span class="dim">&boxv;</span>
 <span class="dim">&boxvr;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxvl;</span>
 <span class="dim">&boxv;</span>                                                                              <span class="dim">&boxv;</span>
-<span class="dim">&boxv;</span>  <span class="sec">News Sources</span> (DDG, Serper, RSS, Scrapers)                                  <span class="dim">&boxv;</span>
-<span class="dim">&boxv;</span>       &boxv;                                                                      <span class="dim">&boxv;</span>
+<span class="dim">&boxv;</span>  <span class="hl">Auth Layer</span> (email verify, sessions, rate limiting, profile isolation)      <span class="dim">&boxv;</span>
+<span class="dim">&boxv;</span>       &boxv;  per-request self._profile_id on ThreadingMixIn handler           <span class="dim">&boxv;</span>
 <span class="dim">&boxv;</span>       &darr;                                                                      <span class="dim">&boxv;</span>
-<span class="dim">&boxv;</span>  <span class="hl">NewsFetcher</span> (ThreadPoolExecutor, parallel)                                 <span class="dim">&boxv;</span>
+<span class="dim">&boxv;</span>  <span class="sec">News Sources</span> (DDG, Serper, RSS)    <span class="sec">Market Data</span> (yfinance OHLCV)           <span class="dim">&boxv;</span>
+<span class="dim">&boxv;</span>       &boxv;                                    &boxv;                                <span class="dim">&boxv;</span>
+<span class="dim">&boxv;</span>       &darr;                                    &darr;                                <span class="dim">&boxv;</span>
+<span class="dim">&boxv;</span>  <span class="hl">NewsFetcher</span> (ThreadPool)      <span class="hl">MarketFetcher</span> (5 intervals)              <span class="dim">&boxv;</span>
 <span class="dim">&boxv;</span>       &boxv;                                                                      <span class="dim">&boxv;</span>
 <span class="dim">&boxv;</span>       &darr;                                                                      <span class="dim">&boxv;</span>
 <span class="dim">&boxv;</span>  <span class="hl">AI Scorer</span> (3-phase pipeline)                                               <span class="dim">&boxv;</span>
-<span class="dim">&boxv;</span>  [Phase 1: Rules] &rarr; [Phase 2: Batch LLM] &rarr; [Phase 3: Re-score cascade]      <span class="dim">&boxv;</span>
+<span class="dim">&boxv;</span>  [Phase 1: Rules] &rarr; [Phase 2: Batch LLM] &rarr; [Phase 3: Re-score]             <span class="dim">&boxv;</span>
 <span class="dim">&boxv;</span>       &boxv;                                         &uarr;                             <span class="dim">&boxv;</span>
 <span class="dim">&boxv;</span>       &darr;                                         &boxv;                             <span class="dim">&boxv;</span>
-<span class="dim">&boxv;</span>  <span class="sec">SQLite</span> (WAL) &rarr; <span class="sec">JSON API</span> &rarr; <span class="hl">Frontend SPA</span>         &boxv;                             <span class="dim">&boxv;</span>
-<span class="dim">&boxv;</span>                              &boxv;               <span class="sec">Feedback Loop</span>                    <span class="dim">&boxv;</span>
-<span class="dim">&boxv;</span>                              &darr;                   &boxv;                             <span class="dim">&boxv;</span>
-<span class="dim">&boxv;</span>                        User Feedback &rarr; <span class="hl">Distillation</span> (Claude Opus)              <span class="dim">&boxv;</span>
-<span class="dim">&boxv;</span>                        (save/dismiss/rate)       &boxv;                             <span class="dim">&boxv;</span>
-<span class="dim">&boxv;</span>                                                  &darr;                             <span class="dim">&boxv;</span>
-<span class="dim">&boxv;</span>                                          <span class="hl">DoRA Fine-Tuning</span> &rarr; GGUF &rarr; Ollama  <span class="dim">&boxv;</span>
+<span class="dim">&boxv;</span>  <span class="sec">SQLite</span> (WAL) &rarr; <span class="sec">JSON API</span> (57 endpoints)       &boxv;                             <span class="dim">&boxv;</span>
+<span class="dim">&boxv;</span>       &boxv;              &boxv;               <span class="sec">Feedback Loop</span>                    <span class="dim">&boxv;</span>
+<span class="dim">&boxv;</span>       &boxv;              &darr;                   &boxv;                             <span class="dim">&boxv;</span>
+<span class="dim">&boxv;</span>  <span class="hl">SSE Bus</span>    <span class="hl">Frontend SPA</span>              &boxv;                             <span class="dim">&boxv;</span>
+<span class="dim">&boxv;</span>  (live push)   (Vanilla JS)              &boxv;                             <span class="dim">&boxv;</span>
+<span class="dim">&boxv;</span>                     &boxv;                   &boxv;                             <span class="dim">&boxv;</span>
+<span class="dim">&boxv;</span>               User Feedback &rarr; <span class="hl">Distillation</span> (Claude Opus)              <span class="dim">&boxv;</span>
+<span class="dim">&boxv;</span>               (save/dismiss/rate)       &boxv;                             <span class="dim">&boxv;</span>
+<span class="dim">&boxv;</span>                                         &darr;                             <span class="dim">&boxv;</span>
+<span class="dim">&boxv;</span>                                 <span class="hl">DoRA Fine-Tuning</span> &rarr; GGUF &rarr; Ollama  <span class="dim">&boxv;</span>
 <span class="dim">&boxv;</span>                                                                              <span class="dim">&boxv;</span>
 <span class="dim">&boxul;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxur;</span></pre>
         </div>
@@ -1619,9 +1637,30 @@
             </div>
             <div class="feature-card" onmousemove="this.style.setProperty('--mouse-x', (event.offsetX/this.offsetWidth*100)+'%'); this.style.setProperty('--mouse-y', (event.offsetY/this.offsetHeight*100)+'%');">
                 <div class="feature-icon">&#127912;</div>
-                <h4>8 Themes + Dark Mode</h4>
-                <p>Midnight, Noir, Coffee, Rose, Cosmos, Nebula, Aurora, Sakura &mdash; each with normal and "Deeper" ultra-dark OLED variants (16 total).</p>
-                <div class="feature-expand">Animated star particles with scroll parallax. Sakura has petal-shaped particles. Live theme editor for per-variable customization. Extra Large font size option (20px).</div>
+                <h4>8 Themes &times; 3 Modes</h4>
+                <p>Midnight, Noir, Coffee, Rose, Cosmos, Nebula, Aurora, Sakura &mdash; each with Normal, Brighter, and Deeper OLED variants (24 total).</p>
+                <div class="feature-expand">Animated star particles with scroll parallax. Sakura has petal-shaped particles. Live theme editor for per-variable customization. Extra Large font size option (20px). Cross-device theme sync via DB.</div>
+                <div class="feature-toggle" onclick="this.parentElement.classList.toggle('expanded')">[ more ]</div>
+            </div>
+            <div class="feature-card" onmousemove="this.style.setProperty('--mouse-x', (event.offsetX/this.offsetWidth*100)+'%'); this.style.setProperty('--mouse-y', (event.offsetY/this.offsetHeight*100)+'%');">
+                <div class="feature-icon">&#128274;</div>
+                <h4>Multi-User Auth</h4>
+                <p>Email-based authentication with verification codes, forgot-password flow, session management, and per-user rate limiting. PIN fallback for local access.</p>
+                <div class="feature-expand">Session tokens stored in SQLite with expiry. Per-request profile isolation prevents concurrent users from seeing each other's data &mdash; even during 30-180s LLM inference windows. Invite-code registration for controlled access.</div>
+                <div class="feature-toggle" onclick="this.parentElement.classList.toggle('expanded')">[ more ]</div>
+            </div>
+            <div class="feature-card" onmousemove="this.style.setProperty('--mouse-x', (event.offsetX/this.offsetWidth*100)+'%'); this.style.setProperty('--mouse-y', (event.offsetY/this.offsetHeight*100)+'%');">
+                <div class="feature-icon">&#128260;</div>
+                <h4>Cross-Device Sync</h4>
+                <p>Theme, avatar, and UI state persist across devices via DB-backed sync. Log in from your phone and pick up exactly where you left off.</p>
+                <div class="feature-expand">UI state stored per-profile in SQLite. Avatars (including custom image uploads) sync alongside theme preference, brightness mode, and font size. Zero external dependencies &mdash; all local.</div>
+                <div class="feature-toggle" onclick="this.parentElement.classList.toggle('expanded')">[ more ]</div>
+            </div>
+            <div class="feature-card" onmousemove="this.style.setProperty('--mouse-x', (event.offsetX/this.offsetWidth*100)+'%'); this.style.setProperty('--mouse-y', (event.offsetY/this.offsetHeight*100)+'%');">
+                <div class="feature-icon">&#127919;</div>
+                <h4>Guided Onboarding</h4>
+                <p>3-step wizard walks new users from zero to a fully configured intelligence dashboard in under 2 minutes. AI generates categories from your role.</p>
+                <div class="feature-expand">Step 1: Enter role and location, AI suggests categories and tickers. Step 2: Pick news sources (Finance, Politics feeds). Step 3: First scan. Dismissible tour highlights with per-user completion tracking.</div>
                 <div class="feature-toggle" onclick="this.parentElement.classList.toggle('expanded')">[ more ]</div>
             </div>
         </div>
@@ -1632,35 +1671,8 @@
                 <span style="width: 3px; height: 20px; background: var(--accent); border-radius: 2px; display: inline-block;"></span>
                 In Action
             </h3>
-            <p style="font-size: 13.5px; color: var(--text-secondary); margin-bottom: 24px; font-weight: 300;">Click any screenshot to view full-size. 143 articles scored in a single scan &mdash; 3 critical signals, 64 high-relevance, all profile-aware.</p>
+            <p style="font-size: 13.5px; color: var(--text-secondary); margin-bottom: 24px; font-weight: 300;">Click any screenshot to view full-size. Desktop dashboard, market charts, fullscreen analysis, and mobile PWA with guided onboarding.</p>
             <div class="screenshot-grid">
-                <div class="screenshot-card" onclick="openLightbox(this)">
-                    <img src="screenshots/scan-history.png" alt="StratOS Scan History" onerror="this.parentElement.classList.add('no-img')">
-                    <div class="screenshot-label">Scan History</div>
-                    <div class="screenshot-fallback">
-                        <div class="fallback-mock">
-                            <div class="mock-header">Scan History</div>
-                            <div class="mock-row">
-                                <span class="mock-date">26 Feb</span>
-                                <span class="mock-count">143 items</span>
-                                <span class="mock-badge crit">3 critical</span>
-                                <span class="mock-badge high">64 high</span>
-                                <span class="mock-badge mid">12 mid</span>
-                                <span class="mock-badge noise">64 noise</span>
-                                <span class="mock-meta">799.5s</span>
-                            </div>
-                            <div class="mock-row">
-                                <span class="mock-date">26 Feb</span>
-                                <span class="mock-count">138 items</span>
-                                <span class="mock-badge crit">3 critical</span>
-                                <span class="mock-badge high">56 high</span>
-                                <span class="mock-badge mid">9 mid</span>
-                                <span class="mock-badge noise">70 noise</span>
-                                <span class="mock-meta">809.9s</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
                 <div class="screenshot-card" onclick="openLightbox(this)">
                     <img src="screenshots/dashboard.png" alt="StratOS Dashboard" onerror="this.parentElement.classList.add('no-img')">
                     <div class="screenshot-label">Dashboard Feed</div>
@@ -1673,6 +1685,27 @@
                     <div class="screenshot-label">Markets Panel</div>
                     <div class="screenshot-fallback">
                         <div class="fallback-placeholder">&#128200;<br><span>Markets</span></div>
+                    </div>
+                </div>
+                <div class="screenshot-card" onclick="openLightbox(this)">
+                    <img src="screenshots/chart-fullscreen.png" alt="StratOS Fullscreen Chart" onerror="this.parentElement.classList.add('no-img')">
+                    <div class="screenshot-label">Fullscreen Chart</div>
+                    <div class="screenshot-fallback">
+                        <div class="fallback-placeholder">&#128200;<br><span>Chart</span></div>
+                    </div>
+                </div>
+                <div class="screenshot-card portrait" onclick="openLightbox(this)">
+                    <img src="screenshots/mobile-onboarding.jpg" alt="StratOS Mobile Onboarding" onerror="this.parentElement.classList.add('no-img')">
+                    <div class="screenshot-label">Mobile Onboarding</div>
+                    <div class="screenshot-fallback">
+                        <div class="fallback-placeholder">&#128241;<br><span>Mobile</span></div>
+                    </div>
+                </div>
+                <div class="screenshot-card portrait" onclick="openLightbox(this)">
+                    <img src="screenshots/mobile-wizard.jpg" alt="StratOS Setup Wizard" onerror="this.parentElement.classList.add('no-img')">
+                    <div class="screenshot-label">Setup Wizard</div>
+                    <div class="screenshot-fallback">
+                        <div class="fallback-placeholder">&#127919;<br><span>Wizard</span></div>
                     </div>
                 </div>
             </div>
@@ -1763,7 +1796,7 @@
             <div class="stack-item">
                 <div class="stack-dot"></div>
                 <div>
-                    <div class="label">Claude Opus 4.5</div>
+                    <div class="label">Claude Opus 4</div>
                     <div class="detail">Teacher model &middot; distillation</div>
                 </div>
             </div>
@@ -1791,8 +1824,8 @@
             <div class="stack-item">
                 <div class="stack-dot"></div>
                 <div>
-                    <div class="label">Tailwind CSS</div>
-                    <div class="detail">8 themes &middot; dark mode &middot; stars</div>
+                    <div class="label">Vanilla CSS</div>
+                    <div class="detail">24 theme variants &middot; custom properties &middot; no framework</div>
                 </div>
             </div>
             <div class="stack-item">
@@ -1890,7 +1923,7 @@
                     I'm a Computer Engineering student at the American University of Kuwait, graduating Spring 2027. StratOS started because I was tired of opening a dozen tabs every morning &mdash; jobs, news, stocks, tech &mdash; just to feel caught up. I wanted <strong>one place</strong> to be "in the know" on everything I care about, ranked by how much it actually matters to me. So I built it.
                 </p>
                 <p>
-                    That "one place" somehow turned into 45,000 lines of code with a self-improving AI scorer, a distillation pipeline that costs $0.40 per improvement cycle, and 19 failed training runs that each taught me something the documentation never mentioned. I focus on ML pipelines, full-stack systems with local-first principles, and getting GPU training to work on AMD hardware &mdash; which, if you know ROCm, you know is its own adventure.
+                    That "one place" somehow turned into 53,000+ lines of code with a self-improving AI scorer, multi-user authentication, a distillation pipeline that costs $0.40 per improvement cycle, and 19 failed training runs that each taught me something the documentation never mentioned. I focus on ML pipelines, full-stack systems with local-first principles, and getting GPU training to work on AMD hardware &mdash; which, if you know ROCm, you know is its own adventure.
                 </p>
                 <p>
                     I'm looking for systems and ML engineering roles in Kuwait's energy sector, where AI meets industrial operations and the problems are actually interesting.
@@ -1912,6 +1945,14 @@
                 <div class="about-detail-item">
                     <div class="about-detail-label">Location</div>
                     <div class="about-detail-value">Kuwait</div>
+                </div>
+                <div class="about-detail-item">
+                    <div class="about-detail-label">Email</div>
+                    <div class="about-detail-value"><a href="mailto:ahmad.s.ebrahim@outlook.com">ahmad.s.ebrahim@outlook.com</a></div>
+                </div>
+                <div class="about-detail-item">
+                    <div class="about-detail-label">LinkedIn</div>
+                    <div class="about-detail-value"><a href="https://linkedin.com/in/asebrahim" target="_blank" rel="noopener">linkedin.com/in/asebrahim</a></div>
                 </div>
                 <div class="about-detail-item">
                     <div class="about-detail-label">GitHub</div>
@@ -2112,7 +2153,8 @@
         'Computer Engineering student building <strong>AI-powered intelligence systems</strong> that score, learn, and improve autonomously — running entirely on local hardware.',
         'Building a <strong>self-improving AI scorer</strong> that learns from Claude Opus and permanently bakes improvements into local model weights.',
         'Training <strong>custom LLMs on AMD GPUs</strong> — DoRA fine-tuning, chain-of-thought distillation, and 30-profile evaluation pipelines.',
-        '45,000 lines of code. <strong>19 failed training runs.</strong> One system that tells you what matters today.'
+        '53,000+ lines of code. <strong>19 failed training runs.</strong> One system that tells you what matters today.',
+        'Multi-user auth, email verification, <strong>cross-device sync</strong>, and per-request profile isolation &mdash; production-grade, not a prototype.'
     ];
     let phraseIdx = 0;
     let charIdx = 0;
@@ -2512,9 +2554,9 @@ document.addEventListener('keydown', function(e) {
     const commands = {
         help: 'Available commands: whoami, stack, stats, links, stratos, clear, help',
         whoami: 'Ahmad Sayed Alsayed Ebrahim — Computer Engineering student at AUK, Kuwait. Building AI-powered intelligence systems.',
-        stack: 'Python 3.12 · Vanilla JS · Ollama · Qwen3-8B + DoRA · Claude Opus 4.5 · PyTorch + PEFT · SQLite · TradingView · ROCm 6.2',
-        stats: '45,000+ lines · 40+ modules · 20,550 training examples · 30 profiles · 20 countries · 98.1% accuracy · $0.40/improvement cycle',
-        links: '<a class="terminal-link" href="https://github.com/ASEbrahim" target="_blank" rel="noopener">GitHub</a> · <a class="terminal-link" href="https://github.com/ASEbrahim/stratos" target="_blank" rel="noopener">StratOS Repo</a>',
+        stack: 'Python 3.12 · Vanilla JS · Ollama · Qwen3-8B + DoRA · Claude Opus 4 · PyTorch + PEFT · SQLite · TradingView · ROCm 6.2',
+        stats: '53,000+ lines · 50+ modules · 20,550 training examples · 30 profiles · 20 countries · 98.1% accuracy · $0.40/improvement cycle',
+        links: '<a class="terminal-link" href="https://github.com/ASEbrahim" target="_blank" rel="noopener">GitHub</a> · <a class="terminal-link" href="https://github.com/ASEbrahim/stratos" target="_blank" rel="noopener">StratOS Repo</a> · <a class="terminal-link" href="https://linkedin.com/in/asebrahim" target="_blank" rel="noopener">LinkedIn</a> · <a class="terminal-link" href="mailto:ahmad.s.ebrahim@outlook.com">Email</a>',
         stratos: '"Tell the system who you are, and it tells you what matters today." — A self-hosted strategic intelligence platform with a self-improving AI scorer.',
         clear: '__CLEAR__',
         ls: 'stratos/    portfolio/    training-data/    .env (not showing this one)',
@@ -2525,7 +2567,7 @@ document.addEventListener('keydown', function(e) {
         echo: 'echo echo echo...',
         exit: 'You can check out any time you like, but you can never leave.',
         ping: 'PONG — 0.393ms (that\'s also our MAE)',
-        neofetch: 'ahmad@stratos — OS: StratOS v2.1 · CPU: Ryzen 7 7800X3D · GPU: RX 7900 XTX 24GB · RAM: 32GB DDR5 · Shell: bash'
+        neofetch: 'ahmad@stratos — OS: StratOS v3.0 · CPU: Ryzen 7 7800X3D · GPU: RX 7900 XTX 24GB · RAM: 32GB DDR5 · Shell: bash'
     };
 
     input.addEventListener('keydown', function(e) {
