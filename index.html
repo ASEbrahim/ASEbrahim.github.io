@@ -836,17 +836,17 @@
             z-index: 100;
             background: var(--bg-elevated);
             border: 1px solid var(--border-accent);
-            border-radius: 10px;
-            padding: 12px 16px;
-            font-size: 12px;
+            border-radius: 8px;
+            padding: 8px 12px;
+            font-size: 11.5px;
             color: var(--text-secondary);
-            max-width: 300px;
-            line-height: 1.55;
-            box-shadow: 0 12px 32px rgba(0,0,0,0.5);
+            max-width: 260px;
+            line-height: 1.5;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.45);
             opacity: 0;
             pointer-events: none;
-            transform: translateY(6px);
-            transition: opacity 0.18s, transform 0.18s;
+            transform: translateY(4px);
+            transition: opacity 0.15s, transform 0.15s;
         }
 
         .arch-tip.show {
@@ -855,19 +855,19 @@
         }
 
         .arch-tip-title {
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 600;
             color: var(--text-primary);
-            margin-bottom: 6px;
+            margin-bottom: 4px;
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 5px;
         }
 
         .arch-tip-title::before {
             content: '';
-            width: 8px;
-            height: 8px;
+            width: 7px;
+            height: 7px;
             border-radius: 2px;
             flex-shrink: 0;
         }
@@ -2767,29 +2767,29 @@ document.querySelectorAll('.metric-value[data-count]').forEach(el => {
     // Node definitions: id, label, sub, color, tier, col (0=left, 1=right, 'full'=centered)
     var nodes = [
         { id:'auth',      label:'Auth Layer',       sub:'email verify \u00b7 sessions \u00b7 rate limiting',    color:'green', tier:0, col:'full',
-          tip:'Email verification, hashed PINs, session tokens (7-day TTL), per-request profile isolation via ThreadingMixIn, rate limiting on all mutation endpoints.' },
+          tip:'Hashed PINs, 7-day session tokens, per-request profile isolation, and rate limiting on all mutation endpoints.' },
         { id:'news-src',  label:'News Sources',     sub:'DDG \u00b7 Serper \u00b7 RSS',                        color:'blue',  tier:1, col:0,
-          tip:'DuckDuckGo instant answers, Serper.dev Google search API, 46 curated RSS feeds (Finance + Politics). Parallel fetching via ThreadPoolExecutor.' },
+          tip:'DuckDuckGo, Serper Google API, and 46 curated RSS feeds. Sources fetched in parallel via ThreadPoolExecutor.' },
         { id:'market-src',label:'Market Data',      sub:'yfinance OHLCV \u00b7 5 intervals',                   color:'blue',  tier:1, col:1,
-          tip:'Yahoo Finance via yfinance. OHLCV data across 5 intervals (1m, 5m, 1h, 1d, 1wk). Supports watchlist tickers per profile.' },
+          tip:'Yahoo Finance OHLCV data across 5 intervals (1m to 1wk). Per-profile watchlist tickers.' },
         { id:'news-fetch',label:'NewsFetcher',      sub:'ThreadPool \u00b7 dedup',                             color:'green', tier:2, col:0,
-          tip:'Multi-source fetcher with ThreadPoolExecutor. Deduplicates by URL, normalizes dates, extracts metadata.' },
+          tip:'Parallel multi-source fetcher. Deduplicates by URL, normalizes dates, and extracts metadata.' },
         { id:'mkt-fetch', label:'MarketFetcher',    sub:'5 intervals \u00b7 TTL cache',                        color:'green', tier:2, col:1,
-          tip:'Fetches OHLCV candles for all watched tickers. 5 interval tiers from 1-minute to weekly. Caches with configurable TTL.' },
+          tip:'Fetches OHLCV candles for all watched tickers across 5 intervals with configurable TTL caching.' },
         { id:'scorer',    label:'AI Scorer',        sub:'Rules \u2192 Batch LLM \u2192 Re-score',              color:'green', tier:3, col:'full',
-          tip:'3-phase pipeline: (1) Rule-based noise filters, (2) Batch LLM scoring via Ollama, (3) Calibration re-score. Profile-adaptive.' },
+          tip:'3-phase pipeline: rule-based noise filters, batch LLM scoring via Ollama, then calibration re-score. Fully profile-adaptive.' },
         { id:'sqlite',    label:'SQLite (WAL)',     sub:'14 tables \u00b7 thread-safe',                        color:'blue',  tier:4, col:0,
-          tip:'SQLite with WAL mode. 14 tables: news_items, market_snapshots, entities, entity_mentions, scan_log, briefings, user_feedback, shadow_scores, users, profiles, sessions, invite_codes, pending_registrations, schema_version. Thread-safe via lock.' },
+          tip:'WAL-mode SQLite with 14 tables covering news, markets, entities, users, sessions, and feedback. Thread-safe via lock.' },
         { id:'api',       label:'JSON API',         sub:'57 endpoints \u00b7 gzip \u00b7 SSE',                 color:'blue',  tier:4, col:1,
-          tip:'57 REST endpoints served via ThreadingMixIn HTTP server. Gzipped responses, SSE for live updates, per-request profile scoping.' },
+          tip:'57 REST endpoints with gzip compression, SSE live updates, and per-request profile scoping.' },
         { id:'sse',       label:'SSE Bus',          sub:'live push \u00b7 auto-cleanup',                       color:'green', tier:5, col:0,
-          tip:'Server-Sent Events bus for live dashboard updates. Pushes scan progress, briefing completion, market refreshes.' },
+          tip:'Server-Sent Events for live dashboard updates: scan progress, briefing completion, and market refreshes.' },
         { id:'frontend',  label:'Frontend SPA',     sub:'Vanilla JS \u00b7 24 themes \u00b7 PWA',              color:'green', tier:5, col:1,
-          tip:'Vanilla JS SPA: app.js, market.js, mobile.js, settings.js. 8 themes x 3 modes = 24 variants. PWA with offline support.' },
+          tip:'Vanilla JS SPA (app, market, mobile, settings modules). 8 themes \u00d7 3 modes = 24 variants. PWA-ready.' },
         { id:'feedback',  label:'User Feedback',    sub:'save \u00b7 dismiss \u00b7 rate',                     color:'purple',tier:6, col:'full',
-          tip:'Users save, dismiss, or rate articles. Feedback stored in user_feedback table with profile hash. Drives the distillation loop.' },
+          tip:'Users save, dismiss, or rate articles. Feedback stored with profile hash and drives the distillation training loop.' },
         { id:'distill',   label:'Distillation',     sub:'Claude Opus \u00b7 $0.40/cycle',                      color:'purple',tier:7, col:0,
-          tip:'Claude Opus re-scores locally-scored articles. Disagreements (delta >= 2.0) become training corrections. Cost: ~$0.40 per cycle.' },
+          tip:'Claude Opus re-scores local results. Disagreements (\u0394 \u2265 2.0) become training corrections. ~$0.40 per cycle.' },
         { id:'training',  label:'DoRA Fine-Tuning', sub:'LoRA \u2192 GGUF \u2192 Ollama',                      color:'purple',tier:7, col:1,
           tip:'DoRA/LoRA fine-tuning on AMD ROCm. Auto-selects model tier by VRAM. Pipeline: train \u2192 merge \u2192 GGUF export \u2192 Ollama register.' }
     ];
@@ -2968,37 +2968,28 @@ document.querySelectorAll('.metric-value[data-count]').forEach(el => {
             if (tipText && tip) {
                 tip.className = 'arch-tip arch-tip--' + (nodeColor || 'green');
                 tip.innerHTML = '<div class="arch-tip-title">' + (nodeLabel || '') + '</div><div class="arch-tip-body">' + tipText + '</div>';
-                var svgRect = svg.getBoundingClientRect();
+                // Use getBoundingClientRect for accurate screen position
                 var boxEl = this.querySelector('.node-box');
-                var bx = parseFloat(boxEl.getAttribute('x'));
-                var by = parseFloat(boxEl.getAttribute('y'));
-                var bw = parseFloat(boxEl.getAttribute('width'));
-                // Correct SVG-to-screen: account for preserveAspectRatio meet offset
-                var scale = Math.min(svgRect.width / W, svgRect.height / totalH);
-                var offX = (svgRect.width - W * scale) / 2;
-                var offY = (svgRect.height - totalH * scale) / 2;
-                var screenX = svgRect.left + offX + (bx + bw / 2) * scale;
-                var screenY = svgRect.top + offY + by * scale;
-                var screenBotY = screenY + NH * scale;
-                // Position centered directly below node
-                tip.style.left = screenX + 'px';
-                tip.style.top = (screenBotY + 6) + 'px';
+                var nodeRect = boxEl.getBoundingClientRect();
+                // Position directly below, centered on node
+                tip.style.left = (nodeRect.left + nodeRect.width / 2) + 'px';
+                tip.style.top = (nodeRect.bottom + 4) + 'px';
                 tip.style.transform = 'translate(-50%, 0)';
                 tip.classList.add('show');
                 requestAnimationFrame(function() {
                     var tipRect = tip.getBoundingClientRect();
-                    // Flip above node if clipped at bottom
+                    // Flip above if clipped at bottom
                     if (tipRect.bottom > window.innerHeight - 8) {
-                        tip.style.top = (screenY - 6) + 'px';
+                        tip.style.top = (nodeRect.top - 4) + 'px';
                         tip.style.transform = 'translate(-50%, -100%)';
                     }
                     // Clamp horizontal edges
                     tipRect = tip.getBoundingClientRect();
-                    if (tipRect.right > window.innerWidth - 12) {
-                        tip.style.left = (window.innerWidth - tipRect.width / 2 - 12) + 'px';
+                    if (tipRect.right > window.innerWidth - 8) {
+                        tip.style.left = (window.innerWidth - tipRect.width / 2 - 8) + 'px';
                     }
-                    if (tipRect.left < 12) {
-                        tip.style.left = (tipRect.width / 2 + 12) + 'px';
+                    if (tipRect.left < 8) {
+                        tip.style.left = (tipRect.width / 2 + 8) + 'px';
                     }
                 });
             }
