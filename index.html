@@ -20,22 +20,23 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
+        /* Default theme: Nebula */
         :root {
-            --bg-deep: #06080d;
-            --bg-primary: #0a0f1a;
-            --bg-card: #0f1525;
-            --bg-card-hover: #141c30;
-            --bg-elevated: #1a2340;
+            --bg-deep: #08060f;
+            --bg-primary: #140e25;
+            --bg-card: #1a1435;
+            --bg-card-hover: #221c42;
+            --bg-elevated: #2c2455;
             --accent: #38bdf8;
             --accent-dim: #0c4a6e;
             --accent-glow: rgba(56, 189, 248, 0.15);
             --accent-secondary: #a78bfa;
-            --text-primary: #e8ecf4;
-            --text-secondary: #8896b0;
-            --text-dim: #4a5677;
-            --border: #1e2a45;
+            --text-primary: #e8e0f0;
+            --text-secondary: #9088b0;
+            --text-dim: #5a5080;
+            --border: #2a1f4a;
             --border-accent: rgba(56, 189, 248, 0.25);
-            --gradient-hero: linear-gradient(135deg, #06080d 0%, #0a1628 40%, #0d1a2e 70%, #06080d 100%);
+            --gradient-hero: linear-gradient(135deg, #08060f 0%, #140e25 40%, #1a1435 70%, #08060f 100%);
             --color-purple: #a78bfa;
             --color-error: #ef4444;
             --color-warning: #f59e0b;
@@ -43,52 +44,7 @@
             --font-mono: 'JetBrains Mono', monospace;
         }
 
-        /* ── Theme Overrides (StratOS themes) ── */
-        [data-theme="noir"] {
-            --bg-deep: #050506; --bg-primary: #0a0a0c; --bg-card: #111114;
-            --bg-card-hover: #18181c; --bg-elevated: #222228;
-            --accent: #8b5cf6; --accent-dim: #3b1f7a;
-            --accent-glow: rgba(139, 92, 246, 0.15); --accent-secondary: #c084fc;
-            --text-primary: #e4e4e7; --text-secondary: #a1a1aa; --text-dim: #52525b;
-            --border: #27272a; --border-accent: rgba(139, 92, 246, 0.25);
-            --color-purple: #c084fc;
-        }
-        [data-theme="coffee"] {
-            --bg-deep: #0a0704; --bg-primary: #110d08; --bg-card: #1a1408;
-            --bg-card-hover: #231c0e; --bg-elevated: #2c2414;
-            --accent: #f59e0b; --accent-dim: #78450a;
-            --accent-glow: rgba(245, 158, 11, 0.15); --accent-secondary: #fbbf24;
-            --text-primary: #f5ead8; --text-secondary: #c4a576; --text-dim: #7a6540;
-            --border: #2a2010; --border-accent: rgba(245, 158, 11, 0.25);
-            --color-purple: #d4a056;
-        }
-        [data-theme="rose"] {
-            --bg-deep: #080507; --bg-primary: #0e080a; --bg-card: #1a0f14;
-            --bg-card-hover: #24161c; --bg-elevated: #301e28;
-            --accent: #f43f5e; --accent-dim: #7a1d30;
-            --accent-glow: rgba(244, 63, 94, 0.15); --accent-secondary: #fb7185;
-            --text-primary: #f2e6ea; --text-secondary: #b89aa6; --text-dim: #6b4f5a;
-            --border: #2a1520; --border-accent: rgba(244, 63, 94, 0.25);
-            --color-purple: #e879a0;
-        }
-        [data-theme="cosmos"] {
-            --bg-deep: #07080f; --bg-primary: #0d1225; --bg-card: #141830;
-            --bg-card-hover: #1c2040; --bg-elevated: #242a50;
-            --accent: #e8b931; --accent-dim: #6b5010;
-            --accent-glow: rgba(232, 185, 49, 0.15); --accent-secondary: #f0cc55;
-            --text-primary: #e2e8f0; --text-secondary: #7a8bb5; --text-dim: #4a5680;
-            --border: #1e2a52; --border-accent: rgba(232, 185, 49, 0.25);
-            --color-purple: #c0a040;
-        }
-        [data-theme="nebula"] {
-            --bg-deep: #08060f; --bg-primary: #140e25; --bg-card: #1a1435;
-            --bg-card-hover: #221c42; --bg-elevated: #2c2455;
-            --accent: #38bdf8; --accent-dim: #0c4a6e;
-            --accent-glow: rgba(56, 189, 248, 0.15); --accent-secondary: #a78bfa;
-            --text-primary: #e8e0f0; --text-secondary: #9088b0; --text-dim: #5a5080;
-            --border: #2a1f4a; --border-accent: rgba(56, 189, 248, 0.25);
-            --color-purple: #a78bfa;
-        }
+        /* ── Theme Overrides ── */
         [data-theme="aurora"] {
             --bg-deep: #060b10; --bg-primary: #0a1520; --bg-card: #101e2c;
             --bg-card-hover: #162838; --bg-elevated: #1e3448;
@@ -98,14 +54,23 @@
             --border: #182c3a; --border-accent: rgba(52, 211, 153, 0.25);
             --color-purple: #6ee7b7;
         }
-        [data-theme="sakura"] {
-            --bg-deep: #08050c; --bg-primary: #120a1a; --bg-card: #1a1028;
-            --bg-card-hover: #221634; --bg-elevated: #2c1e42;
-            --accent: #f0a0b8; --accent-dim: #6b3048;
-            --accent-glow: rgba(240, 160, 184, 0.15); --accent-secondary: #c8a0e0;
-            --text-primary: #f0e4ea; --text-secondary: #b090a0; --text-dim: #6a4860;
-            --border: #261838; --border-accent: rgba(240, 160, 184, 0.25);
-            --color-purple: #c8a0e0;
+        [data-theme="noir"] {
+            --bg-deep: #050506; --bg-primary: #0a0a0c; --bg-card: #111114;
+            --bg-card-hover: #18181c; --bg-elevated: #222228;
+            --accent: #8b5cf6; --accent-dim: #3b1f7a;
+            --accent-glow: rgba(139, 92, 246, 0.15); --accent-secondary: #c084fc;
+            --text-primary: #e4e4e7; --text-secondary: #a1a1aa; --text-dim: #52525b;
+            --border: #27272a; --border-accent: rgba(139, 92, 246, 0.25);
+            --color-purple: #c084fc;
+        }
+        [data-theme="cosmos"] {
+            --bg-deep: #07080f; --bg-primary: #0d1225; --bg-card: #141830;
+            --bg-card-hover: #1c2040; --bg-elevated: #242a50;
+            --accent: #e8b931; --accent-dim: #6b5010;
+            --accent-glow: rgba(232, 185, 49, 0.15); --accent-secondary: #f0cc55;
+            --text-primary: #e2e8f0; --text-secondary: #7a8bb5; --text-dim: #4a5680;
+            --border: #1e2a52; --border-accent: rgba(232, 185, 49, 0.25);
+            --color-purple: #c0a040;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -157,8 +122,8 @@
         /* Mouse Glow */
         #mouse-glow {
             position: fixed;
-            width: 600px;
-            height: 600px;
+            width: 250px;
+            height: 250px;
             border-radius: 50%;
             background: radial-gradient(circle, var(--accent-glow), transparent 70%);
             transform: translate(-50%, -50%);
@@ -167,7 +132,7 @@
             opacity: 0;
             transition: opacity 0.4s;
         }
-        #mouse-glow.visible { opacity: 1; }
+        #mouse-glow.visible { opacity: 0.6; }
 
         /* Theme Picker */
         .theme-dots {
@@ -1749,14 +1714,10 @@
             <a href="#journey">Journey</a>
             <a href="#about">About</a>
             <div class="theme-dots">
-                <button class="theme-dot active" data-theme="midnight" title="Midnight" style="--dot-color:#38bdf8"></button>
-                <button class="theme-dot" data-theme="noir" title="Noir" style="--dot-color:#8b5cf6"></button>
-                <button class="theme-dot" data-theme="coffee" title="Coffee" style="--dot-color:#f59e0b"></button>
-                <button class="theme-dot" data-theme="rose" title="Rose" style="--dot-color:#f43f5e"></button>
-                <button class="theme-dot" data-theme="cosmos" title="Cosmos" style="--dot-color:#e8b931"></button>
-                <button class="theme-dot" data-theme="nebula" title="Nebula" style="--dot-color:#38bdf8"></button>
+                <button class="theme-dot active" data-theme="nebula" title="Nebula" style="--dot-color:#38bdf8"></button>
                 <button class="theme-dot" data-theme="aurora" title="Aurora" style="--dot-color:#34d399"></button>
-                <button class="theme-dot" data-theme="sakura" title="Sakura" style="--dot-color:#f0a0b8"></button>
+                <button class="theme-dot" data-theme="noir" title="Noir" style="--dot-color:#8b5cf6"></button>
+                <button class="theme-dot" data-theme="cosmos" title="Cosmos" style="--dot-color:#e8b931"></button>
             </div>
         </div>
     </div>
@@ -2344,16 +2305,12 @@
 // THEME SYSTEM
 // ========================
 var _themeColors = {
-    midnight: { stars: ['#38bdf8','#7dd3fc','#c8d6e5'], accent: '#38bdf8' },
-    noir:     { stars: ['#8b5cf6','#c084fc','#d4d4d8'], accent: '#8b5cf6' },
-    coffee:   { stars: ['#f59e0b','#fbbf24','#e8d8c0'], accent: '#f59e0b' },
-    rose:     { stars: ['#f43f5e','#fb7185','#e0c8d0'], accent: '#f43f5e' },
-    cosmos:   { stars: ['#e8b931','#96b4ff','#e0e4f0'], accent: '#e8b931' },
     nebula:   { stars: ['#a78bfa','#38bdf8','#d8d0e8'], accent: '#38bdf8' },
     aurora:   { stars: ['#34d399','#38bdf8','#d0e8e0'], accent: '#34d399' },
-    sakura:   { stars: ['#f0a0b8','#f8c4d4','#c8a0dc'], accent: '#f0a0b8' }
+    noir:     { stars: ['#8b5cf6','#c084fc','#d4d4d8'], accent: '#8b5cf6' },
+    cosmos:   { stars: ['#e8b931','#96b4ff','#e0e4f0'], accent: '#e8b931' }
 };
-var _currentTheme = localStorage.getItem('portfolio_theme') || 'midnight';
+var _currentTheme = localStorage.getItem('portfolio_theme') || 'nebula';
 
 function setPortfolioTheme(name) {
     if (!_themeColors[name]) return;
@@ -2369,8 +2326,10 @@ function setPortfolioTheme(name) {
 
 // Init theme on load
 (function() {
-    var saved = localStorage.getItem('portfolio_theme') || 'midnight';
-    if (saved !== 'midnight') document.documentElement.setAttribute('data-theme', saved);
+    var saved = localStorage.getItem('portfolio_theme') || 'nebula';
+    // Gracefully migrate removed themes to nebula
+    if (!_themeColors[saved]) { saved = 'nebula'; localStorage.setItem('portfolio_theme', 'nebula'); }
+    if (saved !== 'nebula') document.documentElement.setAttribute('data-theme', saved);
     document.querySelectorAll('.theme-dot').forEach(function(d) {
         d.classList.toggle('active', d.getAttribute('data-theme') === saved);
         d.addEventListener('click', function() { setPortfolioTheme(this.getAttribute('data-theme')); });
@@ -2426,7 +2385,7 @@ function setPortfolioTheme(name) {
     function init() {
         resize();
         stars = [];
-        var tc = (_themeColors[_currentTheme] || _themeColors.midnight).stars;
+        var tc = (_themeColors[_currentTheme] || _themeColors.nebula).stars;
         for (var i = 0; i < COUNT; i++) {
             var isBright = Math.random() < 0.20;
             stars.push({
@@ -2447,7 +2406,7 @@ function setPortfolioTheme(name) {
 
     // Recolor stars when theme changes
     window._recolorStars = function(themeName) {
-        var tc = (_themeColors[themeName] || _themeColors.midnight).stars;
+        var tc = (_themeColors[themeName] || _themeColors.nebula).stars;
         for (var i = 0; i < stars.length; i++) {
             var s = stars[i];
             s.color = s.isBright ? pickColor(tc) : (Math.random() < 0.12 ? tc[1] : tc[2]);
@@ -2457,7 +2416,7 @@ function setPortfolioTheme(name) {
     function spawnShooter() {
         var angle = Math.random() * 0.6 + 0.3; // 0.3–0.9 radians (shallow)
         var speed = Math.random() * 8 + 6;
-        var tc = (_themeColors[_currentTheme] || _themeColors.midnight).stars;
+        var tc = (_themeColors[_currentTheme] || _themeColors.nebula).stars;
         shooters.push({
             x: Math.random() * canvas.width * 0.8,
             y: Math.random() * canvas.height * 0.4,
@@ -2526,7 +2485,7 @@ function setPortfolioTheme(name) {
         }
 
         // Draw connection lines between nearby stars near the cursor
-        var accent = (_themeColors[_currentTheme] || _themeColors.midnight).accent;
+        var accent = (_themeColors[_currentTheme] || _themeColors.nebula).accent;
         for (var a = 0; a < visible.length; a++) {
             for (var b = a + 1; b < visible.length; b++) {
                 var ddx = visible[a].x - visible[b].x;
