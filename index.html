@@ -729,16 +729,21 @@
         }
 
         /* SVG node styling */
+        .arch-canvas .node-group {
+            pointer-events: none;
+        }
+
         .arch-canvas .node-box {
             fill: var(--bg-card);
             stroke: var(--border);
             stroke-width: 1;
             rx: 10;
             transition: fill 0.3s, stroke 0.3s;
-            cursor: default;
+            cursor: pointer;
+            pointer-events: all;
         }
 
-        .arch-canvas .node-group:hover .node-box {
+        .arch-canvas .node-group.hover .node-box {
             fill: var(--bg-card-hover);
             stroke: var(--border-accent);
         }
@@ -2975,19 +2980,20 @@ document.querySelectorAll('.metric-value[data-count]').forEach(el => {
 
     Object.keys(nodeGroups).forEach(function(id) {
         var g = nodeGroups[id];
-        g.addEventListener('mouseenter', function(e) {
-            var tipText = this.getAttribute('data-tip');
-            var nodeLabel = this.getAttribute('data-label');
-            var nodeColor = this.getAttribute('data-color');
+        var box = g.querySelector('.node-box');
+        box.addEventListener('mouseenter', function(e) {
+            var tipText = g.getAttribute('data-tip');
+            var nodeLabel = g.getAttribute('data-label');
+            var nodeColor = g.getAttribute('data-color');
             if (tipText && tip) {
                 tip.className = 'arch-tip arch-tip--' + (nodeColor || 'green');
                 tip.innerHTML = '<div class="arch-tip-title">' + (nodeLabel || '') + '</div><div class="arch-tip-body">' + tipText + '</div>';
                 tip.style.left = '-9999px';
                 tip.classList.add('show');
-                // Initial position after layout
                 requestAnimationFrame(function() { positionTip(e); });
             }
-            this.classList.add('highlight');
+            g.classList.add('highlight');
+            g.classList.add('hover');
             connPaths.forEach(function(cp) {
                 if (cp.from === id || cp.to === id) {
                     cp.path.classList.add('highlight');
@@ -2996,10 +3002,11 @@ document.querySelectorAll('.metric-value[data-count]').forEach(el => {
                 }
             });
         });
-        g.addEventListener('mousemove', positionTip);
-        g.addEventListener('mouseleave', function() {
+        box.addEventListener('mousemove', positionTip);
+        box.addEventListener('mouseleave', function() {
             if (tip) tip.classList.remove('show');
-            this.classList.remove('highlight');
+            g.classList.remove('highlight');
+            g.classList.remove('hover');
             connPaths.forEach(function(cp) {
                 cp.path.classList.remove('highlight');
             });
