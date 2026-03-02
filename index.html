@@ -43,6 +43,71 @@
             --font-mono: 'JetBrains Mono', monospace;
         }
 
+        /* ── Theme Overrides (StratOS themes) ── */
+        [data-theme="noir"] {
+            --bg-deep: #050506; --bg-primary: #0a0a0c; --bg-card: #111114;
+            --bg-card-hover: #18181c; --bg-elevated: #222228;
+            --accent: #8b5cf6; --accent-dim: #3b1f7a;
+            --accent-glow: rgba(139, 92, 246, 0.15); --accent-secondary: #c084fc;
+            --text-primary: #e4e4e7; --text-secondary: #a1a1aa; --text-dim: #52525b;
+            --border: #27272a; --border-accent: rgba(139, 92, 246, 0.25);
+            --color-purple: #c084fc;
+        }
+        [data-theme="coffee"] {
+            --bg-deep: #0a0704; --bg-primary: #110d08; --bg-card: #1a1408;
+            --bg-card-hover: #231c0e; --bg-elevated: #2c2414;
+            --accent: #f59e0b; --accent-dim: #78450a;
+            --accent-glow: rgba(245, 158, 11, 0.15); --accent-secondary: #fbbf24;
+            --text-primary: #f5ead8; --text-secondary: #c4a576; --text-dim: #7a6540;
+            --border: #2a2010; --border-accent: rgba(245, 158, 11, 0.25);
+            --color-purple: #d4a056;
+        }
+        [data-theme="rose"] {
+            --bg-deep: #080507; --bg-primary: #0e080a; --bg-card: #1a0f14;
+            --bg-card-hover: #24161c; --bg-elevated: #301e28;
+            --accent: #f43f5e; --accent-dim: #7a1d30;
+            --accent-glow: rgba(244, 63, 94, 0.15); --accent-secondary: #fb7185;
+            --text-primary: #f2e6ea; --text-secondary: #b89aa6; --text-dim: #6b4f5a;
+            --border: #2a1520; --border-accent: rgba(244, 63, 94, 0.25);
+            --color-purple: #e879a0;
+        }
+        [data-theme="cosmos"] {
+            --bg-deep: #07080f; --bg-primary: #0d1225; --bg-card: #141830;
+            --bg-card-hover: #1c2040; --bg-elevated: #242a50;
+            --accent: #e8b931; --accent-dim: #6b5010;
+            --accent-glow: rgba(232, 185, 49, 0.15); --accent-secondary: #f0cc55;
+            --text-primary: #e2e8f0; --text-secondary: #7a8bb5; --text-dim: #4a5680;
+            --border: #1e2a52; --border-accent: rgba(232, 185, 49, 0.25);
+            --color-purple: #c0a040;
+        }
+        [data-theme="nebula"] {
+            --bg-deep: #08060f; --bg-primary: #140e25; --bg-card: #1a1435;
+            --bg-card-hover: #221c42; --bg-elevated: #2c2455;
+            --accent: #38bdf8; --accent-dim: #0c4a6e;
+            --accent-glow: rgba(56, 189, 248, 0.15); --accent-secondary: #a78bfa;
+            --text-primary: #e8e0f0; --text-secondary: #9088b0; --text-dim: #5a5080;
+            --border: #2a1f4a; --border-accent: rgba(56, 189, 248, 0.25);
+            --color-purple: #a78bfa;
+        }
+        [data-theme="aurora"] {
+            --bg-deep: #060b10; --bg-primary: #0a1520; --bg-card: #101e2c;
+            --bg-card-hover: #162838; --bg-elevated: #1e3448;
+            --accent: #34d399; --accent-dim: #065f46;
+            --accent-glow: rgba(52, 211, 153, 0.15); --accent-secondary: #38bdf8;
+            --text-primary: #e0eaf0; --text-secondary: #6b8da5; --text-dim: #3e6070;
+            --border: #182c3a; --border-accent: rgba(52, 211, 153, 0.25);
+            --color-purple: #6ee7b7;
+        }
+        [data-theme="sakura"] {
+            --bg-deep: #08050c; --bg-primary: #120a1a; --bg-card: #1a1028;
+            --bg-card-hover: #221634; --bg-elevated: #2c1e42;
+            --accent: #f0a0b8; --accent-dim: #6b3048;
+            --accent-glow: rgba(240, 160, 184, 0.15); --accent-secondary: #c8a0e0;
+            --text-primary: #f0e4ea; --text-secondary: #b090a0; --text-dim: #6a4860;
+            --border: #261838; --border-accent: rgba(240, 160, 184, 0.25);
+            --color-purple: #c8a0e0;
+        }
+
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         html {
@@ -89,6 +154,50 @@
             pointer-events: none;
         }
 
+        /* Mouse Glow */
+        #mouse-glow {
+            position: fixed;
+            width: 600px;
+            height: 600px;
+            border-radius: 50%;
+            background: radial-gradient(circle, var(--accent-glow), transparent 70%);
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+        #mouse-glow.visible { opacity: 1; }
+
+        /* Theme Picker */
+        .theme-dots {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-left: 16px;
+            padding-left: 16px;
+            border-left: 1px solid var(--border);
+        }
+        .theme-dot {
+            width: 11px;
+            height: 11px;
+            border-radius: 50%;
+            background: var(--dot-color);
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+            padding: 0;
+            outline: none;
+        }
+        .theme-dot:hover {
+            transform: scale(1.35);
+            box-shadow: 0 0 10px var(--dot-color);
+        }
+        .theme-dot.active {
+            border-color: rgba(255,255,255,0.7);
+            box-shadow: 0 0 8px var(--dot-color);
+        }
+
         /* Layout */
         .container {
             max-width: 1100px;
@@ -111,7 +220,7 @@
             right: 0;
             z-index: 100;
             padding: 16px 0;
-            background: rgba(6, 8, 13, 0.7);
+            background: color-mix(in srgb, var(--bg-deep) 70%, transparent);
             backdrop-filter: blur(20px);
             border-bottom: 1px solid transparent;
             transition: border-color 0.3s, background 0.3s;
@@ -119,7 +228,7 @@
 
         nav.scrolled {
             border-bottom-color: var(--border);
-            background: rgba(6, 8, 13, 0.92);
+            background: color-mix(in srgb, var(--bg-deep) 92%, transparent);
         }
 
         nav .container {
@@ -176,7 +285,11 @@
             display: flex;
             align-items: center;
             padding-top: 80px;
-            background: linear-gradient(135deg, rgba(6,8,13,0.85) 0%, rgba(10,22,40,0.8) 40%, rgba(13,26,46,0.8) 70%, rgba(6,8,13,0.85) 100%);
+            background: linear-gradient(135deg,
+                color-mix(in srgb, var(--bg-deep) 85%, transparent) 0%,
+                color-mix(in srgb, var(--bg-primary) 80%, transparent) 40%,
+                color-mix(in srgb, var(--bg-primary) 80%, transparent) 70%,
+                color-mix(in srgb, var(--bg-deep) 85%, transparent) 100%);
             position: relative;
             overflow: hidden;
         }
@@ -188,7 +301,7 @@
             left: 0;
             right: 0;
             height: 200px;
-            background: linear-gradient(to bottom, transparent, rgba(6, 8, 13, 0.88));
+            background: linear-gradient(to bottom, transparent, color-mix(in srgb, var(--bg-deep) 88%, transparent));
             pointer-events: none;
         }
 
@@ -277,8 +390,8 @@
 
         .hero-tag:hover {
             transform: translateY(-2px);
-            background: rgba(16, 185, 129, 0.15);
-            box-shadow: 0 4px 20px rgba(16, 185, 129, 0.12);
+            background: var(--accent-glow);
+            box-shadow: 0 4px 20px var(--accent-glow);
         }
 
         .hero-cta {
@@ -946,7 +1059,7 @@
             position: absolute;
             inset: 0;
             border-radius: 12px;
-            background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(16, 185, 129, 0.06), transparent 60%);
+            background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), var(--accent-glow), transparent 60%);
             pointer-events: none;
             opacity: 0;
             transition: opacity 0.3s;
@@ -1581,6 +1694,8 @@
             .container { padding: 0 20px; }
             .nav-links { gap: 20px; }
             .nav-links a { font-size: 11px; }
+            .theme-dots { gap: 5px; margin-left: 10px; padding-left: 10px; }
+            .theme-dot { width: 9px; height: 9px; }
             .about-grid { grid-template-columns: 1fr; gap: 32px; }
             .metrics-grid { grid-template-columns: repeat(2, 1fr); }
             .features-grid { grid-template-columns: 1fr; }
@@ -1602,6 +1717,7 @@
             .metric-value { font-size: 26px; }
             .nav-links { gap: 12px; }
             .nav-links a { font-size: 10px; letter-spacing: 0.2px; }
+            .theme-dots { display: none; }
             .stack-grid { grid-template-columns: 1fr; }
             .demo-article-selector { flex-direction: column; }
             .demo-bar-row { grid-template-columns: 1fr 40px; }
@@ -1614,6 +1730,7 @@
 
 <div id="scroll-progress"></div>
 <canvas id="stars"></canvas>
+<div id="mouse-glow"></div>
 
 <!-- Lightbox -->
 <div class="lightbox" id="lightbox">
@@ -1631,6 +1748,16 @@
             <a href="#stack">Stack</a>
             <a href="#journey">Journey</a>
             <a href="#about">About</a>
+            <div class="theme-dots">
+                <button class="theme-dot active" data-theme="midnight" title="Midnight" style="--dot-color:#10b981"></button>
+                <button class="theme-dot" data-theme="noir" title="Noir" style="--dot-color:#8b5cf6"></button>
+                <button class="theme-dot" data-theme="coffee" title="Coffee" style="--dot-color:#f59e0b"></button>
+                <button class="theme-dot" data-theme="rose" title="Rose" style="--dot-color:#f43f5e"></button>
+                <button class="theme-dot" data-theme="cosmos" title="Cosmos" style="--dot-color:#e8b931"></button>
+                <button class="theme-dot" data-theme="nebula" title="Nebula" style="--dot-color:#38bdf8"></button>
+                <button class="theme-dot" data-theme="aurora" title="Aurora" style="--dot-color:#34d399"></button>
+                <button class="theme-dot" data-theme="sakura" title="Sakura" style="--dot-color:#f0a0b8"></button>
+            </div>
         </div>
     </div>
 </nav>
@@ -2214,85 +2341,250 @@
 
 <script>
 // ========================
-// STAR FIELD (Mouse-reactive)
+// THEME SYSTEM
+// ========================
+var _themeColors = {
+    midnight: { stars: ['#10b981','#38bdf8','#c8d6e5'], accent: '#10b981' },
+    noir:     { stars: ['#8b5cf6','#c084fc','#d4d4d8'], accent: '#8b5cf6' },
+    coffee:   { stars: ['#f59e0b','#fbbf24','#e8d8c0'], accent: '#f59e0b' },
+    rose:     { stars: ['#f43f5e','#fb7185','#e0c8d0'], accent: '#f43f5e' },
+    cosmos:   { stars: ['#e8b931','#96b4ff','#e0e4f0'], accent: '#e8b931' },
+    nebula:   { stars: ['#a78bfa','#38bdf8','#d8d0e8'], accent: '#38bdf8' },
+    aurora:   { stars: ['#34d399','#38bdf8','#d0e8e0'], accent: '#34d399' },
+    sakura:   { stars: ['#f0a0b8','#f8c4d4','#c8a0dc'], accent: '#f0a0b8' }
+};
+var _currentTheme = localStorage.getItem('portfolio_theme') || 'midnight';
+
+function setPortfolioTheme(name) {
+    if (!_themeColors[name]) return;
+    _currentTheme = name;
+    document.documentElement.setAttribute('data-theme', name);
+    localStorage.setItem('portfolio_theme', name);
+    document.querySelectorAll('.theme-dot').forEach(function(d) {
+        d.classList.toggle('active', d.getAttribute('data-theme') === name);
+    });
+    // Recolor existing stars
+    if (typeof _recolorStars === 'function') _recolorStars(name);
+}
+
+// Init theme on load
+(function() {
+    var saved = localStorage.getItem('portfolio_theme') || 'midnight';
+    if (saved !== 'midnight') document.documentElement.setAttribute('data-theme', saved);
+    document.querySelectorAll('.theme-dot').forEach(function(d) {
+        d.classList.toggle('active', d.getAttribute('data-theme') === saved);
+        d.addEventListener('click', function() { setPortfolioTheme(this.getAttribute('data-theme')); });
+    });
+})();
+
+// ========================
+// MOUSE GLOW
 // ========================
 (function() {
-    const canvas = document.getElementById('stars');
-    const ctx = canvas.getContext('2d');
-    let stars = [];
-    const COUNT = 400;
-    let mouseX = -1000, mouseY = -1000;
-    const MOUSE_RADIUS = 180;
-    let canvasVisible = true;
-    let animFrame = null;
+    var glow = document.getElementById('mouse-glow');
+    if (!glow) return;
+    document.addEventListener('mousemove', function(e) {
+        glow.style.left = e.clientX + 'px';
+        glow.style.top = e.clientY + 'px';
+        if (!glow.classList.contains('visible')) glow.classList.add('visible');
+    });
+    document.addEventListener('mouseleave', function() {
+        glow.classList.remove('visible');
+    });
+})();
+
+// ========================
+// STAR FIELD (Enhanced — connection lines, shooting stars, theme colors)
+// ========================
+(function() {
+    var canvas = document.getElementById('stars');
+    var ctx = canvas.getContext('2d');
+    var stars = [];
+    var COUNT = 550;
+    var mouseX = -1000, mouseY = -1000;
+    var MOUSE_RADIUS = 200;
+    var LINE_RADIUS = 120;       // max distance for connection lines
+    var LINE_MOUSE_RANGE = 280;  // only draw lines near cursor
+    var canvasVisible = true;
+    var animFrame = null;
+
+    // Shooting stars
+    var shooters = [];
+    var lastShooter = 0;
+    var SHOOT_INTERVAL = 4000; // ms between shooting stars
 
     function resize() {
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
     }
 
+    function pickColor(tc) {
+        var r = Math.random();
+        return r < 0.30 ? tc[0] : r < 0.38 ? tc[1] : tc[2];
+    }
+
     function init() {
         resize();
         stars = [];
-        for (let i = 0; i < COUNT; i++) {
-            const isBright = Math.random() < 0.18;
+        var tc = (_themeColors[_currentTheme] || _themeColors.midnight).stars;
+        for (var i = 0; i < COUNT; i++) {
+            var isBright = Math.random() < 0.20;
             stars.push({
                 x: Math.random() * canvas.width,
                 y: Math.random() * canvas.height * 2,
-                baseX: 0,
-                baseY: 0,
-                r: isBright ? Math.random() * 2.0 + 0.8 : Math.random() * 1.2 + 0.2,
-                a: isBright ? Math.random() * 0.35 + 0.5 : Math.random() * 0.4 + 0.1,
+                baseX: 0, baseY: 0,
+                r: isBright ? Math.random() * 2.2 + 0.8 : Math.random() * 1.3 + 0.2,
+                a: isBright ? Math.random() * 0.40 + 0.45 : Math.random() * 0.35 + 0.08,
                 speed: Math.random() * 0.15 + 0.02,
                 phase: Math.random() * Math.PI * 2,
-                color: isBright && Math.random() < 0.35 ? '#10b981' : Math.random() < 0.08 ? '#38bdf8' : '#c8d6e5'
+                color: isBright ? pickColor(tc) : (Math.random() < 0.12 ? tc[1] : tc[2]),
+                isBright: isBright
             });
             stars[i].baseX = stars[i].x;
             stars[i].baseY = stars[i].y;
         }
     }
 
+    // Recolor stars when theme changes
+    window._recolorStars = function(themeName) {
+        var tc = (_themeColors[themeName] || _themeColors.midnight).stars;
+        for (var i = 0; i < stars.length; i++) {
+            var s = stars[i];
+            s.color = s.isBright ? pickColor(tc) : (Math.random() < 0.12 ? tc[1] : tc[2]);
+        }
+    };
+
+    function spawnShooter() {
+        var angle = Math.random() * 0.6 + 0.3; // 0.3–0.9 radians (shallow)
+        var speed = Math.random() * 8 + 6;
+        var tc = (_themeColors[_currentTheme] || _themeColors.midnight).stars;
+        shooters.push({
+            x: Math.random() * canvas.width * 0.8,
+            y: Math.random() * canvas.height * 0.4,
+            vx: Math.cos(angle) * speed,
+            vy: Math.sin(angle) * speed,
+            life: 1.0,
+            len: Math.random() * 40 + 30,
+            color: tc[0]
+        });
+    }
+
     function draw() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        const scroll = window.scrollY * 0.08;
-        const t = Date.now() * 0.001;
+        var scroll = window.scrollY * 0.08;
+        var t = Date.now() * 0.001;
+        var now = Date.now();
 
-        for (const s of stars) {
-            let y = s.baseY - scroll;
-            let x = s.baseX;
+        // Spawn shooting stars periodically
+        if (now - lastShooter > SHOOT_INTERVAL + Math.random() * 3000) {
+            spawnShooter();
+            lastShooter = now;
+        }
 
-            // Mouse attraction
-            const dy = y - mouseY;
-            const dx = x - mouseX;
-            const dist = Math.sqrt(dx * dx + dy * dy);
+        // Collect visible star positions for connection lines
+        var visible = [];
+
+        for (var i = 0; i < stars.length; i++) {
+            var s = stars[i];
+            var y = s.baseY - scroll;
+            var x = s.baseX;
+
+            var dy = y - mouseY;
+            var dx = x - mouseX;
+            var dist = Math.sqrt(dx * dx + dy * dy);
+
+            // Mouse repulsion
             if (dist < MOUSE_RADIUS && dist > 0) {
-                const force = (1 - dist / MOUSE_RADIUS) * 30;
+                var force = (1 - dist / MOUSE_RADIUS) * 30;
                 x += (dx / dist) * force;
                 y += (dy / dist) * force;
             }
 
-            // Smooth interpolation
             s.x += (x - s.x) * 0.08;
             s.y += (y - (s.baseY - scroll)) * 0.08;
-            const drawY = s.baseY - scroll + (s.y - (s.baseY - scroll));
-            const drawX = s.x;
+            var drawY = s.baseY - scroll + (s.y - (s.baseY - scroll));
+            var drawX = s.x;
 
             if (drawY < -10 || drawY > canvas.height + 10) continue;
-            const flicker = 0.7 + 0.3 * Math.sin(t * s.speed * 4 + s.phase);
-            const proximityBoost = dist < MOUSE_RADIUS ? 1 + (1 - dist / MOUSE_RADIUS) * 0.5 : 1;
-            ctx.globalAlpha = Math.min(1, s.a * flicker * proximityBoost);
+
+            var flicker = 0.7 + 0.3 * Math.sin(t * s.speed * 4 + s.phase);
+            var proximityBoost = dist < MOUSE_RADIUS ? 1 + (1 - dist / MOUSE_RADIUS) * 0.6 : 1;
+            var alpha = Math.min(1, s.a * flicker * proximityBoost);
+            var radius = s.r * (dist < MOUSE_RADIUS ? 1 + (1 - dist / MOUSE_RADIUS) * 0.5 : 1);
+
+            ctx.globalAlpha = alpha;
             ctx.fillStyle = s.color;
             ctx.beginPath();
-            ctx.arc(drawX, drawY, s.r * (dist < MOUSE_RADIUS ? 1 + (1 - dist / MOUSE_RADIUS) * 0.5 : 1), 0, Math.PI * 2);
+            ctx.arc(drawX, drawY, radius, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Track for connection lines (only near mouse)
+            var mDist = Math.sqrt((drawX - mouseX) * (drawX - mouseX) + (drawY - mouseY) * (drawY - mouseY));
+            if (mDist < LINE_MOUSE_RANGE) {
+                visible.push({ x: drawX, y: drawY, a: alpha, color: s.color, mDist: mDist });
+            }
+        }
+
+        // Draw connection lines between nearby stars near the cursor
+        var accent = (_themeColors[_currentTheme] || _themeColors.midnight).accent;
+        for (var a = 0; a < visible.length; a++) {
+            for (var b = a + 1; b < visible.length; b++) {
+                var ddx = visible[a].x - visible[b].x;
+                var ddy = visible[a].y - visible[b].y;
+                var d = Math.sqrt(ddx * ddx + ddy * ddy);
+                if (d < LINE_RADIUS) {
+                    var lineAlpha = (1 - d / LINE_RADIUS) * 0.18;
+                    // Fade lines by proximity to mouse
+                    var avgMouseDist = (visible[a].mDist + visible[b].mDist) / 2;
+                    lineAlpha *= (1 - avgMouseDist / LINE_MOUSE_RANGE) * 1.5;
+                    lineAlpha = Math.min(lineAlpha, 0.2);
+                    ctx.globalAlpha = lineAlpha;
+                    ctx.strokeStyle = accent;
+                    ctx.lineWidth = 0.6;
+                    ctx.beginPath();
+                    ctx.moveTo(visible[a].x, visible[a].y);
+                    ctx.lineTo(visible[b].x, visible[b].y);
+                    ctx.stroke();
+                }
+            }
+        }
+
+        // Draw shooting stars
+        for (var si = shooters.length - 1; si >= 0; si--) {
+            var sh = shooters[si];
+            sh.x += sh.vx;
+            sh.y += sh.vy;
+            sh.life -= 0.015;
+            if (sh.life <= 0 || sh.x > canvas.width + 50 || sh.y > canvas.height + 50) {
+                shooters.splice(si, 1);
+                continue;
+            }
+            var tailX = sh.x - sh.vx * (sh.len / Math.sqrt(sh.vx * sh.vx + sh.vy * sh.vy));
+            var tailY = sh.y - sh.vy * (sh.len / Math.sqrt(sh.vx * sh.vx + sh.vy * sh.vy));
+            var grad = ctx.createLinearGradient(tailX, tailY, sh.x, sh.y);
+            grad.addColorStop(0, 'transparent');
+            grad.addColorStop(1, sh.color);
+            ctx.globalAlpha = sh.life * 0.7;
+            ctx.strokeStyle = grad;
+            ctx.lineWidth = 1.5;
+            ctx.beginPath();
+            ctx.moveTo(tailX, tailY);
+            ctx.lineTo(sh.x, sh.y);
+            ctx.stroke();
+            // Bright head
+            ctx.globalAlpha = sh.life * 0.9;
+            ctx.fillStyle = '#fff';
+            ctx.beginPath();
+            ctx.arc(sh.x, sh.y, 1.5, 0, Math.PI * 2);
             ctx.fill();
         }
+
         ctx.globalAlpha = 1;
         if (canvasVisible) animFrame = requestAnimationFrame(draw);
     }
 
-    // Pause star field when canvas scrolls off-screen
-    const canvasObserver = new IntersectionObserver(([entry]) => {
-        canvasVisible = entry.isIntersecting;
+    var canvasObserver = new IntersectionObserver(function(entries) {
+        canvasVisible = entries[0].isIntersecting;
         if (canvasVisible && !animFrame) {
             animFrame = requestAnimationFrame(draw);
         } else if (!canvasVisible && animFrame) {
@@ -2302,21 +2594,20 @@
     }, { threshold: 0 });
     canvasObserver.observe(canvas);
 
-    document.addEventListener('mousemove', (e) => {
+    document.addEventListener('mousemove', function(e) {
         mouseX = e.clientX;
         mouseY = e.clientY;
     });
 
-    document.addEventListener('mouseleave', () => {
+    document.addEventListener('mouseleave', function() {
         mouseX = -1000;
         mouseY = -1000;
     });
 
-    window.addEventListener('resize', () => {
+    window.addEventListener('resize', function() {
         resize();
-        // Redistribute stars on resize
-        for (const s of stars) {
-            s.baseX = Math.random() * canvas.width;
+        for (var i = 0; i < stars.length; i++) {
+            stars[i].baseX = Math.random() * canvas.width;
         }
     });
 
