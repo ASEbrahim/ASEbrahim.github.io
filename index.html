@@ -835,22 +835,23 @@
             rx: 6;
         }
 
-        /* Architecture tooltip */
+        /* Architecture tooltip — appended to <body> to avoid transform containment */
         .arch-tip {
             position: fixed;
-            z-index: 100;
+            z-index: 10000;
             background: var(--bg-elevated);
             border: 1px solid var(--border-accent);
-            border-radius: 8px;
-            padding: 7px 11px;
-            font-size: 11.5px;
+            border-radius: 10px;
+            padding: 10px 14px;
+            font-size: 12px;
             color: var(--text-secondary);
-            max-width: 340px;
-            line-height: 1.45;
-            box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+            width: 300px;
+            max-width: calc(100vw - 32px);
+            line-height: 1.5;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.5);
             opacity: 0;
             pointer-events: none;
-            transition: opacity 0.13s;
+            transition: opacity 0.15s ease;
         }
 
         .arch-tip.show {
@@ -858,13 +859,13 @@
         }
 
         .arch-tip-title {
-            font-size: 12px;
+            font-size: 12.5px;
             font-weight: 600;
             color: var(--text-primary);
-            margin-bottom: 4px;
+            margin-bottom: 3px;
             display: flex;
             align-items: center;
-            gap: 5px;
+            gap: 6px;
         }
 
         .arch-tip-title::before {
@@ -2960,20 +2961,27 @@ document.querySelectorAll('.metric-value[data-count]').forEach(el => {
         requestAnimationFrame(animateFlowDots);
     }
 
-    // Hover: highlight connected nodes and paths, tooltip follows cursor
-    function positionTip(e) {
+    // Move tooltip to <body> so position:fixed isn't broken by ancestor transforms
+    if (tip && tip.parentNode !== document.body) {
+        document.body.appendChild(tip);
+    }
+
+    // Position tooltip centered below (or above) the hovered node box
+    function positionTip(boxEl) {
         if (!tip || !tip.classList.contains('show')) return;
-        var mx = e.clientX, my = e.clientY;
+        var rect = boxEl.getBoundingClientRect();
         var tw = tip.offsetWidth, th = tip.offsetHeight;
-        // Place 12px to the right and 8px below cursor
-        var left = mx + 12, top = my + 8;
-        // Flip left if overflowing right edge
-        if (left + tw > window.innerWidth - 8) left = mx - tw - 12;
+        var gap = 10;
+        // Center horizontally below the node
+        var left = rect.left + rect.width / 2 - tw / 2;
+        var top = rect.bottom + gap;
         // Flip above if overflowing bottom
-        if (top + th > window.innerHeight - 8) top = my - th - 8;
+        if (top + th > window.innerHeight - 16) {
+            top = rect.top - th - gap;
+        }
         // Clamp to viewport
-        if (left < 8) left = 8;
-        if (top < 8) top = 8;
+        left = Math.max(16, Math.min(left, window.innerWidth - tw - 16));
+        top = Math.max(16, top);
         tip.style.left = left + 'px';
         tip.style.top = top + 'px';
     }
@@ -2981,7 +2989,7 @@ document.querySelectorAll('.metric-value[data-count]').forEach(el => {
     Object.keys(nodeGroups).forEach(function(id) {
         var g = nodeGroups[id];
         var box = g.querySelector('.node-box');
-        box.addEventListener('mouseenter', function(e) {
+        box.addEventListener('mouseenter', function() {
             var tipText = g.getAttribute('data-tip');
             var nodeLabel = g.getAttribute('data-label');
             var nodeColor = g.getAttribute('data-color');
@@ -2990,7 +2998,7 @@ document.querySelectorAll('.metric-value[data-count]').forEach(el => {
                 tip.innerHTML = '<div class="arch-tip-title">' + (nodeLabel || '') + '</div><div class="arch-tip-body">' + tipText + '</div>';
                 tip.style.left = '-9999px';
                 tip.classList.add('show');
-                requestAnimationFrame(function() { positionTip(e); });
+                requestAnimationFrame(function() { positionTip(box); });
             }
             g.classList.add('highlight');
             g.classList.add('hover');
@@ -3002,7 +3010,6 @@ document.querySelectorAll('.metric-value[data-count]').forEach(el => {
                 }
             });
         });
-        box.addEventListener('mousemove', positionTip);
         box.addEventListener('mouseleave', function() {
             if (tip) tip.classList.remove('show');
             g.classList.remove('highlight');
