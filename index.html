@@ -837,21 +837,19 @@
             background: var(--bg-elevated);
             border: 1px solid var(--border-accent);
             border-radius: 8px;
-            padding: 8px 12px;
+            padding: 7px 11px;
             font-size: 11.5px;
             color: var(--text-secondary);
-            max-width: 260px;
-            line-height: 1.5;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.45);
+            max-width: 340px;
+            line-height: 1.45;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.4);
             opacity: 0;
             pointer-events: none;
-            transform: translateY(4px);
-            transition: opacity 0.15s, transform 0.15s;
+            transition: opacity 0.13s;
         }
 
         .arch-tip.show {
             opacity: 1;
-            transform: translateY(0);
         }
 
         .arch-tip-title {
@@ -2957,53 +2955,48 @@ document.querySelectorAll('.metric-value[data-count]').forEach(el => {
         requestAnimationFrame(animateFlowDots);
     }
 
-    // Hover: highlight connected nodes and paths
+    // Hover: highlight connected nodes and paths, tooltip follows cursor
+    function positionTip(e) {
+        if (!tip || !tip.classList.contains('show')) return;
+        var mx = e.clientX, my = e.clientY;
+        var tw = tip.offsetWidth, th = tip.offsetHeight;
+        // Place 12px to the right and 8px below cursor
+        var left = mx + 12, top = my + 8;
+        // Flip left if overflowing right edge
+        if (left + tw > window.innerWidth - 8) left = mx - tw - 12;
+        // Flip above if overflowing bottom
+        if (top + th > window.innerHeight - 8) top = my - th - 8;
+        // Clamp to viewport
+        if (left < 8) left = 8;
+        if (top < 8) top = 8;
+        tip.style.left = left + 'px';
+        tip.style.top = top + 'px';
+    }
+
     Object.keys(nodeGroups).forEach(function(id) {
         var g = nodeGroups[id];
-        g.addEventListener('mouseenter', function() {
-            // Show tooltip
+        g.addEventListener('mouseenter', function(e) {
             var tipText = this.getAttribute('data-tip');
             var nodeLabel = this.getAttribute('data-label');
             var nodeColor = this.getAttribute('data-color');
             if (tipText && tip) {
                 tip.className = 'arch-tip arch-tip--' + (nodeColor || 'green');
                 tip.innerHTML = '<div class="arch-tip-title">' + (nodeLabel || '') + '</div><div class="arch-tip-body">' + tipText + '</div>';
-                // Use getBoundingClientRect for accurate screen position
-                var boxEl = this.querySelector('.node-box');
-                var nodeRect = boxEl.getBoundingClientRect();
-                // Position directly below, centered on node
-                tip.style.left = (nodeRect.left + nodeRect.width / 2) + 'px';
-                tip.style.top = (nodeRect.bottom + 4) + 'px';
-                tip.style.transform = 'translate(-50%, 0)';
+                tip.style.left = '-9999px';
                 tip.classList.add('show');
-                requestAnimationFrame(function() {
-                    var tipRect = tip.getBoundingClientRect();
-                    // Flip above if clipped at bottom
-                    if (tipRect.bottom > window.innerHeight - 8) {
-                        tip.style.top = (nodeRect.top - 4) + 'px';
-                        tip.style.transform = 'translate(-50%, -100%)';
-                    }
-                    // Clamp horizontal edges
-                    tipRect = tip.getBoundingClientRect();
-                    if (tipRect.right > window.innerWidth - 8) {
-                        tip.style.left = (window.innerWidth - tipRect.width / 2 - 8) + 'px';
-                    }
-                    if (tipRect.left < 8) {
-                        tip.style.left = (tipRect.width / 2 + 8) + 'px';
-                    }
-                });
+                // Initial position after layout
+                requestAnimationFrame(function() { positionTip(e); });
             }
-            // Highlight connected paths
             this.classList.add('highlight');
             connPaths.forEach(function(cp) {
                 if (cp.from === id || cp.to === id) {
                     cp.path.classList.add('highlight');
-                    // Also highlight the other node
                     var otherId = cp.from === id ? cp.to : cp.from;
                     if (nodeGroups[otherId]) nodeGroups[otherId].classList.add('highlight');
                 }
             });
         });
+        g.addEventListener('mousemove', positionTip);
         g.addEventListener('mouseleave', function() {
             if (tip) tip.classList.remove('show');
             this.classList.remove('highlight');
