@@ -73,13 +73,13 @@
             --color-purple: #c0a040;
         }
         [data-theme="sakura"] {
-            --bg-deep: #0a0610; --bg-primary: #140e1e; --bg-card: #1c1428;
-            --bg-card-hover: #251c34; --bg-elevated: #2e2440;
-            --accent: #f0a0b8; --accent-dim: #6b2040;
-            --accent-glow: rgba(240, 160, 184, 0.15); --accent-secondary: #d4a0d0;
-            --text-primary: #f0e4ec; --text-secondary: #9a7898; --text-dim: #604060;
-            --border: #2a1830; --border-accent: rgba(240, 160, 184, 0.25);
-            --color-purple: #d4a0d0;
+            --bg-deep: #080507; --bg-primary: #0c080a; --bg-card: #1e1016;
+            --bg-card-hover: #2a1820; --bg-elevated: #3c2530;
+            --accent: #f43f5e; --accent-dim: #7a1d30;
+            --accent-glow: rgba(244, 63, 94, 0.15); --accent-secondary: #fb7185;
+            --text-primary: #f2e6ea; --text-secondary: #b8949e; --text-dim: #5a3f48;
+            --border: #2a1420; --border-accent: rgba(244, 63, 94, 0.25);
+            --color-purple: #fb7185;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -1727,7 +1727,7 @@
                 <button class="theme-dot" data-theme="aurora" title="Aurora" style="--dot-color:#34d399"></button>
                 <button class="theme-dot" data-theme="noir" title="Noir" style="--dot-color:#8b5cf6"></button>
                 <button class="theme-dot" data-theme="cosmos" title="Cosmos" style="--dot-color:#e8b931"></button>
-                <button class="theme-dot" data-theme="sakura" title="Sakura" style="--dot-color:#f0a0b8"></button>
+                <button class="theme-dot" data-theme="sakura" title="Sakura" style="--dot-color:#f43f5e"></button>
             </div>
         </div>
     </div>
@@ -2319,7 +2319,7 @@ var _themeColors = {
     aurora:   { stars: ['#34d399','#38bdf8','#d0e8e0'], accent: '#34d399' },
     noir:     { stars: ['#8b5cf6','#c084fc','#d4d4d8'], accent: '#8b5cf6' },
     cosmos:   { stars: ['#e8b931','#96b4ff','#e0e4f0'], accent: '#e8b931' },
-    sakura:   { stars: ['#f0a0b8','#d4a0d0','#f0e4ec'], accent: '#f0a0b8' }
+    sakura:   { stars: ['#f43f5e','#fb7185','#f2e6ea'], accent: '#f43f5e' }
 };
 var _currentTheme = localStorage.getItem('portfolio_theme') || 'nebula';
 
@@ -2364,7 +2364,7 @@ function setPortfolioTheme(name) {
 })();
 
 // ========================
-// STAR FIELD (Enhanced — connection lines, shooting stars, theme colors)
+// STAR FIELD + THEME EFFECTS (petals, pendulum, orbits, aurora)
 // ========================
 (function() {
     var canvas = document.getElementById('stars');
@@ -2373,15 +2373,22 @@ function setPortfolioTheme(name) {
     var COUNT = 550;
     var mouseX = -1000, mouseY = -1000;
     var MOUSE_RADIUS = 200;
-    var LINE_RADIUS = 120;       // max distance for connection lines
-    var LINE_MOUSE_RANGE = 280;  // only draw lines near cursor
+    var LINE_RADIUS = 120;
+    var LINE_MOUSE_RANGE = 280;
     var canvasVisible = true;
     var animFrame = null;
 
     // Shooting stars
     var shooters = [];
     var lastShooter = 0;
-    var SHOOT_INTERVAL = 4000; // ms between shooting stars
+    var SHOOT_INTERVAL = 4000;
+
+    // Sakura petals
+    var petals = [];
+    var PETAL_COUNT = 35;
+
+    // Cosmos orbits
+    var planets = [];
 
     function resize() {
         canvas.width = window.innerWidth;
@@ -2393,29 +2400,57 @@ function setPortfolioTheme(name) {
         return r < 0.30 ? tc[0] : r < 0.38 ? tc[1] : tc[2];
     }
 
+    function initPetals() {
+        petals = [];
+        for (var i = 0; i < PETAL_COUNT; i++) {
+            petals.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                size: Math.random() * 6 + 3,
+                rot: Math.random() * Math.PI * 2,
+                rotSpeed: (Math.random() - 0.5) * 0.03,
+                vy: Math.random() * 0.6 + 0.3,
+                vx: (Math.random() - 0.5) * 0.3,
+                drift: Math.random() * Math.PI * 2,
+                alpha: Math.random() * 0.4 + 0.15
+            });
+        }
+    }
+
+    function initPlanets() {
+        planets = [
+            { dist: 60, size: 3, speed: 0.008, angle: 0, color: '#a0b8e8' },
+            { dist: 100, size: 4.5, speed: 0.005, angle: 2, color: '#e8b931' },
+            { dist: 145, size: 3.5, speed: 0.003, angle: 4, color: '#c06030' },
+            { dist: 185, size: 6, speed: 0.002, angle: 1, color: '#d4a060' },
+            { dist: 220, size: 2.5, speed: 0.0015, angle: 5, color: '#90b8d8' }
+        ];
+    }
+
     function init() {
         resize();
         stars = [];
         var tc = (_themeColors[_currentTheme] || _themeColors.nebula).stars;
+        var pageH = Math.max(document.body.scrollHeight, canvas.height * 3);
         for (var i = 0; i < COUNT; i++) {
             var isBright = Math.random() < 0.20;
             stars.push({
-                x: Math.random() * canvas.width,
-                y: Math.random() * canvas.height * 2,
-                baseX: 0, baseY: 0,
+                baseX: Math.random() * canvas.width,
+                baseY: Math.random() * pageH,
+                ox: 0, oy: 0,
                 r: isBright ? Math.random() * 2.2 + 0.8 : Math.random() * 1.3 + 0.2,
                 a: isBright ? Math.random() * 0.40 + 0.45 : Math.random() * 0.35 + 0.08,
                 speed: Math.random() * 0.15 + 0.02,
+                depth: 0.3 + Math.random() * 0.7,
                 phase: Math.random() * Math.PI * 2,
                 color: isBright ? pickColor(tc) : (Math.random() < 0.12 ? tc[1] : tc[2]),
                 isBright: isBright
             });
-            stars[i].baseX = stars[i].x;
-            stars[i].baseY = stars[i].y;
         }
+        initPetals();
+        initPlanets();
     }
 
-    // Recolor stars when theme changes
     window._recolorStars = function(themeName) {
         var tc = (_themeColors[themeName] || _themeColors.nebula).stars;
         for (var i = 0; i < stars.length; i++) {
@@ -2425,7 +2460,7 @@ function setPortfolioTheme(name) {
     };
 
     function spawnShooter() {
-        var angle = Math.random() * 0.6 + 0.3; // 0.3–0.9 radians (shallow)
+        var angle = Math.random() * 0.6 + 0.3;
         var speed = Math.random() * 8 + 6;
         var tc = (_themeColors[_currentTheme] || _themeColors.nebula).stars;
         shooters.push({
@@ -2439,9 +2474,142 @@ function setPortfolioTheme(name) {
         });
     }
 
+    // ── Sakura petals ──
+    function drawPetals(t) {
+        for (var i = 0; i < petals.length; i++) {
+            var p = petals[i];
+            p.y += p.vy;
+            p.x += p.vx + Math.sin(t * 0.5 + p.drift) * 0.4;
+            p.rot += p.rotSpeed;
+            if (p.y > canvas.height + 20) { p.y = -20; p.x = Math.random() * canvas.width; }
+            if (p.x < -20) p.x = canvas.width + 20;
+            if (p.x > canvas.width + 20) p.x = -20;
+
+            ctx.save();
+            ctx.translate(p.x, p.y);
+            ctx.rotate(p.rot);
+            ctx.globalAlpha = p.alpha;
+            // Petal shape: two arcs
+            ctx.fillStyle = '#f43f5e';
+            ctx.beginPath();
+            ctx.moveTo(0, 0);
+            ctx.quadraticCurveTo(p.size * 0.8, -p.size * 0.6, 0, -p.size);
+            ctx.quadraticCurveTo(-p.size * 0.8, -p.size * 0.6, 0, 0);
+            ctx.fill();
+            // Inner highlight
+            ctx.fillStyle = '#fb7185';
+            ctx.globalAlpha = p.alpha * 0.5;
+            ctx.beginPath();
+            ctx.moveTo(0, -p.size * 0.2);
+            ctx.quadraticCurveTo(p.size * 0.3, -p.size * 0.5, 0, -p.size * 0.75);
+            ctx.quadraticCurveTo(-p.size * 0.3, -p.size * 0.5, 0, -p.size * 0.2);
+            ctx.fill();
+            ctx.restore();
+        }
+    }
+
+    // ── Noir pendulum ──
+    function drawPendulum(t) {
+        var cx = canvas.width * 0.85;
+        var cy = 60;
+        var length = 120;
+        var angle = Math.sin(t * 0.8) * 0.35;
+        var bx = cx + Math.sin(angle) * length;
+        var by = cy + Math.cos(angle) * length;
+
+        // Rod
+        ctx.globalAlpha = 0.12;
+        ctx.strokeStyle = '#a1a1aa';
+        ctx.lineWidth = 1.5;
+        ctx.beginPath();
+        ctx.moveTo(cx, cy);
+        ctx.lineTo(bx, by);
+        ctx.stroke();
+
+        // Bob
+        ctx.globalAlpha = 0.18;
+        ctx.fillStyle = '#8b5cf6';
+        ctx.beginPath();
+        ctx.arc(bx, by, 8, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Glow
+        ctx.globalAlpha = 0.06;
+        ctx.fillStyle = '#c084fc';
+        ctx.beginPath();
+        ctx.arc(bx, by, 18, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Pivot
+        ctx.globalAlpha = 0.15;
+        ctx.fillStyle = '#a1a1aa';
+        ctx.beginPath();
+        ctx.arc(cx, cy, 3, 0, Math.PI * 2);
+        ctx.fill();
+    }
+
+    // ── Cosmos orbits ──
+    function drawOrbits(t) {
+        var cx = canvas.width * 0.82;
+        var cy = canvas.height * 0.18;
+
+        // Sun
+        ctx.globalAlpha = 0.2;
+        ctx.fillStyle = '#e8b931';
+        ctx.beginPath();
+        ctx.arc(cx, cy, 8, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.globalAlpha = 0.06;
+        ctx.beginPath();
+        ctx.arc(cx, cy, 16, 0, Math.PI * 2);
+        ctx.fill();
+
+        for (var i = 0; i < planets.length; i++) {
+            var p = planets[i];
+            p.angle += p.speed;
+            var px = cx + Math.cos(p.angle) * p.dist;
+            var py = cy + Math.sin(p.angle) * p.dist * 0.4; // elliptical
+
+            // Orbit ring
+            ctx.globalAlpha = 0.04;
+            ctx.strokeStyle = '#7a8bb5';
+            ctx.lineWidth = 0.5;
+            ctx.beginPath();
+            ctx.ellipse(cx, cy, p.dist, p.dist * 0.4, 0, 0, Math.PI * 2);
+            ctx.stroke();
+
+            // Planet
+            ctx.globalAlpha = 0.22;
+            ctx.fillStyle = p.color;
+            ctx.beginPath();
+            ctx.arc(px, py, p.size, 0, Math.PI * 2);
+            ctx.fill();
+        }
+    }
+
+    // ── Aurora curtain ──
+    function drawAurora(t) {
+        var w = canvas.width;
+        ctx.globalAlpha = 0.04;
+        for (var band = 0; band < 3; band++) {
+            var colors = ['#34d399', '#38bdf8', '#6ee7b7'];
+            ctx.fillStyle = colors[band];
+            ctx.beginPath();
+            ctx.moveTo(0, 0);
+            for (var x = 0; x <= w; x += 8) {
+                var wave = Math.sin(x * 0.005 + t * 0.3 + band * 1.5) * 30 +
+                           Math.sin(x * 0.012 + t * 0.5 + band) * 15;
+                ctx.lineTo(x, 40 + band * 20 + wave);
+            }
+            ctx.lineTo(w, 0);
+            ctx.closePath();
+            ctx.fill();
+        }
+    }
+
     function draw() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        var scroll = window.scrollY * 0.08;
+        var scroll = window.scrollY;
         var t = Date.now() * 0.001;
         var now = Date.now();
 
@@ -2451,31 +2619,39 @@ function setPortfolioTheme(name) {
             lastShooter = now;
         }
 
+        // ── Theme-specific background effects (behind stars) ──
+        if (_currentTheme === 'aurora') drawAurora(t);
+
         // Collect visible star positions for connection lines
         var visible = [];
 
         for (var i = 0; i < stars.length; i++) {
             var s = stars[i];
-            var y = s.baseY - scroll;
-            var x = s.baseX;
+            // Parallax: deeper stars scroll slower
+            var drawY = s.baseY - scroll * s.depth * 0.12;
+            var drawX = s.baseX;
 
-            var dy = y - mouseY;
-            var dx = x - mouseX;
+            // Wrap vertically so stars always fill viewport
+            drawY = ((drawY % (canvas.height + 40)) + canvas.height + 40) % (canvas.height + 40) - 20;
+
+            var dy = drawY - mouseY;
+            var dx = drawX - mouseX;
             var dist = Math.sqrt(dx * dx + dy * dy);
 
-            // Mouse repulsion
+            // Mouse repulsion — smooth offset
+            var targetOx = 0, targetOy = 0;
             if (dist < MOUSE_RADIUS && dist > 0) {
                 var force = (1 - dist / MOUSE_RADIUS) * 30;
-                x += (dx / dist) * force;
-                y += (dy / dist) * force;
+                targetOx = (dx / dist) * force;
+                targetOy = (dy / dist) * force;
             }
+            s.ox += (targetOx - s.ox) * 0.08;
+            s.oy += (targetOy - s.oy) * 0.08;
 
-            s.x += (x - s.x) * 0.08;
-            s.y += (y - (s.baseY - scroll)) * 0.08;
-            var drawY = s.baseY - scroll + (s.y - (s.baseY - scroll));
-            var drawX = s.x;
+            var finalX = drawX + s.ox;
+            var finalY = drawY + s.oy;
 
-            if (drawY < -10 || drawY > canvas.height + 10) continue;
+            if (finalY < -10 || finalY > canvas.height + 10) continue;
 
             var flicker = 0.7 + 0.3 * Math.sin(t * s.speed * 4 + s.phase);
             var proximityBoost = dist < MOUSE_RADIUS ? 1 + (1 - dist / MOUSE_RADIUS) * 0.6 : 1;
@@ -2485,17 +2661,16 @@ function setPortfolioTheme(name) {
             ctx.globalAlpha = alpha;
             ctx.fillStyle = s.color;
             ctx.beginPath();
-            ctx.arc(drawX, drawY, radius, 0, Math.PI * 2);
+            ctx.arc(finalX, finalY, radius, 0, Math.PI * 2);
             ctx.fill();
 
-            // Track for connection lines (only near mouse)
-            var mDist = Math.sqrt((drawX - mouseX) * (drawX - mouseX) + (drawY - mouseY) * (drawY - mouseY));
+            var mDist = Math.sqrt((finalX - mouseX) * (finalX - mouseX) + (finalY - mouseY) * (finalY - mouseY));
             if (mDist < LINE_MOUSE_RANGE) {
-                visible.push({ x: drawX, y: drawY, a: alpha, color: s.color, mDist: mDist });
+                visible.push({ x: finalX, y: finalY, a: alpha, color: s.color, mDist: mDist });
             }
         }
 
-        // Draw connection lines between nearby stars near the cursor
+        // Connection lines
         var accent = (_themeColors[_currentTheme] || _themeColors.nebula).accent;
         for (var a = 0; a < visible.length; a++) {
             for (var b = a + 1; b < visible.length; b++) {
@@ -2504,7 +2679,6 @@ function setPortfolioTheme(name) {
                 var d = Math.sqrt(ddx * ddx + ddy * ddy);
                 if (d < LINE_RADIUS) {
                     var lineAlpha = (1 - d / LINE_RADIUS) * 0.18;
-                    // Fade lines by proximity to mouse
                     var avgMouseDist = (visible[a].mDist + visible[b].mDist) / 2;
                     lineAlpha *= (1 - avgMouseDist / LINE_MOUSE_RANGE) * 1.5;
                     lineAlpha = Math.min(lineAlpha, 0.2);
@@ -2519,7 +2693,7 @@ function setPortfolioTheme(name) {
             }
         }
 
-        // Draw shooting stars
+        // Shooting stars
         for (var si = shooters.length - 1; si >= 0; si--) {
             var sh = shooters[si];
             sh.x += sh.vx;
@@ -2541,13 +2715,17 @@ function setPortfolioTheme(name) {
             ctx.moveTo(tailX, tailY);
             ctx.lineTo(sh.x, sh.y);
             ctx.stroke();
-            // Bright head
             ctx.globalAlpha = sh.life * 0.9;
             ctx.fillStyle = '#fff';
             ctx.beginPath();
             ctx.arc(sh.x, sh.y, 1.5, 0, Math.PI * 2);
             ctx.fill();
         }
+
+        // ── Theme-specific foreground effects (above stars) ──
+        if (_currentTheme === 'sakura') drawPetals(t);
+        if (_currentTheme === 'noir') drawPendulum(t);
+        if (_currentTheme === 'cosmos') drawOrbits(t);
 
         ctx.globalAlpha = 1;
         if (canvasVisible) animFrame = requestAnimationFrame(draw);
