@@ -72,6 +72,15 @@
             --border: #1e2a52; --border-accent: rgba(232, 185, 49, 0.25);
             --color-purple: #c0a040;
         }
+        [data-theme="sakura"] {
+            --bg-deep: #0a0610; --bg-primary: #140e1e; --bg-card: #1c1428;
+            --bg-card-hover: #251c34; --bg-elevated: #2e2440;
+            --accent: #f0a0b8; --accent-dim: #6b2040;
+            --accent-glow: rgba(240, 160, 184, 0.15); --accent-secondary: #d4a0d0;
+            --text-primary: #f0e4ec; --text-secondary: #9a7898; --text-dim: #604060;
+            --border: #2a1830; --border-accent: rgba(240, 160, 184, 0.25);
+            --color-purple: #d4a0d0;
+        }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -126,7 +135,7 @@
             height: 60px;
             border-radius: 50%;
             background: radial-gradient(circle, var(--accent-glow), transparent 50%);
-            transform: translate(-38%, -28%);
+            transform: translate(-44%, -40%);
             pointer-events: none;
             z-index: 0;
             opacity: 0;
@@ -1718,6 +1727,7 @@
                 <button class="theme-dot" data-theme="aurora" title="Aurora" style="--dot-color:#34d399"></button>
                 <button class="theme-dot" data-theme="noir" title="Noir" style="--dot-color:#8b5cf6"></button>
                 <button class="theme-dot" data-theme="cosmos" title="Cosmos" style="--dot-color:#e8b931"></button>
+                <button class="theme-dot" data-theme="sakura" title="Sakura" style="--dot-color:#f0a0b8"></button>
             </div>
         </div>
     </div>
@@ -1918,8 +1928,8 @@
             <div class="feature-card">
                 <div class="feature-icon">&#127912;</div>
                 <h4>8 Themes &times; 3 Modes</h4>
-                <p>Midnight, Noir, Coffee, Rose, Cosmos, Nebula, Aurora, Sakura &mdash; each with Normal, Brighter, and Deeper OLED variants (24 total).</p>
-                <div class="feature-expand">Animated particles with scroll parallax (Sakura uses petal shapes). Live theme editor for per-variable CSS customization. Four font sizes up to Extra Large (20px). Theme preference syncs across devices via DB.</div>
+                <p>Midnight, Noir, Coffee, Rose, Cosmos, Nebula, Aurora, Sakura &mdash; each with Normal, Brighter, and Deeper OLED variants (24 total). Every theme has a unique visual element.</p>
+                <div class="feature-expand">Per-theme visuals: Sakura gets a cherry blossom tree with falling petals, Coffee has a steaming cup, Noir a swinging pendulum clock, Cosmos an orbiting solar system, Aurora shimmering curtains. Animated login screens with HiDPI canvas. Live theme editor for per-variable CSS customization. Performance mode toggle disables animations. Theme preference syncs across devices via DB.</div>
                 <div class="feature-toggle" onclick="this.parentElement.classList.toggle('expanded')">[ more ]</div>
             </div>
             <div class="feature-card">
@@ -2308,7 +2318,8 @@ var _themeColors = {
     nebula:   { stars: ['#a78bfa','#38bdf8','#d8d0e8'], accent: '#38bdf8' },
     aurora:   { stars: ['#34d399','#38bdf8','#d0e8e0'], accent: '#34d399' },
     noir:     { stars: ['#8b5cf6','#c084fc','#d4d4d8'], accent: '#8b5cf6' },
-    cosmos:   { stars: ['#e8b931','#96b4ff','#e0e4f0'], accent: '#e8b931' }
+    cosmos:   { stars: ['#e8b931','#96b4ff','#e0e4f0'], accent: '#e8b931' },
+    sakura:   { stars: ['#f0a0b8','#d4a0d0','#f0e4ec'], accent: '#f0a0b8' }
 };
 var _currentTheme = localStorage.getItem('portfolio_theme') || 'nebula';
 
