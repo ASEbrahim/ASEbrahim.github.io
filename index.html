@@ -7,7 +7,7 @@
     <meta name="description" content="Computer Engineering student building AI-powered intelligence systems. Creator of StratOS — a self-hosted strategic intelligence platform with a self-improving scorer.">
     <!-- Open Graph -->
     <meta property="og:title" content="Ahmad Sayed Alsayed Ebrahim — Computer Engineering Student · ML & Systems">
-    <meta property="og:description" content="Creator of StratOS — a self-hosted strategic intelligence platform with a self-improving AI scorer. 53,000+ lines, 30 trained profiles, 98.1% accuracy.">
+    <meta property="og:description" content="Creator of StratOS — a self-hosted strategic intelligence platform with a self-improving AI scorer. 61,000+ lines, 45 trained profiles, 94.5% direction accuracy.">
     <meta property="og:image" content="https://asebrahim.github.io/screenshots/dashboard.png">
     <meta property="og:url" content="https://asebrahim.github.io/">
     <meta property="og:type" content="website">
@@ -548,6 +548,7 @@
         }
 
         .val-bad { color: #ef4444; font-family: var(--font-mono); font-size: 13px; }
+        .val-mid { color: var(--text-secondary); font-family: var(--font-mono); font-size: 13px; }
         .val-good { color: var(--accent); font-weight: 600; font-family: var(--font-mono); font-size: 13px; }
         .val-change {
             color: var(--accent-secondary);
@@ -1778,94 +1779,94 @@
         </div>
 
         <p class="section-desc section-desc--tight reveal">
-            A self-hosted intelligence dashboard that aggregates news from 46 RSS feeds, DuckDuckGo, and Serper, tracks markets via yfinance, and scores content relevance using a locally fine-tuned LLM. The scorer improves itself through a distillation loop &mdash; Claude Opus re-scores articles, disagreements become training data, and DoRA fine-tuning updates the local model.
+            A self-hosted intelligence dashboard that aggregates news from RSS feeds, DuckDuckGo, and Serper, tracks markets via yfinance, and scores content relevance using a locally fine-tuned LLM. The scorer improves itself through a distillation loop &mdash; Gemini Flash and Claude Opus re-score articles, disagreements become training data, and DoRA fine-tuning updates the local model.
         </p>
         <p class="section-desc section-desc--mono reveal">
-            53,000+ lines &middot; 50+ modules &middot; Solo project &middot; Zero cloud dependency for inference
+            61,000+ lines &middot; 40+ modules &middot; Solo project &middot; Zero cloud dependency for inference
         </p>
 
         <!-- Metrics -->
         <div class="metrics-grid reveal">
             <div class="metric-card">
-                <div class="metric-value" data-count="98.1" data-suffix="%">0%</div>
+                <div class="metric-value" data-count="94.5" data-suffix="%">0%</div>
                 <div class="metric-label">Direction Accuracy</div>
-                <div class="metric-sublabel">V1: 90.7%</div>
+                <div class="metric-sublabel">V2: 91.7% &middot; V1: 90.7%</div>
             </div>
             <div class="metric-card">
-                <div class="metric-value" data-count="0.393" data-decimals="3">0</div>
+                <div class="metric-value" data-count="0.914" data-decimals="3">0</div>
                 <div class="metric-label">Mean Absolute Error</div>
-                <div class="metric-sublabel">V1: 1.553 &middot; 75% reduction</div>
+                <div class="metric-sublabel">V2: 1.544 &middot; 41% reduction</div>
             </div>
             <div class="metric-card">
-                <div class="metric-value" data-count="0.750" data-decimals="3">0</div>
+                <div class="metric-value" data-count="0.691" data-decimals="3">0</div>
                 <div class="metric-label">Spearman &rho;</div>
-                <div class="metric-sublabel">Rank correlation</div>
+                <div class="metric-sublabel">V2: 0.555 &middot; +24.5%</div>
             </div>
             <div class="metric-card">
-                <div class="metric-value" data-count="7.6" data-suffix="&times;">0&times;</div>
-                <div class="metric-label">Profile Awareness</div>
-                <div class="metric-sublabel">V2 spread: 7.90 vs V1: 1.04</div>
+                <div class="metric-value" data-count="75.5" data-suffix="%">0%</div>
+                <div class="metric-label">Within 1 Point</div>
+                <div class="metric-sublabel">V2: 53.4% &middot; +22pp</div>
             </div>
             <div class="metric-card">
-                <div class="metric-value" data-count="30" data-decimals="0">0</div>
+                <div class="metric-value" data-count="45" data-decimals="0">0</div>
                 <div class="metric-label">Trained Profiles</div>
-                <div class="metric-sublabel">20 countries</div>
+                <div class="metric-sublabel">Diverse professional roles</div>
             </div>
             <div class="metric-card">
-                <div class="metric-value" data-count="20550" data-decimals="0" data-separator="true">0</div>
+                <div class="metric-value" data-count="11785" data-decimals="0" data-separator="true">0</div>
                 <div class="metric-label">Training Examples</div>
-                <div class="metric-sublabel">Claude Opus teacher</div>
+                <div class="metric-sublabel">Gemini Flash teacher</div>
             </div>
         </div>
 
         <!-- V1 vs V2 Comparison -->
         <div class="comparison-section reveal">
-            <h3>V1 &rarr; V2 Scorer Evolution</h3>
+            <h3>V1 &rarr; V2 &rarr; V2.2 Scorer Evolution</h3>
             <table class="comparison-table">
                 <thead>
                     <tr>
                         <th>Metric</th>
                         <th>V1 Baseline</th>
-                        <th>V2 Production</th>
-                        <th>Delta</th>
+                        <th>V2</th>
+                        <th>V2.2 Production</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
                         <td>Direction Accuracy</td>
                         <td class="val-bad">90.7%</td>
-                        <td class="val-good">98.1%</td>
-                        <td class="val-change">+7.4pp</td>
+                        <td class="val-mid">91.7%</td>
+                        <td class="val-good">94.5%</td>
                     </tr>
                     <tr>
                         <td>Mean Absolute Error</td>
                         <td class="val-bad">1.553</td>
-                        <td class="val-good">0.393</td>
-                        <td class="val-change">&minus;75%</td>
+                        <td class="val-mid">1.544</td>
+                        <td class="val-good">0.914</td>
                     </tr>
                     <tr>
-                        <td>Profile Sensitivity Ratio</td>
-                        <td class="val-bad">39.7%</td>
-                        <td class="val-good">24.4%</td>
-                        <td class="val-change">&minus;15.3pp</td>
+                        <td>Spearman &rho;</td>
+                        <td class="val-bad">&mdash;</td>
+                        <td class="val-mid">0.555</td>
+                        <td class="val-good">0.691</td>
                     </tr>
                     <tr>
-                        <td>Profile Awareness Spread</td>
-                        <td class="val-bad">1.04</td>
-                        <td class="val-good">7.90</td>
-                        <td class="val-change">7.6&times; improvement</td>
-                    </tr>
-                    <tr>
-                        <td>Think Block Empty Rate</td>
-                        <td class="val-bad">~85%</td>
-                        <td class="val-good">0.0%</td>
-                        <td class="val-change">Eliminated</td>
+                        <td>Within 1 Point</td>
+                        <td class="val-bad">&mdash;</td>
+                        <td class="val-mid">53.4%</td>
+                        <td class="val-good">75.5%</td>
                     </tr>
                     <tr>
                         <td>Parse Failures</td>
                         <td class="val-bad">&mdash;</td>
-                        <td class="val-good">0 / 2,048</td>
-                        <td class="val-change">Zero</td>
+                        <td class="val-mid">5.0%</td>
+                        <td class="val-good">0.0%</td>
+                    </tr>
+                    <tr>
+                        <td>Training Cost</td>
+                        <td class="val-bad">~$17</td>
+                        <td class="val-mid">~$60</td>
+                        <td class="val-good">~$6</td>
                     </tr>
                 </tbody>
             </table>
@@ -1878,12 +1879,12 @@
             <!-- Mobile fallback (shown < 768px) -->
             <div class="arch-mobile">
                 <div class="arch-mobile-node"><div class="arch-mobile-title">Auth Layer</div><div class="arch-mobile-sub">email verify &middot; sessions &middot; profile isolation</div></div>
-                <div class="arch-mobile-node arch-mobile-node--blue"><div class="arch-mobile-title">News Sources + Market Data</div><div class="arch-mobile-sub">DDG &middot; Serper &middot; 46 RSS feeds &middot; yfinance</div></div>
+                <div class="arch-mobile-node arch-mobile-node--blue"><div class="arch-mobile-title">News Sources + Market Data</div><div class="arch-mobile-sub">DDG &middot; Serper &middot; RSS feeds &middot; yfinance &middot; CF Worker proxy</div></div>
                 <div class="arch-mobile-node"><div class="arch-mobile-title">NewsFetcher + MarketFetcher</div><div class="arch-mobile-sub">ThreadPool &middot; dedup &middot; 5 intervals</div></div>
                 <div class="arch-mobile-node"><div class="arch-mobile-title">AI Scorer (3-phase)</div><div class="arch-mobile-sub">Rules &rarr; Batch LLM &rarr; Re-score</div></div>
                 <div class="arch-mobile-node arch-mobile-node--blue"><div class="arch-mobile-title">SQLite + JSON API</div><div class="arch-mobile-sub">WAL mode &middot; 57 endpoints &middot; SSE</div></div>
                 <div class="arch-mobile-node"><div class="arch-mobile-title">Frontend SPA + SSE Bus</div><div class="arch-mobile-sub">Vanilla JS &middot; 24 themes &middot; live push</div></div>
-                <div class="arch-mobile-node arch-mobile-node--purple"><div class="arch-mobile-title">Feedback &rarr; Distillation &rarr; Training</div><div class="arch-mobile-sub">Claude Opus &middot; DoRA fine-tuning &rarr; loops back to scorer</div></div>
+                <div class="arch-mobile-node arch-mobile-node--purple"><div class="arch-mobile-title">Feedback &rarr; Distillation &rarr; Training</div><div class="arch-mobile-sub">Gemini Flash / Claude Opus &middot; DoRA fine-tuning &rarr; loops back to scorer</div></div>
             </div>
             <div class="arch-tip" id="arch-tip"></div>
         </div>
@@ -1893,8 +1894,8 @@
             <div class="feature-card">
                 <div class="feature-icon">&#129504;</div>
                 <h4>Self-Improving Scorer</h4>
-                <p>Two-tier feedback loop: implicit user signals (save/dismiss/rate) plus Claude Opus distillation at ~$0.40/cycle. Disagreements become training data that permanently updates local model weights.</p>
-                <div class="feature-expand">DoRA fine-tuning on 20,550 examples across 30 profiles spanning 20 countries. V2 achieves 98.1% direction accuracy with 0.393 MAE &mdash; a 75% error reduction from V1.</div>
+                <p>Two-tier feedback loop: implicit user signals (save/dismiss/rate) plus Gemini Flash and Claude Opus distillation at ~$6/generation. Disagreements become training data that permanently updates local model weights.</p>
+                <div class="feature-expand">DoRA fine-tuning on 11,785 examples across 45 profiles. V2.2 achieves 94.5% direction accuracy with 0.914 MAE &mdash; a 41% error reduction from V2, with training cost reduced 90% ($60 &rarr; $6).</div>
                 <div class="feature-toggle" onclick="this.parentElement.classList.toggle('expanded')">[ more ]</div>
             </div>
             <div class="feature-card">
@@ -1950,7 +1951,7 @@
                 <div class="feature-icon">&#127919;</div>
                 <h4>Guided Onboarding</h4>
                 <p>3-step wizard walks new users from zero to a fully configured dashboard in under 2 minutes. AI generates categories and tickers from your role and location.</p>
-                <div class="feature-expand">Step 1: Role and location &rarr; AI suggests categories + tickers. Step 2: Pick news sources (46 RSS feeds across Finance and Politics). Step 3: First scan. Dismissible tour highlights with per-user completion tracking.</div>
+                <div class="feature-expand">Step 1: Role and location &rarr; AI suggests categories + tickers. Step 2: Pick news sources (RSS feeds with auto-discovery). Step 3: First scan. Dismissible tour highlights with per-user completion tracking.</div>
                 <div class="feature-toggle" onclick="this.parentElement.classList.toggle('expanded')">[ more ]</div>
             </div>
         </div>
@@ -2043,8 +2044,8 @@
 
         <!-- Spearman Rho Chart -->
         <div class="rho-chart-section reveal">
-            <h3>Per-Profile Spearman &rho; &mdash; All 30 Profiles</h3>
-            <p>Rank correlation between V2 predictions and ground truth. All positive, no flagged profiles. Hover to see details.</p>
+            <h3>Per-Profile Spearman &rho; &mdash; V2 Evaluation (30 Profiles)</h3>
+            <p>Rank correlation between V2 predictions and ground truth. V2.2 achieves an overall &rho; of 0.691 (+24.5% vs V2). Hover to see details.</p>
             <div class="rho-chart" id="rho-chart">
                 <!-- Populated by JS -->
             </div>
@@ -2058,7 +2059,7 @@
         <div class="reveal">
             <div class="section-label">Technology</div>
             <div class="section-title">Built With</div>
-            <p class="section-desc">Entirely local-first. Zero recurring costs for inference. The only paid component is optional Claude Opus distillation at ~$0.40 per improvement cycle.</p>
+            <p class="section-desc">Entirely local-first. Zero recurring costs for inference. The only paid component is optional distillation at ~$6 per training generation (90% cheaper than V2).</p>
         </div>
 
         <div class="stack-grid reveal">
@@ -2073,7 +2074,7 @@
                 <div class="stack-dot"></div>
                 <div>
                     <div class="label">Vanilla JavaScript</div>
-                    <div class="detail">Frontend SPA &middot; ~18,800 lines</div>
+                    <div class="detail">Frontend SPA &middot; 14 modules</div>
                 </div>
             </div>
             <div class="stack-item">
@@ -2086,15 +2087,15 @@
             <div class="stack-item">
                 <div class="stack-dot"></div>
                 <div>
-                    <div class="label">Qwen3-8B + DoRA</div>
-                    <div class="detail">Fine-tuned scorer &middot; Q8_0 GGUF</div>
+                    <div class="label">Qwen3.5-9B + DoRA</div>
+                    <div class="detail">Fine-tuned scorer V2.2 &middot; Q8_0 GGUF</div>
                 </div>
             </div>
             <div class="stack-item">
                 <div class="stack-dot"></div>
                 <div>
-                    <div class="label">Claude Opus 4.5</div>
-                    <div class="detail">Teacher model &middot; distillation</div>
+                    <div class="label">Gemini Flash + Claude Opus</div>
+                    <div class="detail">Dual teacher models &middot; distillation</div>
                 </div>
             </div>
             <div class="stack-item">
@@ -2164,7 +2165,7 @@
         <div class="reveal">
             <div class="section-label">Evolution</div>
             <div class="section-title">Training Journey</div>
-            <p class="section-desc section-desc--spaced">19 failed training runs. Each one taught something the documentation never mentioned. The path from a flat scorer to 98.1% accuracy wasn't straight.</p>
+            <p class="section-desc section-desc--spaced">19 failed training runs. Each one taught something the documentation never mentioned. The path from a flat scorer to 94.5% direction accuracy wasn't straight.</p>
         </div>
 
         <div class="timeline reveal">
@@ -2197,10 +2198,24 @@
             </div>
 
             <div class="timeline-item success">
-                <div class="timeline-date">V2 &middot; Production</div>
-                <h4>98.1% Direction Accuracy</h4>
-                <p>10.7 hours training on 7900 XTX. MAE dropped from 1.553 to 0.393 (75% reduction). Profile awareness jumped from 1.04 to 7.90 (7.6&times;). Zero parse failures across 2,048 eval examples. Deployed to production.</p>
+                <div class="timeline-date">V2 &middot; First Production</div>
+                <h4>91.7% Direction Accuracy</h4>
+                <p>10.7 hours training on 7900 XTX. Profile awareness jumped from 1.04 to 7.90 (7.6&times;). Zero parse failures across 2,048 eval examples. First production deployment.</p>
                 <span class="timeline-tag pass">Deployed</span>
+            </div>
+
+            <div class="timeline-item failure">
+                <div class="timeline-date">V2.1 &middot; Failed</div>
+                <h4>Think-Text Catastrophe</h4>
+                <p>Attempted to include chain-of-thought text in training. MAE exploded to 3.244, direction accuracy crashed to 53.5%. Changed 4+ variables simultaneously &mdash; broke the fundamental rule of one change per version.</p>
+                <span class="timeline-tag fail">Catastrophic &middot; Lesson learned</span>
+            </div>
+
+            <div class="timeline-item success">
+                <div class="timeline-date">V2.2 &middot; Production</div>
+                <h4>94.5% Direction Accuracy &mdash; $6 Training</h4>
+                <p>Switched to Qwen3.5-9B base and Gemini Flash as teacher (90% cost reduction: $60 &rarr; $6). 11,785 examples across 45 profiles. MAE: 0.914 (41% reduction vs V2). Spearman &rho;: 0.691 (+24.5%). Zero parse failures. 7 hours on 7900 XTX.</p>
+                <span class="timeline-tag pass">Current production</span>
             </div>
         </div>
     </div>
@@ -2220,7 +2235,7 @@
                     I'm a Computer Engineering student at the American University of Kuwait, graduating Spring 2027. StratOS started because I was tired of opening a dozen tabs every morning &mdash; jobs, news, stocks, tech &mdash; just to feel caught up. I wanted <strong>one place</strong> to be "in the know" on everything I care about, ranked by how much it actually matters to me. So I built it.
                 </p>
                 <p>
-                    That "one place" somehow turned into 53,000+ lines of code with a self-improving AI scorer, multi-user authentication, a distillation pipeline that costs $0.40 per improvement cycle, and 19 failed training runs that each taught me something the documentation never mentioned. I focus on ML pipelines, full-stack systems with local-first principles, and getting GPU training to work on AMD hardware &mdash; which, if you know ROCm, you know is its own adventure.
+                    That "one place" somehow turned into 61,000+ lines of code with a self-improving AI scorer, multi-user authentication, a distillation pipeline that costs $6 per training generation (down 90% from the previous version), and 19 failed training runs that each taught me something the documentation never mentioned. I focus on ML pipelines, full-stack systems with local-first principles, and getting GPU training to work on AMD hardware &mdash; which, if you know ROCm, you know is its own adventure.
                 </p>
                 <p>
                     I'm looking for systems and ML engineering roles in Kuwait's energy sector, where AI meets industrial operations and the problems are actually interesting.
@@ -2891,9 +2906,9 @@ function setPortfolioTheme(name) {
     const el = document.getElementById('hero-typewriter');
     const phrases = [
         'Computer Engineering student building <strong>AI-powered intelligence systems</strong> that score, learn, and improve autonomously — running entirely on local hardware.',
-        'Building a <strong>self-improving AI scorer</strong> that learns from Claude Opus and permanently bakes improvements into local model weights.',
-        'Training <strong>custom LLMs on AMD GPUs</strong> — DoRA fine-tuning, chain-of-thought distillation, and 30-profile evaluation pipelines.',
-        '53,000+ lines of code. <strong>19 failed training runs.</strong> One system that tells you what matters today.',
+        'Building a <strong>self-improving AI scorer</strong> that learns from Gemini Flash and Claude Opus, permanently baking improvements into local model weights.',
+        'Training <strong>custom LLMs on AMD GPUs</strong> — DoRA fine-tuning, dual-teacher distillation, and 45-profile evaluation pipelines.',
+        '61,000+ lines of code. <strong>19 failed training runs.</strong> One system that tells you what matters today.',
         'Multi-user auth, email verification, <strong>cross-device sync</strong>, and per-request profile isolation &mdash; production-grade, not a prototype.'
     ];
     let phraseIdx = 0;
@@ -3293,8 +3308,8 @@ document.querySelectorAll('.metric-value[data-count]').forEach(el => {
     var nodes = [
         { id:'auth',      label:'Auth Layer',       sub:'email verify \u00b7 sessions \u00b7 rate limiting',    color:'green', tier:0, col:'full',
           tip:'Hashed PINs, 7-day session tokens, per-request profile isolation, and rate limiting on all mutation endpoints.' },
-        { id:'news-src',  label:'News Sources',     sub:'DDG \u00b7 Serper \u00b7 RSS',                        color:'blue',  tier:1, col:0,
-          tip:'DuckDuckGo, Serper Google API, and 46 curated RSS feeds. Sources fetched in parallel via ThreadPoolExecutor.' },
+        { id:'news-src',  label:'News Sources',     sub:'DDG \u00b7 Serper \u00b7 RSS \u00b7 CF Proxy',          color:'blue',  tier:1, col:0,
+          tip:'DuckDuckGo, Serper Google API, RSS feeds with auto-discovery, and Cloudflare Worker proxy. Sources fetched in parallel via ThreadPoolExecutor.' },
         { id:'market-src',label:'Market Data',      sub:'yfinance OHLCV \u00b7 5 intervals',                   color:'blue',  tier:1, col:1,
           tip:'Yahoo Finance OHLCV data across 5 intervals (1m to 1wk). Per-profile watchlist tickers.' },
         { id:'news-fetch',label:'NewsFetcher',      sub:'ThreadPool \u00b7 dedup',                             color:'green', tier:2, col:0,
@@ -3313,8 +3328,8 @@ document.querySelectorAll('.metric-value[data-count]').forEach(el => {
           tip:'Vanilla JS SPA (app, market, mobile, settings modules). 8 themes \u00d7 3 modes = 24 variants. PWA-ready.' },
         { id:'feedback',  label:'User Feedback',    sub:'save \u00b7 dismiss \u00b7 rate',                     color:'purple',tier:6, col:'full',
           tip:'Users save, dismiss, or rate articles. Feedback stored with profile hash and drives the distillation training loop.' },
-        { id:'distill',   label:'Distillation',     sub:'Claude Opus \u00b7 $0.40/cycle',                      color:'purple',tier:7, col:0,
-          tip:'Claude Opus re-scores local results. Disagreements (\u0394 \u2265 2.0) become training corrections. ~$0.40 per cycle.' },
+        { id:'distill',   label:'Distillation',     sub:'Gemini Flash / Opus \u00b7 $6/gen',                    color:'purple',tier:7, col:0,
+          tip:'Gemini Flash and Claude Opus re-score local results. Disagreements (\u0394 \u2265 2.0) become training corrections. ~$6 per training generation.' },
         { id:'training',  label:'DoRA Fine-Tuning', sub:'LoRA \u2192 GGUF \u2192 Ollama',                      color:'purple',tier:7, col:1,
           tip:'DoRA/LoRA fine-tuning on AMD ROCm. Auto-selects model tier by VRAM. Pipeline: train \u2192 merge \u2192 GGUF export \u2192 Ollama register.' }
     ];
@@ -3624,8 +3639,8 @@ document.addEventListener('keydown', function(e) {
     const commands = {
         help: 'Available commands: whoami, stack, stats, links, stratos, clear, help',
         whoami: 'Ahmad Sayed Alsayed Ebrahim — Computer Engineering student at AUK, Kuwait. Building AI-powered intelligence systems.',
-        stack: 'Python 3.12 · Vanilla JS · Ollama · Qwen3-8B + DoRA · Claude Opus 4.5 · PyTorch + PEFT · SQLite · TradingView · ROCm 6.2',
-        stats: '53,000+ lines · 50+ modules · 20,550 training examples · 30 profiles · 20 countries · 98.1% accuracy · $0.40/improvement cycle',
+        stack: 'Python 3.12 · Vanilla JS · Ollama · Qwen3.5-9B + DoRA · Gemini Flash + Claude Opus · PyTorch + PEFT · SQLite · TradingView · ROCm 6.2',
+        stats: '61,000+ lines · 40+ modules · 11,785 training examples · 45 profiles · 94.5% accuracy · $6/training generation',
         links: '<a class="terminal-link" href="https://github.com/ASEbrahim" target="_blank" rel="noopener">GitHub</a> · <a class="terminal-link" href="https://github.com/ASEbrahim/stratos" target="_blank" rel="noopener">StratOS Repo</a> · <a class="terminal-link" href="https://linkedin.com/in/asebrahim" target="_blank" rel="noopener">LinkedIn</a> · <a class="terminal-link" href="mailto:ahmad.s.ebrahim@outlook.com">Email</a>',
         stratos: '"Tell the system who you are, and it tells you what matters today." — A self-hosted strategic intelligence platform with a self-improving AI scorer.',
         clear: '__CLEAR__',
@@ -3636,8 +3651,8 @@ document.addEventListener('keydown', function(e) {
         pwd: '/home/ahmad/stratos',
         echo: 'echo echo echo...',
         exit: 'You can check out any time you like, but you can never leave.',
-        ping: 'PONG — 0.393ms (that\'s also our MAE)',
-        neofetch: 'ahmad@stratos — OS: StratOS v2.1 · CPU: Ryzen 7 7800X3D · GPU: RX 7900 XTX 24GB · RAM: 32GB DDR5 · Shell: bash'
+        ping: 'PONG — 0.914ms (that\'s also our MAE)',
+        neofetch: 'ahmad@stratos — OS: StratOS v2.2 · CPU: Ryzen 7 7800X3D · GPU: RX 7900 XTX 24GB · RAM: 32GB DDR5 · Shell: bash'
     };
 
     input.addEventListener('keydown', function(e) {
