@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ahmad Sayed Alsayed Ebrahim — Computer Engineering Student · ML & Systems</title>
-    <meta name="description" content="Computer Engineering student building AI-powered intelligence systems. Creator of StratOS — a self-hosted strategic intelligence platform with a self-improving scorer.">
+    <meta name="description" content="Computer Engineering student building AI-powered intelligence systems. Creator of StratOS — a 111K-line self-hosted strategic intelligence platform with a self-improving scorer, React Native mobile app, RP chat system, and 6 AI personas.">
     <!-- Open Graph -->
     <meta property="og:title" content="Ahmad Sayed Alsayed Ebrahim — Computer Engineering Student · ML & Systems">
-    <meta property="og:description" content="Creator of StratOS — a self-hosted strategic intelligence platform with a self-improving AI scorer. 61,000+ lines, 45 trained profiles, 94.5% direction accuracy.">
+    <meta property="og:description" content="Creator of StratOS — a 111K-line self-hosted strategic intelligence platform with a self-improving AI scorer, React Native mobile app, RP chat system, and 6 AI personas. 50 trained profiles, 1,018 commits, 94.5% direction accuracy.">
     <meta property="og:image" content="https://asebrahim.github.io/screenshots/dashboard.png">
     <meta property="og:url" content="https://asebrahim.github.io/">
     <meta property="og:type" content="website">
@@ -967,6 +967,7 @@
         .arch-tip--green .arch-tip-title::before { background: #38bdf8; }
         .arch-tip--blue .arch-tip-title::before { background: #38bdf8; }
         .arch-tip--purple .arch-tip-title::before { background: #a78bfa; }
+        #agent-arch-tip .arch-tip-title::before { display: none; }
 
         /* Mobile arch fallback */
         .arch-mobile {
@@ -1779,10 +1780,10 @@
         </div>
 
         <p class="section-desc section-desc--tight reveal">
-            A self-hosted intelligence dashboard that aggregates news from RSS feeds, DuckDuckGo, and Serper, tracks markets via yfinance, and scores content relevance using a locally fine-tuned LLM. The scorer improves itself through a distillation loop &mdash; Gemini Flash and Claude Opus re-score articles, disagreements become training data, and DoRA fine-tuning updates the local model.
+            A self-hosted intelligence platform that aggregates news, tracks markets, and scores content relevance using a locally fine-tuned AI model. Features a 6-persona AI agent, YouTube knowledge base with 7 lenses, RP chat system with tiered memory and branching timelines, a production React Native mobile app (105+ commits), AI image generation via ComfyUI, and dual TTS/STT. The scorer improves itself through a distillation loop &mdash; Gemini Flash and Claude Opus re-score articles, disagreements become training data, and DoRA fine-tuning updates the local model. 4-mode platform vision: Intelligence, Anime/Manga, Collection/TCG, Gaming.
         </p>
         <p class="section-desc section-desc--mono reveal">
-            61,000+ lines &middot; 40+ modules &middot; Solo project &middot; Zero cloud dependency for inference
+            111,000+ lines &middot; 192 files &middot; 1,018 commits &middot; Solo project &middot; Zero cloud dependency for inference
         </p>
 
         <!-- Metrics -->
@@ -1808,14 +1809,24 @@
                 <div class="metric-sublabel">V2: 53.4% &middot; +22pp</div>
             </div>
             <div class="metric-card">
-                <div class="metric-value" data-count="45" data-decimals="0">0</div>
+                <div class="metric-value" data-count="50" data-decimals="0">0</div>
                 <div class="metric-label">Trained Profiles</div>
-                <div class="metric-sublabel">Diverse professional roles</div>
+                <div class="metric-sublabel">Across 20+ countries</div>
             </div>
             <div class="metric-card">
                 <div class="metric-value" data-count="11785" data-decimals="0" data-separator="true">0</div>
                 <div class="metric-label">Training Examples</div>
-                <div class="metric-sublabel">Gemini Flash teacher</div>
+                <div class="metric-sublabel">Gemini Flash teacher &middot; $6 total</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value" data-count="1018" data-decimals="0" data-separator="true">0</div>
+                <div class="metric-label">Git Commits</div>
+                <div class="metric-sublabel">31 audit &middot; 105 mobile</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value" data-count="47" data-decimals="0">0</div>
+                <div class="metric-label">Database Tables</div>
+                <div class="metric-sublabel">SQLite WAL &middot; 390MB</div>
             </div>
         </div>
 
@@ -1882,11 +1893,32 @@
                 <div class="arch-mobile-node arch-mobile-node--blue"><div class="arch-mobile-title">News Sources + Market Data</div><div class="arch-mobile-sub">DDG &middot; Serper &middot; RSS feeds &middot; yfinance &middot; CF Worker proxy</div></div>
                 <div class="arch-mobile-node"><div class="arch-mobile-title">NewsFetcher + MarketFetcher</div><div class="arch-mobile-sub">ThreadPool &middot; dedup &middot; 5 intervals</div></div>
                 <div class="arch-mobile-node"><div class="arch-mobile-title">AI Scorer (3-phase)</div><div class="arch-mobile-sub">Rules &rarr; Batch LLM &rarr; Re-score</div></div>
-                <div class="arch-mobile-node arch-mobile-node--blue"><div class="arch-mobile-title">SQLite + JSON API</div><div class="arch-mobile-sub">WAL mode &middot; 57 endpoints &middot; SSE</div></div>
-                <div class="arch-mobile-node"><div class="arch-mobile-title">Frontend SPA + SSE Bus</div><div class="arch-mobile-sub">Vanilla JS &middot; 24 themes &middot; live push</div></div>
+                <div class="arch-mobile-node arch-mobile-node--blue"><div class="arch-mobile-title">YouTube Worker + Voice I/O</div><div class="arch-mobile-sub">faster-whisper &middot; 7 AI lenses &middot; Kokoro TTS &middot; Edge-TTS</div></div>
+                <div class="arch-mobile-node arch-mobile-node--blue"><div class="arch-mobile-title">SQLite + JSON API</div><div class="arch-mobile-sub">WAL mode &middot; 70+ endpoints &middot; SSE</div></div>
+                <div class="arch-mobile-node"><div class="arch-mobile-title">Frontend SPA + SSE Bus</div><div class="arch-mobile-sub">Vanilla JS &middot; 24 themes &middot; 20+ modules &middot; live push</div></div>
+                <div class="arch-mobile-node arch-mobile-node--purple"><div class="arch-mobile-title">RPG Scenario Engine</div><div class="arch-mobile-sub">entities &middot; branching narratives &middot; AI-driven outcomes</div></div>
                 <div class="arch-mobile-node arch-mobile-node--purple"><div class="arch-mobile-title">Feedback &rarr; Distillation &rarr; Training</div><div class="arch-mobile-sub">Gemini Flash / Claude Opus &middot; DoRA fine-tuning &rarr; loops back to scorer</div></div>
             </div>
             <div class="arch-tip" id="arch-tip"></div>
+        </div>
+
+        <!-- Agent Architecture — Animated Canvas Pipeline -->
+        <div class="arch-diagram reveal" id="agent-arch-diagram">
+            <div class="arch-diagram-title"><span class="bar"></span> Strat Agent Pipeline</div>
+            <div style="position:relative;width:100%;aspect-ratio:16/10;max-height:900px;background:#04030a;border-radius:12px;overflow:hidden;border:1px solid var(--border);">
+                <canvas id="agent-pipeline-canvas" style="display:block;width:100%;height:100%;"></canvas>
+            </div>
+            <!-- Mobile fallback (shown < 768px) -->
+            <div class="arch-mobile">
+                <div class="arch-mobile-node"><div class="arch-mobile-title">User Input</div><div class="arch-mobile-sub">text &middot; voice &middot; $ticker commands &middot; file upload</div></div>
+                <div class="arch-mobile-node"><div class="arch-mobile-title">Persona Router</div><div class="arch-mobile-sub">multi-persona selection &middot; profile context injection</div></div>
+                <div class="arch-mobile-node arch-mobile-node--blue"><div class="arch-mobile-title">Cloud APIs</div><div class="arch-mobile-sub">Claude Opus/Sonnet &middot; Gemini Flash/Pro &middot; streaming</div></div>
+                <div class="arch-mobile-node arch-mobile-node--blue"><div class="arch-mobile-title">Ollama Local</div><div class="arch-mobile-sub">Qwen3 30B-A3B &middot; zero-cost inference</div></div>
+                <div class="arch-mobile-node"><div class="arch-mobile-title">Tool Executor</div><div class="arch-mobile-sub">web_search &middot; manage_watchlist &middot; manage_categories &middot; file_upload</div></div>
+                <div class="arch-mobile-node arch-mobile-node--blue"><div class="arch-mobile-title">Context Sources</div><div class="arch-mobile-sub">profile &middot; articles &middot; markets &middot; YouTube insights</div></div>
+                <div class="arch-mobile-node arch-mobile-node--purple"><div class="arch-mobile-title">SSE Response Stream</div><div class="arch-mobile-sub">real-time streaming &middot; fullscreen &middot; inline chat</div></div>
+            </div>
+            <div class="arch-tip" id="agent-arch-tip"></div>
         </div>
 
         <!-- Features -->
@@ -1895,7 +1927,7 @@
                 <div class="feature-icon">&#129504;</div>
                 <h4>Self-Improving Scorer</h4>
                 <p>Two-tier feedback loop: implicit user signals (save/dismiss/rate) plus Gemini Flash and Claude Opus distillation at ~$6/generation. Disagreements become training data that permanently updates local model weights.</p>
-                <div class="feature-expand">DoRA fine-tuning on 11,785 examples across 45 profiles. V2.2 achieves 94.5% direction accuracy with 0.914 MAE &mdash; a 41% error reduction from V2, with training cost reduced 90% ($60 &rarr; $6).</div>
+                <div class="feature-expand">DoRA fine-tuning on 11,785 examples across 50 profiles. V2.2 achieves 94.5% direction accuracy with 0.914 MAE &mdash; a 41% error reduction from V2, with training cost reduced 90% ($60 &rarr; $6). Security-audited with 31 commits and zero exploitable vulnerabilities.</div>
                 <div class="feature-toggle" onclick="this.parentElement.classList.toggle('expanded')">[ more ]</div>
             </div>
             <div class="feature-card">
@@ -1914,16 +1946,16 @@
             </div>
             <div class="feature-card">
                 <div class="feature-icon">&#129302;</div>
-                <h4>Strat Agent</h4>
-                <p>Context-aware AI chat with tool use &mdash; web search, watchlist and category management. Ticker commands ($NVDA, $BTC) for instant market lookups.</p>
-                <div class="feature-expand">Powered by Qwen3 30B-A3B (MoE, 3.3B active params/token). Full portfolio and profile context in every response. Tool calls for web_search, manage_watchlist, manage_categories. Streaming via SSE.</div>
+                <h4>6-Persona AI Agent</h4>
+                <p>Context-aware AI chat with 11 tools across 6 personas &mdash; Intelligence, Market, Scholarly, Gaming, Anime, TCG. Fullscreen mode with Claude/ChatGPT-style sidebar, suggestion chips, and conversation management.</p>
+                <div class="feature-expand">Powered by Claude, Gemini, and local Qwen3.5 via Ollama. 11 agent tools including web_search, manage_watchlist, manage_categories, file_upload, read_url. Streaming via SSE with fullscreen mode. 180-prompt automated test suite across all 6 personas.</div>
                 <div class="feature-toggle" onclick="this.parentElement.classList.toggle('expanded')">[ more ]</div>
             </div>
             <div class="feature-card">
                 <div class="feature-icon">&#128241;</div>
-                <h4>Mobile PWA</h4>
-                <p>Installable PWA with touch gestures &mdash; swipe cards to save/dismiss, pull-to-refresh, edge-swipe sidebar &mdash; bottom nav, and fullscreen charts.</p>
-                <div class="feature-expand">Two-tier drawing toolbar: always-visible 48px hotbar (6 tools) + drag-up full panel with all 20 tools in a 4-column grid. Service worker for offline access.</div>
+                <h4>React Native Mobile App</h4>
+                <p>Production-grade mobile app built with React Native + Expo 54 + TypeScript. 5 themes, SSE streaming, character creator with TavernCard V2 import, RP chat with swipe/branch/edit. 105+ commits, 7,825 lines.</p>
+                <div class="feature-expand">Zustand state management, rich prose formatting, double-tap bookmarks, haptic feedback, skeleton loading, search with debounce, export chat via native share sheet. Zero TypeScript errors. Plus a web PWA with touch gestures, swipe cards, and fullscreen charts.</div>
                 <div class="feature-toggle" onclick="this.parentElement.classList.toggle('expanded')">[ more ]</div>
             </div>
             <div class="feature-card">
@@ -1954,6 +1986,34 @@
                 <div class="feature-expand">Step 1: Role and location &rarr; AI suggests categories + tickers. Step 2: Pick news sources (RSS feeds with auto-discovery). Step 3: First scan. Dismissible tour highlights with per-user completion tracking.</div>
                 <div class="feature-toggle" onclick="this.parentElement.classList.toggle('expanded')">[ more ]</div>
             </div>
+            <div class="feature-card">
+                <div class="feature-icon">&#127909;</div>
+                <h4>YouTube Knowledge Engine</h4>
+                <p>Add YouTube channels and auto-extract knowledge from every video using 7 AI-powered lenses: summary, key insights, entities, timeline, eloquence, transcript, and Q&amp;A.</p>
+                <div class="feature-expand">Auto-transcription via faster-whisper (local, GPU-accelerated). Batch channel processing with SSE progress. Lens results stored per-video with inline playback. Star parallax canvas with theme-aware visuals. Channel management with play-all and bulk actions.</div>
+                <div class="feature-toggle" onclick="this.parentElement.classList.toggle('expanded')">[ more ]</div>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">&#128483;</div>
+                <h4>Voice I/O</h4>
+                <p>Dual text-to-speech engine &mdash; Kokoro (local neural TTS) and Edge-TTS (cloud fallback) &mdash; with voice selection, speed control, and article narration.</p>
+                <div class="feature-expand">Kokoro runs fully local on GPU for zero-latency narration. Edge-TTS provides 400+ voices across 90+ languages as fallback. Speech-to-text input via faster-whisper. Per-profile voice preferences synced across devices.</div>
+                <div class="feature-toggle" onclick="this.parentElement.classList.toggle('expanded')">[ more ]</div>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">&#128270;</div>
+                <h4>Source Verification</h4>
+                <p>AI-powered narration source verification &mdash; analyzes article credibility, cross-references claims, and flags potential misinformation before you read.</p>
+                <div class="feature-expand">Verification runs as a background agent task. Results include credibility score, source reputation, claim analysis, and suggested cross-references. Integrated into the article narration flow.</div>
+                <div class="feature-toggle" onclick="this.parentElement.classList.toggle('expanded')">[ more ]</div>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">&#127918;</div>
+                <h4>RP Chat + Gaming</h4>
+                <p>Roleplay chat with 6-archetype detection, per-turn prompt injection, 3-tier memory (facts, recent, arc summaries), swipe regeneration, branching timelines, and director notes. Powered by Cydonia 24B.</p>
+                <div class="feature-expand">Automated regression testing (150-point scoring). GM narration mode with interactive stat displays. World import wizard with Fandom wiki canon import. Sibyl theme with Dominator reticle. AI image generation via ComfyUI + CHROMA model with GPU swap management.</div>
+                <div class="feature-toggle" onclick="this.parentElement.classList.toggle('expanded')">[ more ]</div>
+            </div>
         </div>
 
         <!-- Screenshot Showcase -->
@@ -1962,46 +2022,39 @@
                 <span class="bar"></span>
                 In Action
             </h3>
-            <p class="section-sub-desc">Click any screenshot to view full-size. Desktop dashboard, market charts, fullscreen analysis, guided tour, setup wizard, and mobile PWA.</p>
+            <p class="section-sub-desc">Click any screenshot to view full-size. Executive summary, market charts, settings, YouTube knowledge base, and themed login.</p>
             <div class="screenshot-grid">
                 <div class="screenshot-card" onclick="openLightbox(this)">
                     <img src="screenshots/dashboard.png" alt="StratOS Dashboard" onerror="this.parentElement.classList.add('no-img')">
-                    <div class="screenshot-label">Dashboard Feed</div>
+                    <div class="screenshot-label">Executive Summary + Strat Agent</div>
                     <div class="screenshot-fallback">
                         <div class="fallback-placeholder">&#128202;<br><span>Dashboard</span></div>
                     </div>
                 </div>
                 <div class="screenshot-card" onclick="openLightbox(this)">
                     <img src="screenshots/markets.png" alt="StratOS Markets Panel" onerror="this.parentElement.classList.add('no-img')">
-                    <div class="screenshot-label">Markets Panel</div>
+                    <div class="screenshot-label">Markets &mdash; Dual Charts + Ticker Intel</div>
                     <div class="screenshot-fallback">
                         <div class="fallback-placeholder">&#128200;<br><span>Markets</span></div>
                     </div>
                 </div>
                 <div class="screenshot-card" onclick="openLightbox(this)">
-                    <img src="screenshots/chart-fullscreen.png" alt="StratOS Fullscreen Chart" onerror="this.parentElement.classList.add('no-img')">
-                    <div class="screenshot-label">Fullscreen Chart</div>
+                    <img src="screenshots/settings.png" alt="StratOS Settings" onerror="this.parentElement.classList.add('no-img')">
+                    <div class="screenshot-label">Settings &mdash; 8 Themes + Profile</div>
                     <div class="screenshot-fallback">
-                        <div class="fallback-placeholder">&#128200;<br><span>Chart</span></div>
+                        <div class="fallback-placeholder">&#128295;<br><span>Settings</span></div>
                     </div>
                 </div>
                 <div class="screenshot-card" onclick="openLightbox(this)">
-                    <img src="screenshots/guided-tour.png" alt="StratOS Guided Tour" onerror="this.parentElement.classList.add('no-img')">
-                    <div class="screenshot-label">Guided Tour</div>
+                    <img src="screenshots/youtube.png" alt="StratOS YouTube Knowledge Base" onerror="this.parentElement.classList.add('no-img')">
+                    <div class="screenshot-label">YouTube Knowledge Base</div>
                     <div class="screenshot-fallback">
-                        <div class="fallback-placeholder">&#128161;<br><span>Tour</span></div>
+                        <div class="fallback-placeholder">&#127909;<br><span>YouTube</span></div>
                     </div>
                 </div>
                 <div class="screenshot-card" onclick="openLightbox(this)">
-                    <img src="screenshots/wizard-priorities.png" alt="StratOS Setup Wizard" onerror="this.parentElement.classList.add('no-img')">
-                    <div class="screenshot-label">Setup Wizard</div>
-                    <div class="screenshot-fallback">
-                        <div class="fallback-placeholder">&#127919;<br><span>Wizard</span></div>
-                    </div>
-                </div>
-                <div class="screenshot-card" onclick="openLightbox(this)">
-                    <img src="screenshots/mobile-overview.jpg" alt="StratOS Mobile Overview" onerror="this.parentElement.classList.add('no-img')">
-                    <div class="screenshot-label">Mobile Overview</div>
+                    <img src="screenshots/login.png" alt="StratOS Login" onerror="this.parentElement.classList.add('no-img')">
+                    <div class="screenshot-label">Login &mdash; Cosmos Theme</div>
                     <div class="screenshot-fallback">
                         <div class="fallback-placeholder">&#128241;<br><span>Mobile</span></div>
                     </div>
@@ -2074,7 +2127,7 @@
                 <div class="stack-dot"></div>
                 <div>
                     <div class="label">Vanilla JavaScript</div>
-                    <div class="detail">Frontend SPA &middot; 14 modules</div>
+                    <div class="detail">Frontend SPA &middot; 20+ modules</div>
                 </div>
             </div>
             <div class="stack-item">
@@ -2109,7 +2162,7 @@
                 <div class="stack-dot"></div>
                 <div>
                     <div class="label">SQLite (WAL)</div>
-                    <div class="detail">14 tables &middot; auth + feedback + history</div>
+                    <div class="detail">25+ tables &middot; auth + feedback + history + youtube + scenarios</div>
                 </div>
             </div>
             <div class="stack-item">
@@ -2145,6 +2198,34 @@
                 <div>
                     <div class="label">Cloudflare Tunnel</div>
                     <div class="detail">Public access &middot; free</div>
+                </div>
+            </div>
+            <div class="stack-item">
+                <div class="stack-dot"></div>
+                <div>
+                    <div class="label">faster-whisper</div>
+                    <div class="detail">Local speech-to-text &middot; GPU-accelerated</div>
+                </div>
+            </div>
+            <div class="stack-item">
+                <div class="stack-dot"></div>
+                <div>
+                    <div class="label">Kokoro TTS</div>
+                    <div class="detail">Local neural text-to-speech</div>
+                </div>
+            </div>
+            <div class="stack-item">
+                <div class="stack-dot"></div>
+                <div>
+                    <div class="label">Edge-TTS</div>
+                    <div class="detail">Cloud TTS fallback &middot; 400+ voices</div>
+                </div>
+            </div>
+            <div class="stack-item">
+                <div class="stack-dot"></div>
+                <div>
+                    <div class="label">yt-dlp + youtube-transcript-api</div>
+                    <div class="detail">YouTube audio download &middot; transcript extraction</div>
                 </div>
             </div>
         </div>
@@ -2235,7 +2316,7 @@
                     I'm a Computer Engineering student at the American University of Kuwait, graduating Spring 2027. StratOS started because I was tired of opening a dozen tabs every morning &mdash; jobs, news, stocks, tech &mdash; just to feel caught up. I wanted <strong>one place</strong> to be "in the know" on everything I care about, ranked by how much it actually matters to me. So I built it.
                 </p>
                 <p>
-                    That "one place" somehow turned into 61,000+ lines of code with a self-improving AI scorer, multi-user authentication, a distillation pipeline that costs $6 per training generation (down 90% from the previous version), and 19 failed training runs that each taught me something the documentation never mentioned. I focus on ML pipelines, full-stack systems with local-first principles, and getting GPU training to work on AMD hardware &mdash; which, if you know ROCm, you know is its own adventure.
+                    That "one place" somehow turned into 111,000+ lines of code across 192 files &mdash; a self-improving AI scorer across 3 training generations, a production React Native mobile app (105+ commits), an RP chat system with branching timelines and tiered memory, AI image generation, dual TTS engines, a YouTube knowledge base, and 6 AI personas. The distillation pipeline went from $60 to $6 per cycle while getting 40% more accurate. I focus on ML pipelines, full-stack systems with local-first principles, and getting GPU training to work on AMD hardware &mdash; which, if you know ROCm, you know is its own adventure.
                 </p>
                 <p>
                     I'm looking for systems and ML engineering roles in Kuwait's energy sector, where AI meets industrial operations and the problems are actually interesting.
@@ -2406,6 +2487,23 @@ function setPortfolioTheme(name) {
     // Rose hearts
     var hearts = [];
     var HEART_COUNT = 20;
+
+    // Nebula black hole particles
+    var _bhParticles = [];
+    for (var bhi = 0; bhi < 260; bhi++) {
+        var bhBand = Math.random();
+        var bhDist = 60 + bhBand * 220;
+        _bhParticles.push({
+            angle: Math.random() * Math.PI * 2,
+            dist: bhDist,
+            speed: (0.08 + Math.random() * 0.12) * (200 / (bhDist + 40)),
+            r: Math.random() * 1.2 + 0.3,
+            a: Math.random() * 0.5 + 0.15,
+            yOff: (Math.random() - 0.5) * 6,
+            tier: bhBand < 0.25 ? 0 : bhBand < 0.6 ? 1 : 2
+        });
+    }
+    var _BH_TILT = 0.32, _BH_ROT = -0.1;
 
     function resize() {
         canvas.width = window.innerWidth;
@@ -2657,54 +2755,100 @@ function setPortfolioTheme(name) {
         }
     }
 
-    // ── Nebula black hole ──
+    // ── Nebula black hole (full 3D-projected accretion disk) ──
+    function _bhProject(bhcx, bhcy, dist, angle) {
+        var x3 = Math.cos(angle) * dist, y3 = Math.sin(angle) * dist;
+        var cr = Math.cos(_BH_ROT), sr = Math.sin(_BH_ROT);
+        return { x: bhcx + x3 * cr - y3 * sr, y: bhcy + (x3 * sr + y3 * cr) * _BH_TILT, depth: Math.sin(angle) };
+    }
+
+    function _bhDrawDisk(bhcx, bhcy, t) {
+        ctx.save(); ctx.translate(bhcx, bhcy); ctx.rotate(_BH_ROT); ctx.scale(1, _BH_TILT);
+        var g0 = ctx.createRadialGradient(0, 0, 100, 0, 0, 290);
+        g0.addColorStop(0, 'rgba(100,80,200,0.0)');
+        g0.addColorStop(0.3, 'rgba(80,60,180,0.03)');
+        g0.addColorStop(0.6, 'rgba(56,130,220,0.02)');
+        g0.addColorStop(1, 'rgba(56,189,248,0)');
+        ctx.fillStyle = g0; ctx.beginPath(); ctx.arc(0, 0, 290, 0, Math.PI * 2); ctx.fill();
+        for (var ring = 0; ring < 4; ring++) {
+            var rd = 80 + ring * 45;
+            var alpha = [0.08, 0.06, 0.04, 0.025][ring];
+            ctx.beginPath(); ctx.arc(0, 0, rd, 0, Math.PI * 2);
+            ctx.strokeStyle = 'rgba(140,120,250,' + alpha + ')'; ctx.lineWidth = 20 + ring * 8; ctx.stroke();
+        }
+        ctx.restore();
+    }
+
+    function _bhDrawVoid(bhcx, bhcy, t) {
+        var pulse = 1 + Math.sin(t * 0.3) * 0.02;
+        var eventR = 28 * pulse;
+        var prGrad = ctx.createRadialGradient(bhcx, bhcy, eventR - 2, bhcx, bhcy, eventR + 12);
+        prGrad.addColorStop(0, 'rgba(167,139,250,0)');
+        prGrad.addColorStop(0.3, 'rgba(167,139,250,0.35)');
+        prGrad.addColorStop(0.5, 'rgba(200,180,255,0.5)');
+        prGrad.addColorStop(0.7, 'rgba(125,211,252,0.3)');
+        prGrad.addColorStop(1, 'rgba(56,189,248,0)');
+        ctx.fillStyle = prGrad; ctx.beginPath(); ctx.arc(bhcx, bhcy, eventR + 12, 0, Math.PI * 2); ctx.fill();
+        var lensGrad = ctx.createRadialGradient(bhcx, bhcy, eventR, bhcx, bhcy, eventR * 4);
+        lensGrad.addColorStop(0, 'rgba(167,139,250,0.12)');
+        lensGrad.addColorStop(0.3, 'rgba(120,100,220,0.06)');
+        lensGrad.addColorStop(0.6, 'rgba(56,189,248,0.02)');
+        lensGrad.addColorStop(1, 'rgba(56,189,248,0)');
+        ctx.fillStyle = lensGrad; ctx.beginPath(); ctx.arc(bhcx, bhcy, eventR * 4, 0, Math.PI * 2); ctx.fill();
+        var voidGrad = ctx.createRadialGradient(bhcx, bhcy, 0, bhcx, bhcy, eventR);
+        voidGrad.addColorStop(0, 'rgba(0,0,0,1)');
+        voidGrad.addColorStop(0.85, 'rgba(0,0,0,1)');
+        voidGrad.addColorStop(1, 'rgba(0,0,0,0.7)');
+        ctx.fillStyle = voidGrad; ctx.beginPath(); ctx.arc(bhcx, bhcy, eventR, 0, Math.PI * 2); ctx.fill();
+    }
+
     function drawBlackHole(t) {
-        var cx = canvas.width * 0.82;
-        var cy = canvas.height * 0.2;
+        var bhcx = canvas.width * 0.82;
+        var bhcy = canvas.height * 0.22;
+        var tierColors = [[200,190,255],[140,120,250],[56,160,248]];
 
-        // Accretion disk — spinning rings
-        for (var ring = 4; ring >= 0; ring--) {
-            var radius = 30 + ring * 18;
-            var spin = t * (0.3 - ring * 0.04);
-            ctx.globalAlpha = 0.08 - ring * 0.012;
-            ctx.strokeStyle = ring % 2 === 0 ? '#a78bfa' : '#38bdf8';
-            ctx.lineWidth = 3 - ring * 0.3;
-            ctx.beginPath();
-            ctx.ellipse(cx, cy, radius, radius * 0.3, spin, 0, Math.PI * 2);
-            ctx.stroke();
+        _bhDrawDisk(bhcx, bhcy, t);
+
+        // Project and sort particles by depth
+        var projected = [];
+        for (var pi = 0; pi < _bhParticles.length; pi++) {
+            var p = _bhParticles[pi];
+            var ang = p.angle + t * p.speed;
+            var pr = _bhProject(bhcx, bhcy, p.dist, ang);
+            projected.push({ x: pr.x, y: pr.y + p.yOff, d: pr.depth, r: p.r, a: p.a, tier: p.tier });
+        }
+        projected.sort(function(a, b) { return a.d - b.d; });
+
+        // Behind-void particles
+        for (var bi = 0; bi < projected.length; bi++) {
+            var bp = projected[bi];
+            if (bp.d > 0.15) continue;
+            var bc = tierColors[bp.tier];
+            var bda = bp.a * (0.6 + bp.d * 0.4);
+            ctx.globalAlpha = bda;
+            ctx.fillStyle = 'rgb(' + bc[0] + ',' + bc[1] + ',' + bc[2] + ')';
+            ctx.beginPath(); ctx.arc(bp.x, bp.y, bp.r, 0, Math.PI * 2); ctx.fill();
         }
 
-        // Event horizon glow
-        var grad = ctx.createRadialGradient(cx, cy, 0, cx, cy, 35);
-        grad.addColorStop(0, 'rgba(0,0,0,0.9)');
-        grad.addColorStop(0.5, 'rgba(10,5,20,0.6)');
-        grad.addColorStop(0.7, 'rgba(56,189,248,0.12)');
-        grad.addColorStop(1, 'transparent');
-        ctx.globalAlpha = 0.7;
-        ctx.fillStyle = grad;
-        ctx.beginPath();
-        ctx.arc(cx, cy, 35, 0, Math.PI * 2);
-        ctx.fill();
+        _bhDrawVoid(bhcx, bhcy, t);
 
-        // Core void
-        ctx.globalAlpha = 0.85;
-        ctx.fillStyle = '#000';
-        ctx.beginPath();
-        ctx.arc(cx, cy, 12, 0, Math.PI * 2);
-        ctx.fill();
-
-        // Light wisps being pulled in
-        for (var w = 0; w < 6; w++) {
-            var wAngle = t * 0.5 + w * Math.PI / 3;
-            var wDist = 45 + Math.sin(t * 0.8 + w) * 15;
-            var wx = cx + Math.cos(wAngle) * wDist;
-            var wy = cy + Math.sin(wAngle) * wDist * 0.3;
-            ctx.globalAlpha = 0.15 + Math.sin(t + w) * 0.05;
-            ctx.fillStyle = w % 2 === 0 ? '#a78bfa' : '#38bdf8';
-            ctx.beginPath();
-            ctx.arc(wx, wy, 1.5, 0, Math.PI * 2);
-            ctx.fill();
+        // In-front particles (with glow for tier 0)
+        for (var fi = 0; fi < projected.length; fi++) {
+            var fp = projected[fi];
+            if (fp.d <= 0.15) continue;
+            var fc = tierColors[fp.tier];
+            var fda = fp.a * (0.7 + fp.d * 0.3);
+            ctx.globalAlpha = fda;
+            if (fp.tier === 0) {
+                var glow = ctx.createRadialGradient(fp.x, fp.y, 0, fp.x, fp.y, fp.r * 5);
+                glow.addColorStop(0, 'rgba(' + fc[0] + ',' + fc[1] + ',' + fc[2] + ',' + (fda * 0.3) + ')');
+                glow.addColorStop(1, 'rgba(' + fc[0] + ',' + fc[1] + ',' + fc[2] + ',0)');
+                ctx.fillStyle = glow; ctx.beginPath(); ctx.arc(fp.x, fp.y, fp.r * 5, 0, Math.PI * 2); ctx.fill();
+            }
+            ctx.fillStyle = 'rgb(' + fc[0] + ',' + fc[1] + ',' + fc[2] + ')';
+            ctx.beginPath(); ctx.arc(fp.x, fp.y, fp.r, 0, Math.PI * 2); ctx.fill();
         }
+        ctx.globalAlpha = 1;
     }
 
     // ── Rose floating hearts ──
@@ -2908,7 +3052,7 @@ function setPortfolioTheme(name) {
         'Computer Engineering student building <strong>AI-powered intelligence systems</strong> that score, learn, and improve autonomously — running entirely on local hardware.',
         'Building a <strong>self-improving AI scorer</strong> that learns from Gemini Flash and Claude Opus, permanently baking improvements into local model weights.',
         'Training <strong>custom LLMs on AMD GPUs</strong> — DoRA fine-tuning, dual-teacher distillation, and 45-profile evaluation pipelines.',
-        '61,000+ lines of code. <strong>19 failed training runs.</strong> One system that tells you what matters today.',
+        '111,000+ lines of code. <strong>1,018 commits. 19 failed training runs.</strong> One system that tells you what matters today.',
         'Multi-user auth, email verification, <strong>cross-device sync</strong>, and per-request profile isolation &mdash; production-grade, not a prototype.'
     ];
     let phraseIdx = 0;
@@ -3318,19 +3462,25 @@ document.querySelectorAll('.metric-value[data-count]').forEach(el => {
           tip:'Fetches OHLCV candles for all watched tickers across 5 intervals with configurable TTL caching.' },
         { id:'scorer',    label:'AI Scorer',        sub:'Rules \u2192 Batch LLM \u2192 Re-score',              color:'green', tier:3, col:'full',
           tip:'3-phase pipeline: rule-based noise filters, batch LLM scoring via Ollama, then calibration re-score. Fully profile-adaptive.' },
-        { id:'sqlite',    label:'SQLite (WAL)',     sub:'14 tables \u00b7 thread-safe',                        color:'blue',  tier:4, col:0,
-          tip:'WAL-mode SQLite with 14 tables covering news, markets, entities, users, sessions, and feedback. Thread-safe via lock.' },
-        { id:'api',       label:'JSON API',         sub:'57 endpoints \u00b7 gzip \u00b7 SSE',                 color:'blue',  tier:4, col:1,
-          tip:'57 REST endpoints with gzip compression, SSE live updates, and per-request profile scoping.' },
-        { id:'sse',       label:'SSE Bus',          sub:'live push \u00b7 auto-cleanup',                       color:'green', tier:5, col:0,
-          tip:'Server-Sent Events for live dashboard updates: scan progress, briefing completion, and market refreshes.' },
-        { id:'frontend',  label:'Frontend SPA',     sub:'Vanilla JS \u00b7 24 themes \u00b7 PWA',              color:'green', tier:5, col:1,
-          tip:'Vanilla JS SPA (app, market, mobile, settings modules). 8 themes \u00d7 3 modes = 24 variants. PWA-ready.' },
-        { id:'feedback',  label:'User Feedback',    sub:'save \u00b7 dismiss \u00b7 rate',                     color:'purple',tier:6, col:'full',
+        { id:'yt-worker', label:'YouTube Worker',   sub:'faster-whisper \u00b7 7 AI lenses',                   color:'blue',  tier:4, col:0,
+          tip:'Batch channel processing: audio download via yt-dlp, local transcription via faster-whisper, then 7 AI lens extractions (summary, insights, entities, timeline, eloquence, transcript, Q&A).' },
+        { id:'voice-io',  label:'Voice I/O',        sub:'Kokoro \u00b7 Edge-TTS \u00b7 Whisper',               color:'blue',  tier:4, col:1,
+          tip:'Dual TTS: Kokoro (local neural) and Edge-TTS (400+ cloud voices). Speech input via faster-whisper. Article narration with source verification.' },
+        { id:'sqlite',    label:'SQLite (WAL)',     sub:'25+ tables \u00b7 thread-safe',                       color:'blue',  tier:5, col:0,
+          tip:'WAL-mode SQLite with 25+ tables covering news, markets, entities, users, sessions, feedback, youtube, and scenarios. Thread-safe via lock.' },
+        { id:'api',       label:'JSON API',         sub:'70+ endpoints \u00b7 gzip \u00b7 SSE',                color:'blue',  tier:5, col:1,
+          tip:'70+ REST endpoints with gzip compression, SSE live updates, file upload, and per-request profile scoping.' },
+        { id:'sse',       label:'SSE Bus',          sub:'live push \u00b7 auto-cleanup',                       color:'green', tier:6, col:0,
+          tip:'Server-Sent Events for live dashboard updates: scan progress, briefing completion, market refreshes, and YouTube extraction progress.' },
+        { id:'frontend',  label:'Frontend SPA',     sub:'Vanilla JS \u00b7 24 themes \u00b7 PWA',              color:'green', tier:6, col:1,
+          tip:'Vanilla JS SPA (20+ modules). 8 themes \u00d7 3 modes = 24 variants. PWA-ready with YouTube, scenarios, and voice panels.' },
+        { id:'scenarios', label:'RPG Scenario Engine', sub:'entities \u00b7 branching \u00b7 AI narratives',    color:'purple',tier:7, col:'full',
+          tip:'Interactive RPG scenario simulations with entity tracking (people, orgs, locations, assets). Branching narratives with AI-driven outcomes. Auto-populated from real-world data. Profile-scoped with persona-generic definitions.' },
+        { id:'feedback',  label:'User Feedback',    sub:'save \u00b7 dismiss \u00b7 rate',                     color:'purple',tier:8, col:'full',
           tip:'Users save, dismiss, or rate articles. Feedback stored with profile hash and drives the distillation training loop.' },
-        { id:'distill',   label:'Distillation',     sub:'Gemini Flash / Opus \u00b7 $6/gen',                    color:'purple',tier:7, col:0,
+        { id:'distill',   label:'Distillation',     sub:'Gemini Flash / Opus \u00b7 $6/gen',                    color:'purple',tier:9, col:0,
           tip:'Gemini Flash and Claude Opus re-score local results. Disagreements (\u0394 \u2265 2.0) become training corrections. ~$6 per training generation.' },
-        { id:'training',  label:'DoRA Fine-Tuning', sub:'LoRA \u2192 GGUF \u2192 Ollama',                      color:'purple',tier:7, col:1,
+        { id:'training',  label:'DoRA Fine-Tuning', sub:'LoRA \u2192 GGUF \u2192 Ollama',                      color:'purple',tier:9, col:1,
           tip:'DoRA/LoRA fine-tuning on AMD ROCm. Auto-selects model tier by VRAM. Pipeline: train \u2192 merge \u2192 GGUF export \u2192 Ollama register.' }
     ];
 
@@ -3339,9 +3489,12 @@ document.querySelectorAll('.metric-value[data-count]').forEach(el => {
         ['auth','news-src'],['auth','market-src'],
         ['news-src','news-fetch'],['market-src','mkt-fetch'],
         ['news-fetch','scorer'],['mkt-fetch','scorer'],
-        ['scorer','sqlite'],['sqlite','api'],
+        ['scorer','yt-worker'],['scorer','voice-io'],
+        ['yt-worker','sqlite'],['voice-io','sqlite'],
+        ['sqlite','api'],
         ['api','sse'],['api','frontend'],
-        ['frontend','feedback'],
+        ['frontend','scenarios'],
+        ['scenarios','feedback'],
         ['feedback','distill'],['distill','training'],
         ['training','scorer',true]
     ];
@@ -3349,10 +3502,10 @@ document.querySelectorAll('.metric-value[data-count]').forEach(el => {
     // Compute node positions
     var tierY = [];
     var startY = 16;
-    for (var t = 0; t <= 7; t++) {
+    for (var t = 0; t <= 9; t++) {
         tierY[t] = startY + t * (NH + GAP_Y);
     }
-    var totalH = tierY[7] + NH + 16;
+    var totalH = tierY[9] + NH + 16;
     svg.setAttribute('viewBox', '0 0 ' + W + ' ' + totalH);
 
     var posMap = {};
@@ -3386,9 +3539,11 @@ document.querySelectorAll('.metric-value[data-count]').forEach(el => {
     var layers = [
         { tiers:[0], label:'AUTH' },
         { tiers:[1,2], label:'INGESTION' },
-        { tiers:[3], label:'PROCESSING' },
-        { tiers:[4,5], label:'DELIVERY' },
-        { tiers:[6,7], label:'LEARNING' }
+        { tiers:[3], label:'SCORING' },
+        { tiers:[4], label:'ENRICHMENT' },
+        { tiers:[5,6], label:'DELIVERY' },
+        { tiers:[7], label:'SIMULATION' },
+        { tiers:[8,9], label:'LEARNING' }
     ];
     var bandGroup = el('g', { 'class':'layer-bands' });
     layers.forEach(function(layer) {
@@ -3601,6 +3756,228 @@ document.querySelectorAll('.metric-value[data-count]').forEach(el => {
 })();
 
 // ========================
+// AGENT PIPELINE — Animated Canvas (V7 Aligned Horizon)
+// ========================
+(function(){
+var cv=document.getElementById('agent-pipeline-canvas');
+var diagram=document.getElementById('agent-arch-diagram');
+if(!cv||!diagram)return;
+var X=cv.getContext('2d'),dpr=Math.max(devicePixelRatio||1,2),W,H,anim=null,active=false;
+var agTip=document.getElementById('agent-arch-tip');
+var hitboxes=[];
+function resize(){var c=cv.parentElement;W=c.clientWidth;H=c.clientHeight;cv.width=W*dpr;cv.height=H*dpr;cv.style.width=W+'px';cv.style.height=H+'px';X.setTransform(dpr,0,0,dpr,0,0);}
+function rgb(c){return[parseInt(c.slice(1,3),16),parseInt(c.slice(3,5),16),parseInt(c.slice(5,7),16)];}
+function bz(a,b,c,d,t){var u=1-t;return u*u*u*a+3*u*u*t*b+3*u*t*t*c+t*t*t*d;}
+function bzP(x0,y0,cx0,cy0,cx1,cy1,x1,y1,n){var p=[];for(var i=0;i<=n;i++){var t=i/n;p.push({x:bz(x0,cx0,cx1,x1,t),y:bz(y0,cy0,cy1,y1,t)});}return p;}
+var P=[
+{name:'Intelligence',color:'#34d399',badge:'Core',ctx:[{l:'Profile + Prefs',s:'role · location · signals',tip:'User role, location, and behavioral signals (save/dismiss/rate) that drive personalized scoring weights.'},{l:'Scored News Feed',s:'top 30 · briefing · 7d',tip:'Top 30 articles ranked by the DoRA-tuned model, with daily briefing and 7-day rolling window.'}],hasTools:true,tip:'News intelligence \u2014 three-phase scoring pipeline: rule filter \u2192 batch LLM \u2192 calibration re-rank. Same article, different score per user profile.'},
+{name:'Market',color:'#60a5fa',badge:'1m Refresh',ctx:[{l:'Watchlist OHLCV',s:'5 TFs · trend · alerts',tip:'OHLCV data across 5 timeframes (1m\u20131W) with auto trend detection and price alerts. Updates every 1 minute in focus mode.'},{l:'Finance News',s:'top 15 · sentiment',tip:'Top 15 financial articles with per-ticker sentiment tags (bullish / bearish / neutral).'}],hasTools:true,tip:'Financial analysis \u2014 watchlist with multi-timeframe trends (1m refresh in focus mode), $ticker commands, and sentiment-tagged news.'},
+{name:'Scholarly',color:'#c084fc',badge:'Research',ctx:[{l:'YouTube KB',s:'channels · 7 lenses · CJK',tip:'YouTube knowledge base \u2014 transcript extraction analyzed through 7 analytical lenses with CJK subtitle support.'},{l:'Document Store',s:'narrations · citations',tip:'Uploaded documents processed into narrations with extractable citations for research workflows.'}],hasTools:true,tip:'Knowledge research \u2014 YouTube channel analysis with 7 analytical lenses, document narrations, and citation extraction.'},
+{name:'Gaming',color:'#f472b6',badge:'Interactive',ctx:[{l:'Persona Router',s:'GM / Immersive RP',tip:'Routes between Game Master mode (world-building, NPC control) and Immersive RP mode (character embodiment).'},{l:'Scenario + Entities',s:'NPCs · lore · auto-save',tip:'Persistent scenario state \u2014 NPCs, locations, items, and lore auto-saved across sessions.'}],hasTools:true,tip:'Game master \u2014 immersive RP with persistent entity system, scenario branching, NPC auto-save, and fandom wiki import.'},
+{name:'Anime',color:'#fb923c',badge:'Seasonal',ctx:[{l:'User Context',s:'watchlist · genres · prefs',tip:'Personal anime watchlist, genre preferences, and viewing history for tailored seasonal picks.'}],hasTools:false,tip:'Anime tracker \u2014 personalized seasonal recommendations based on watchlist, genre preferences, and viewing patterns.'},
+{name:'TCG',color:'#fbbf24',badge:'Collection',ctx:[{l:'User Context',s:'decks · collection · format',tip:'Deck lists, card collection inventory, and format preferences (Standard, Modern, Commander, etc.).'}],hasTools:false,tip:'Card game assistant \u2014 deck building, collection tracking, and format-specific strategy.'}
+];
+var hubTips={
+agent:{t:'Strat Agent',b:'Central routing hub \u2014 receives user input (text, voice, $ticker, file uploads) and dispatches to the active persona with full profile context. Supports multi-persona merge (up to 3).'},
+llm:{t:'Qwen3.5 LLM',b:'Local inference via Ollama \u2014 9B parameters on AMD ROCm. Temperature 0.5\u20130.7 per persona. Automatic &lt;think&gt; tag stripping. Zero-cost, fully private.'},
+tools:{t:'Tool Executor',b:'Function calling engine \u2014 up to 8 tool rounds per request. Tools: web_search, manage_watchlist, manage_categories, file_upload, youtube_search, and more.'},
+sse:{t:'SSE Stream',b:'Server-Sent Events \u2014 character-by-character streaming to fullscreen and inline chat. Markdown rendering, code highlighting, thinking-block display.'}
+};
+var stars=[];for(var i=0;i<300;i++)stars.push({x:Math.random(),y:Math.random(),r:Math.random()*1.1+0.1,a:Math.random()*0.22+0.02,s:Math.random()*2+0.3,ph:Math.random()*6.28,c:Math.random()<0.15?[167,139,250]:Math.random()<0.35?[56,189,248]:[215,218,235]});
+function rr(x,y,w,h,r){X.beginPath();X.moveTo(x+r,y);X.lineTo(x+w-r,y);X.quadraticCurveTo(x+w,y,x+w,y+r);X.lineTo(x+w,y+h-r);X.quadraticCurveTo(x+w,y+h,x+w-r,y+h);X.lineTo(x+r,y+h);X.quadraticCurveTo(x,y+h,x,y+h-r);X.lineTo(x,y+r);X.quadraticCurveTo(x,y,x+r,y);X.closePath();}
+function drawStream(pts,color,radius,time,seed){
+var c=rgb(color),cr=c[0],cg=c[1],cb=c[2];
+X.save();X.lineCap='round';X.lineJoin='round';
+X.strokeStyle='rgba('+cr+','+cg+','+cb+',0.018)';X.lineWidth=radius*3+14;
+X.beginPath();for(var i=0;i<pts.length;i++)i?X.lineTo(pts[i].x,pts[i].y):X.moveTo(pts[i].x,pts[i].y);X.stroke();
+X.strokeStyle='rgba('+cr+','+cg+','+cb+',0.03)';X.lineWidth=radius*2+6;
+X.beginPath();for(var i=0;i<pts.length;i++)i?X.lineTo(pts[i].x,pts[i].y):X.moveTo(pts[i].x,pts[i].y);X.stroke();
+X.strokeStyle='#0d0b1a';X.lineWidth=radius*2+2;
+X.beginPath();for(var i=0;i<pts.length;i++)i?X.lineTo(pts[i].x,pts[i].y):X.moveTo(pts[i].x,pts[i].y);X.stroke();
+X.strokeStyle='#070514';X.lineWidth=radius*2-2;
+X.beginPath();for(var i=0;i<pts.length;i++)i?X.lineTo(pts[i].x,pts[i].y):X.moveTo(pts[i].x,pts[i].y);X.stroke();
+X.globalCompositeOperation='lighter';
+var segs=[],tl=0;for(var i=1;i<pts.length;i++){var d=Math.hypot(pts[i].x-pts[i-1].x,pts[i].y-pts[i-1].y);tl+=d;segs.push({d:d,cum:tl});}
+var bc=Math.max(16,tl/10|0);
+for(var b=0;b<bc;b++){var ph=((time*0.0001+seed*0.042+b/bc)%1),tgt=ph*tl,pt=pts[0];
+for(var i=0;i<segs.length;i++){if(segs[i].cum>=tgt){var prev=i?segs[i-1].cum:0,f=(tgt-prev)/segs[i].d;pt={x:pts[i].x+(pts[i+1].x-pts[i].x)*f,y:pts[i].y+(pts[i+1].y-pts[i].y)*f};break;}}
+var pulse=0.4+0.5*Math.sin(time*0.0009+b*1.3+seed),br=Math.max(1,radius*pulse*1.3);
+var g=X.createRadialGradient(pt.x,pt.y,0,pt.x,pt.y,br);
+g.addColorStop(0,'rgba('+cr+','+cg+','+cb+',0.32)');g.addColorStop(0.3,'rgba('+cr+','+cg+','+cb+',0.14)');g.addColorStop(1,'rgba('+cr+','+cg+','+cb+',0)');
+X.fillStyle=g;X.beginPath();X.arc(pt.x,pt.y,br,0,6.283);X.fill();}
+X.globalCompositeOperation='source-over';
+X.globalAlpha=0.07;X.strokeStyle='rgb('+Math.min(255,cr+60)+','+Math.min(255,cg+60)+','+Math.min(255,cb+60)+')';X.lineWidth=0.5;
+X.beginPath();for(var i=0;i<pts.length;i++){var w=Math.sin(i*0.06-time*0.0015+seed)*radius*0.25;i?X.lineTo(pts[i].x,pts[i].y-radius*0.25+w):X.moveTo(pts[i].x,pts[i].y-radius*0.25+w);}X.stroke();
+X.globalAlpha=1;X.restore();}
+function drawPill(x,y,w,h,color,label,sub){
+var c=rgb(color),cr=c[0],cg=c[1],cb=c[2],r=h/2;
+X.shadowColor='rgba('+cr+','+cg+','+cb+',0.1)';X.shadowBlur=10;
+rr(x,y,w,h,r);var g=X.createLinearGradient(x,y,x,y+h);g.addColorStop(0,'#16122c');g.addColorStop(1,'#0b0918');
+X.fillStyle=g;X.fill();X.shadowBlur=0;X.strokeStyle='rgba('+cr+','+cg+','+cb+',0.22)';X.lineWidth=1;X.stroke();
+X.textAlign='center';X.textBaseline='middle';X.font='bold 13px system-ui,sans-serif';X.fillStyle='#e8ecf2';
+X.fillText(label,x+w/2,y+h/2);}
+function drawHub(cx,cy,r,label,sub,sub2,time,colors,isMain){
+for(var ring=0;ring<(isMain?4:2);ring++){var rr2=Math.max(2,r*(1.4+ring*0.5)),alpha=[0.015,0.008,0.004,0.002][ring];
+var g=X.createRadialGradient(cx,cy,Math.max(1,rr2*0.3),cx,cy,Math.max(2,rr2));
+g.addColorStop(0,'rgba(167,139,250,'+(alpha*2)+')');g.addColorStop(0.5,'rgba(56,189,248,'+alpha+')');g.addColorStop(1,'transparent');
+X.fillStyle=g;X.beginPath();X.arc(cx,cy,rr2,0,6.283);X.fill();}
+if(isMain){X.save();X.beginPath();X.arc(cx,cy,Math.max(1,r-3),0,6.283);X.clip();X.globalCompositeOperation='lighter';
+colors.forEach(function(c,ci){var cc=rgb(c),sp=ci%2?0.0004:-0.0003;
+for(var arm=0;arm<5;arm++){var ba=time*sp+ci*0.7+arm*1.2566;
+for(var p=0;p<5;p++){var dist=r*(0.1+p*0.14),spiral=ba+p*0.32,px=cx+Math.cos(spiral)*dist,py=cy+Math.sin(spiral)*dist,pr=Math.max(1,r*(0.09-p*0.01)),a=Math.max(0.005,0.06-p*0.01);
+var g=X.createRadialGradient(px,py,0,px,py,pr);g.addColorStop(0,'rgba('+cc[0]+','+cc[1]+','+cc[2]+','+a+')');g.addColorStop(1,'rgba('+cc[0]+','+cc[1]+','+cc[2]+',0)');
+X.fillStyle=g;X.beginPath();X.arc(px,py,pr,0,6.283);X.fill();}}});
+X.globalCompositeOperation='source-over';X.restore();}
+X.shadowColor='rgba(167,139,250,0.12)';X.shadowBlur=isMain?24:14;
+X.beginPath();X.arc(cx,cy,r,0,6.283);
+var bg=X.createRadialGradient(cx,cy-r*0.15,0,cx,cy,Math.max(1,r));bg.addColorStop(0,isMain?'#1e1a3c':'#1a1632');bg.addColorStop(1,isMain?'#080618':'#0a0816');
+X.fillStyle=bg;X.fill();X.shadowBlur=0;
+colors.forEach(function(c,i){var cc=rgb(c),ang=-1.5708+(i/colors.length)*6.283,angE=-1.5708+((i+0.82)/colors.length)*6.283;
+X.beginPath();X.arc(cx,cy,r,ang,angE);X.strokeStyle='rgba('+cc[0]+','+cc[1]+','+cc[2]+',0.5)';X.lineWidth=isMain?2.5:2;X.stroke();});
+X.textAlign='center';X.textBaseline='middle';X.font='bold '+(isMain?16:13)+'px system-ui,sans-serif';X.fillStyle='#f1f5f9';
+X.fillText(label,cx,cy-(sub?isMain?14:7:0));
+if(sub){X.font=(isMain?'9.5':'8.5')+'px system-ui,sans-serif';X.fillStyle='rgba(210,200,255,0.8)';X.fillText(sub,cx,cy+(isMain?7:9));}
+if(sub2){X.font='8px system-ui,sans-serif';X.fillStyle='rgba(210,200,255,0.6)';X.fillText(sub2,cx,cy+22);}}
+function draw(){
+if(!active)return;X.clearRect(0,0,W,H);if(W<10||H<10){anim=requestAnimationFrame(draw);return;}
+var t=performance.now();X.fillStyle='#04030a';X.fillRect(0,0,W,H);
+hitboxes=[];
+var n1=X.createRadialGradient(W*0.45,H*0.5,0,W*0.5,H*0.5,Math.max(2,W*0.5));
+n1.addColorStop(0,'rgba(15,12,30,0.6)');n1.addColorStop(0.5,'rgba(10,8,20,0.3)');n1.addColorStop(1,'transparent');X.fillStyle=n1;X.fillRect(0,0,W,H);
+for(var si=0;si<stars.length;si++){var s=stars[si],fl=0.5+0.5*Math.sin(t*0.001*s.s+s.ph);X.globalAlpha=s.a*fl;X.fillStyle='rgb('+s.c[0]+','+s.c[1]+','+s.c[2]+')';X.beginPath();X.arc(s.x*W,s.y*H,s.r,0,6.283);X.fill();}X.globalAlpha=1;
+// Symmetric row positioning — rows centered exactly at H*0.5
+var n=P.length,totalSpan=H*0.84,rowGap=totalSpan/(n-1),rowYs=[];
+for(var i=0;i<n;i++)rowYs.push(H*0.5-totalSpan/2+i*rowGap);
+var pipeR=8,nH=52,pw=W*0.115,pg=W*0.009;
+var aR=Math.min(68,W*0.052,H*0.09),aCX=W*0.065,aCY=H*0.5;
+var mSX=aCX+aR+W*0.008,mEX=W*0.17,ctxX=mEX+W*0.014;
+var hubY=H*0.5,vR=Math.min(78,H*0.1,W*0.065),vCX=W*0.54,vCY=hubY;
+var oR=Math.min(74,H*0.095,W*0.064),oCX=W-oR-4,oCY=hubY;
+// Tool Executor centered with equal edge-to-edge gaps
+var sR=Math.min(68,H*0.085,W*0.058),sCX=(vCX+vR+oCX-oR)/2,sCY=hubY;
+// Backbone
+X.save();X.strokeStyle='rgba(167,139,250,0.03)';X.lineWidth=1;X.setLineDash([4,6]);X.beginPath();X.moveTo(vCX+vR+4,hubY);X.lineTo(oCX-oR-4,hubY);X.stroke();X.setLineDash([]);X.restore();
+// Max pill end X (2-pill personas) — used to keep streams at their own Y until past all pills
+var maxPillEnd=ctxX+(pw+pg)+pw;
+// Penetration: how far pipes extend inside each hub circle
+var penA=aR*0.25,penV=vR*0.3,penS=sR*0.3,penO=oR*0.3;
+// Streams
+for(var i=0;i<n;i++){var p=P[i],ry=rowYs[i],off=(i-(n-1)/2),nOff=off/((n-1)/2);
+var exitY=aCY+off*aR*0.32,sMid=mSX+(mEX-mSX)*0.5,eX=mSX+(mEX-mSX)*(0.6+0.15*Math.abs(nOff));
+// Outer rows start bending toward target Y earlier to avoid crossing neighbor pills
+var cpY1=exitY+(ry-exitY)*0.25*Math.abs(nOff);
+// Agent exit: start inside agent hub
+drawStream(bzP(aCX+aR-penA,exitY,eX,cpY1,sMid,ry,ctxX,ry,50),p.color,pipeR,t,i*7);
+for(var j=0;j<p.ctx.length-1;j++){var x1=ctxX+j*(pw+pg)+pw,x2=ctxX+(j+1)*(pw+pg);drawStream(bzP(x1,ry,x1+W*0.005,ry,x2-W*0.005,ry,x2,ry,16),p.color,pipeR,t,i*7+j*2);}
+// Pills → LLM: end inside LLM hub
+var lE=ctxX+(p.ctx.length-1)*(pw+pg)+pw,vEY=vCY+off*vR*0.24;
+var flatUntil=Math.max(lE+W*0.015,maxPillEnd+W*0.01);
+drawStream(bzP(lE,ry,flatUntil,ry,vCX-vR-W*0.03,vEY,vCX-vR+penV,vEY,40),p.color,pipeR-1,t,i*7+8);
+var vXY=vCY+off*vR*0.24;
+// Right-side pipes — straight, penetrating into each hub
+if(p.hasTools){
+// LLM → Tool → SSE: start inside LLM, end inside Tool; start inside Tool, end inside SSE
+drawStream(bzP(vCX+vR-penV,vXY,vCX+vR+8,vXY,sCX-sR-8,vXY,sCX-sR+penS,vXY,20),p.color,pipeR-2,t,i*7+12);
+drawStream(bzP(sCX+sR-penS,vXY,sCX+sR+8,vXY,oCX-oR-8,vXY,oCX-oR+penO,vXY,20),p.color,pipeR-2,t,i*7+16);
+}else{
+// Anime/TCG bypass: start inside LLM, end inside SSE
+var arcY=off<0?sCY-sR-H*0.06:sCY+sR+H*0.06;
+drawStream(bzP(vCX+vR-penV,vXY,vCX+vR+20,arcY,oCX-oR-20,arcY,oCX-oR+penO,vXY,50),p.color,pipeR-2,t,i*7+16);
+}}
+// Hubs — clean labels, no sub-text inside
+drawHub(vCX,vCY,vR,'Qwen3.5 LLM',null,null,t,P.map(function(p){return p.color;}),true);
+drawHub(sCX,sCY,sR,'Tool Executor',null,null,t,P.filter(function(p){return p.hasTools;}).map(function(p){return p.color;}),false);
+drawHub(oCX,oCY,oR,'SSE Stream',null,null,t,P.map(function(p){return p.color;}),false);
+// Glowing labels above hubs — uses theme accent color
+var accentCSS=getComputedStyle(document.documentElement).getPropertyValue('--accent').trim()||'#38bdf8';
+var acRGB=rgb(accentCSS);
+X.textAlign='center';X.textBaseline='bottom';X.font='bold 11px system-ui,sans-serif';
+X.shadowBlur=12;
+X.shadowColor='rgba('+acRGB[0]+','+acRGB[1]+','+acRGB[2]+',0.6)';
+X.fillStyle='rgba('+Math.min(255,acRGB[0]+60)+','+Math.min(255,acRGB[1]+60)+','+Math.min(255,acRGB[2]+60)+',0.9)';
+X.fillText('Ollama \xb7 9B',vCX,vCY-vR-10);
+X.fillText('x8 max rounds',sCX,sCY-sR-10);
+X.shadowBlur=0;
+// Hub hitboxes
+hitboxes.push({type:'circle',x:vCX,y:vCY,r:vR,title:hubTips.llm.t,body:hubTips.llm.b,color:'#a78bfa'});
+hitboxes.push({type:'circle',x:sCX,y:sCY,r:sR,title:hubTips.tools.t,body:hubTips.tools.b,color:'#a78bfa'});
+hitboxes.push({type:'circle',x:oCX,y:oCY,r:oR,title:hubTips.sse.t,body:hubTips.sse.b,color:'#a78bfa'});
+// Agent hub
+var agG=X.createRadialGradient(aCX,aCY,Math.max(1,aR*0.3),aCX,aCY,Math.max(2,aR*3.5));
+agG.addColorStop(0,'rgba(56,189,248,0.08)');agG.addColorStop(0.3,'rgba(56,189,248,0.025)');agG.addColorStop(1,'transparent');
+X.fillStyle=agG;X.beginPath();X.arc(aCX,aCY,aR*3.5,0,6.283);X.fill();
+X.shadowColor='rgba(56,189,248,0.18)';X.shadowBlur=22;X.beginPath();X.arc(aCX,aCY,aR,0,6.283);
+var apg=X.createRadialGradient(aCX,aCY-aR*0.15,0,aCX,aCY,Math.max(1,aR));apg.addColorStop(0,'#201a3e');apg.addColorStop(1,'#0c0a18');X.fillStyle=apg;X.fill();X.shadowBlur=0;
+for(var i=0;i<n;i++){var ang=-1.5708+(i/n)*6.283,angE=-1.5708+((i+0.8)/n)*6.283;X.beginPath();X.arc(aCX,aCY,aR+2,ang,angE);var cc=rgb(P[i].color);X.strokeStyle='rgba('+cc[0]+','+cc[1]+','+cc[2]+',0.45)';X.lineWidth=2.5;X.stroke();}
+X.textAlign='center';X.textBaseline='middle';X.font='bold 19px system-ui,sans-serif';X.fillStyle='#f1f5f9';X.fillText('Strat',aCX,aCY-8);X.fillText('Agent',aCX,aCY+14);
+// Glowing label above agent hub — uses theme accent color
+X.textBaseline='bottom';X.font='bold 11px system-ui,sans-serif';
+X.shadowColor='rgba('+acRGB[0]+','+acRGB[1]+','+acRGB[2]+',0.6)';X.shadowBlur=12;
+X.fillStyle='rgba('+Math.min(255,acRGB[0]+60)+','+Math.min(255,acRGB[1]+60)+','+Math.min(255,acRGB[2]+60)+',0.9)';
+X.fillText('Qwen3.5-9B',aCX,aCY-aR-10);X.shadowBlur=0;
+hitboxes.push({type:'circle',x:aCX,y:aCY,r:aR,title:hubTips.agent.t,body:hubTips.agent.b,color:'#38bdf8'});
+// Labels + pills
+for(var i=0;i<n;i++){var p=P[i],ry=rowYs[i],cc=rgb(p.color);
+X.beginPath();X.arc(ctxX-4,ry,2.5,0,6.283);X.fillStyle=p.color;X.fill();
+X.textAlign='left';X.textBaseline='bottom';X.font='bold 15px system-ui,sans-serif';X.fillStyle=p.color;X.fillText(p.name,ctxX,ry-nH/2-7);
+var nmW=X.measureText(p.name).width;X.font='10px system-ui,sans-serif';var bw=X.measureText(p.badge).width+14;
+rr(ctxX+nmW+8,ry-nH/2-22,bw,19,9.5);X.fillStyle='rgba('+cc[0]+','+cc[1]+','+cc[2]+',0.1)';X.fill();X.strokeStyle='rgba('+cc[0]+','+cc[1]+','+cc[2]+',0.25)';X.lineWidth=0.7;X.stroke();
+X.textAlign='center';X.textBaseline='middle';X.fillStyle=p.color;X.fillText(p.badge,ctxX+nmW+8+bw/2,ry-nH/2-12.5);
+// Persona label hitbox
+hitboxes.push({type:'rect',x:ctxX-8,y:ry-nH/2-22,w:nmW+bw+20,h:18,title:p.name+' \u2014 '+p.badge,body:p.tip,color:p.color});
+for(var j=0;j<p.ctx.length;j++){drawPill(ctxX+j*(pw+pg),ry-nH/2,pw,nH,p.color,p.ctx[j].l,p.ctx[j].s);
+// Context pill hitbox
+hitboxes.push({type:'rect',x:ctxX+j*(pw+pg),y:ry-nH/2,w:pw,h:nH,title:p.ctx[j].l,body:p.ctx[j].tip,color:p.color});}}
+// Footer
+X.textAlign='center';X.textBaseline='middle';X.font='9px system-ui,sans-serif';X.fillStyle='#2a3344';
+X.fillText('Max 8 tool rounds  \xb7  <think> stripping  \xb7  Profile-scoped  \xb7  Entity auto-save  \xb7  Multi-persona merge (up to 3)',W/2,H-12);
+anim=requestAnimationFrame(draw);}
+// Move tooltip to <body> so position:fixed isn't broken by ancestor transforms (same as Architecture)
+if(agTip&&agTip.parentNode!==document.body){document.body.appendChild(agTip);}
+// Convert canvas coords to viewport coords for tooltip positioning
+function canvasToViewport(cx,cy){var rect=cv.getBoundingClientRect();return{x:rect.left+cx*(rect.width/W),y:rect.top+cy*(rect.height/H)};}
+function positionAgentTip(hb){
+if(!agTip||!agTip.classList.contains('show'))return;
+var tw=agTip.offsetWidth,th=agTip.offsetHeight,gap=10;
+var vp;
+if(hb.type==='circle'){vp=canvasToViewport(hb.x,hb.y-hb.r);}
+else{vp=canvasToViewport(hb.x+hb.w/2,hb.y);}
+// Center horizontally above the element
+var left=vp.x-tw/2;
+var top=vp.y-th-gap;
+// Flip below if overflowing top
+if(top<16){var vpBot;if(hb.type==='circle'){vpBot=canvasToViewport(hb.x,hb.y+hb.r);}else{vpBot=canvasToViewport(hb.x+hb.w/2,hb.y+hb.h);}top=vpBot.y+gap;}
+// Clamp to viewport
+left=Math.max(16,Math.min(left,window.innerWidth-tw-16));
+top=Math.max(16,top);
+agTip.style.left=left+'px';agTip.style.top=top+'px';}
+// Hover handling
+var lastHit=null;
+cv.addEventListener('mousemove',function(e){
+var rect=cv.getBoundingClientRect();
+var mx=(e.clientX-rect.left)*(W/rect.width),my=(e.clientY-rect.top)*(H/rect.height);
+var found=null;
+for(var i=hitboxes.length-1;i>=0;i--){var h=hitboxes[i];
+if(h.type==='circle'){if(Math.hypot(mx-h.x,my-h.y)<=h.r){found=h;break;}}
+else{if(mx>=h.x&&mx<=h.x+h.w&&my>=h.y&&my<=h.y+h.h){found=h;break;}}}
+if(found&&agTip){
+if(found!==lastHit){lastHit=found;
+agTip.innerHTML='<div class="arch-tip-title"><span style="display:inline-block;width:7px;height:7px;border-radius:2px;background:'+found.color+';flex-shrink:0"></span>'+found.title+'</div><div class="arch-tip-body">'+found.body+'</div>';
+agTip.style.left='-9999px';agTip.classList.add('show');
+requestAnimationFrame(function(){positionAgentTip(found);});}
+cv.style.cursor='pointer';
+}else if(agTip){lastHit=null;agTip.classList.remove('show');cv.style.cursor='default';}});
+cv.addEventListener('mouseleave',function(){lastHit=null;if(agTip){agTip.classList.remove('show');}cv.style.cursor='default';});
+// Scroll-triggered start/stop for performance
+resize();window.addEventListener('resize',function(){if(active)resize();});
+var pipeObserver=new IntersectionObserver(function(entries){entries.forEach(function(entry){
+if(entry.isIntersecting&&!active){active=true;resize();anim=requestAnimationFrame(draw);}
+else if(!entry.isIntersecting&&active){active=false;if(anim){cancelAnimationFrame(anim);anim=null;}}
+});},{threshold:0.05});
+pipeObserver.observe(diagram);
+})();
+
+// ========================
 // LIGHTBOX
 // ========================
 function openLightbox(card) {
@@ -3640,7 +4017,7 @@ document.addEventListener('keydown', function(e) {
         help: 'Available commands: whoami, stack, stats, links, stratos, clear, help',
         whoami: 'Ahmad Sayed Alsayed Ebrahim — Computer Engineering student at AUK, Kuwait. Building AI-powered intelligence systems.',
         stack: 'Python 3.12 · Vanilla JS · Ollama · Qwen3.5-9B + DoRA · Gemini Flash + Claude Opus · PyTorch + PEFT · SQLite · TradingView · ROCm 6.2',
-        stats: '61,000+ lines · 40+ modules · 11,785 training examples · 45 profiles · 94.5% accuracy · $6/training generation',
+        stats: '111,000+ lines · 192 files · 1,018 commits · 50 profiles · 94.5% accuracy · $6/training generation',
         links: '<a class="terminal-link" href="https://github.com/ASEbrahim" target="_blank" rel="noopener">GitHub</a> · <a class="terminal-link" href="https://github.com/ASEbrahim/stratos" target="_blank" rel="noopener">StratOS Repo</a> · <a class="terminal-link" href="https://linkedin.com/in/asebrahim" target="_blank" rel="noopener">LinkedIn</a> · <a class="terminal-link" href="mailto:ahmad.s.ebrahim@outlook.com">Email</a>',
         stratos: '"Tell the system who you are, and it tells you what matters today." — A self-hosted strategic intelligence platform with a self-improving AI scorer.',
         clear: '__CLEAR__',
