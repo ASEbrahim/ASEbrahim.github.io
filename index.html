@@ -4506,8 +4506,7 @@ document.addEventListener('keydown', function(e) {
     function resize() {
         W = window.innerWidth; H = window.innerHeight;
         isMobile = W < 768;
-        // Cap DPR on mobile to reduce pixel count (huge perf win)
-        dpr = isMobile ? Math.min(window.devicePixelRatio||1, 1.5) : (window.devicePixelRatio||1);
+        dpr = window.devicePixelRatio||1;
         cv.width = W*dpr; cv.height = H*dpr;
         X.setTransform(dpr,0,0,dpr,0,0);
         // Fit virtual canvas in viewport
@@ -4679,8 +4678,8 @@ document.addEventListener('keydown', function(e) {
 
     function hitTest(sx,sy) {
         var v=toVirtual(sx,sy), mx=v.x, my=v.y;
-        // On mobile, use larger hit areas for easier tapping
-        var pad = isMobile ? 8 : 0;
+        // On mobile, expand hit areas proportional to zoom (smaller zoom = bigger touch target needed)
+        var pad = isMobile ? Math.max(15, 25/zoom) : 0;
         for(var i=0;i<nodeKeys.length;i++) {
             var id=nodeKeys[i], n=N[id];
             if(n.t==='pill') { if(mx>=n.x-pad&&mx<=n.x+n.w+pad&&my>=n.y-pad&&my<=n.y+n.h+pad) return id; }
@@ -4719,18 +4718,7 @@ document.addEventListener('keydown', function(e) {
         X.translate(panX,panY);
         X.scale(zoom,zoom);
 
-        // Update particle positions
-        var hasInteraction = selectedNode || hoveredNode;
-        for(i=0;i<particles.length;i++) {
-            var p=particles[i];
-            var isAct=selectedNode?
-                (activePathIds.has(p.e.f)&&activePathIds.has(p.e.t)):
-                (hoveredNode&&(p.e.f===hoveredNode||p.e.t===hoveredNode));
-            p.t += 30 / p.e.len * dt;
-            if(p.t>1) p.t-=1;
-        }
-
-        // Draw edges — 2-pass instead of 3
+        // Draw edges
         for(i=0;i<Edges.length;i++) {
             var e=Edges[i], state='normal';
             if(selectedNode) state=(activePathIds.has(e.f)&&activePathIds.has(e.t))?'active':'dimmed';
@@ -4738,34 +4726,35 @@ document.addEventListener('keydown', function(e) {
             drawEdge(e,state);
         }
 
-        // Draw particles — NO shadowBlur, NO compositeOperation change
-        // Use additive color approximation with bright fill only
-        for(i=0;i<particles.length;i++) {
-            var p=particles[i];
-            var isAct=selectedNode?
-                (activePathIds.has(p.e.f)&&activePathIds.has(p.e.t)):
-                (hoveredNode&&(p.e.f===hoveredNode||p.e.t===hoveredNode));
-            if(!isAct&&hasInteraction) continue;
-            var pe=p.e, target=p.t*pe.pts.length;
-            var idx=Math.min(Math.floor(target),pe.pts.length-2);
-            if(idx<0) continue;
-            var frac=target-idx;
-            var ptX=pe.pts[idx].x+(pe.pts[idx+1].x-pe.pts[idx].x)*frac;
-            var ptY=pe.pts[idx].y+(pe.pts[idx+1].y-pe.pts[idx].y)*frac;
-            var cRgb=pe._rgb;
-            var r=isAct?(pe.prominent?3.5:2.5):1.5;
-            if(!isMobile && isAct) {
-                // Outer glow — desktop only
-                X.fillStyle='rgba('+cRgb+',0.3)';
-                X.beginPath();X.arc(ptX,ptY,r*3,0,PI2);X.fill();
-            }
-            // Core dot
-            X.fillStyle='rgba('+cRgb+',0.95)';
-            X.beginPath();X.arc(ptX,ptY,r,0,PI2);X.fill();
-            if(!isMobile && isAct) {
-                // White center — desktop only
-                X.fillStyle='#fff';
-                X.beginPath();X.arc(ptX,ptY,r*0.4,0,PI2);X.fill();
+        // Particles — desktop only (too many draw calls for mobile GPUs)
+        if(!isMobile) {
+            var hasInteraction = selectedNode || hoveredNode;
+            for(i=0;i<particles.length;i++) {
+                var p=particles[i];
+                p.t += 30 / p.e.len * dt;
+                if(p.t>1) p.t-=1;
+                var isAct=selectedNode?
+                    (activePathIds.has(p.e.f)&&activePathIds.has(p.e.t)):
+                    (hoveredNode&&(p.e.f===hoveredNode||p.e.t===hoveredNode));
+                if(!isAct&&hasInteraction) continue;
+                var pe=p.e, target=p.t*pe.pts.length;
+                var idx=Math.min(Math.floor(target),pe.pts.length-2);
+                if(idx<0) continue;
+                var frac=target-idx;
+                var ptX=pe.pts[idx].x+(pe.pts[idx+1].x-pe.pts[idx].x)*frac;
+                var ptY=pe.pts[idx].y+(pe.pts[idx+1].y-pe.pts[idx].y)*frac;
+                var cRgb=pe._rgb;
+                var r=isAct?(pe.prominent?3.5:2.5):1.5;
+                if(isAct) {
+                    X.fillStyle='rgba('+cRgb+',0.3)';
+                    X.beginPath();X.arc(ptX,ptY,r*3,0,PI2);X.fill();
+                }
+                X.fillStyle='rgba('+cRgb+',0.95)';
+                X.beginPath();X.arc(ptX,ptY,r,0,PI2);X.fill();
+                if(isAct) {
+                    X.fillStyle='#fff';
+                    X.beginPath();X.arc(ptX,ptY,r*0.4,0,PI2);X.fill();
+                }
             }
         }
 
@@ -4867,7 +4856,7 @@ document.addEventListener('keydown', function(e) {
 
         // Touch support for mobile: pan, pinch-zoom, tap
         var ts = { dragging:false, startX:0, startY:0, lastX:0, lastY:0, lastDist:0, totalDist:0 };
-        var DEAD_ZONE = 12; // px before pan kicks in
+        var DEAD_ZONE = 20; // px before pan kicks in (fingers jitter ~10-15px)
 
         cv.addEventListener('touchstart',function(e) {
             e.preventDefault();
