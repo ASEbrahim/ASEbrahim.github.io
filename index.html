@@ -1011,6 +1011,205 @@
             }
         }
 
+        /* ── Engine Overlay (fullscreen interactive architecture) ── */
+        #engine-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            background: #020106;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.5s;
+        }
+        #engine-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        #engine-overlay canvas {
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+            cursor: default;
+        }
+        #engine-overlay .eo-ui {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            z-index: 10;
+        }
+        #engine-overlay .eo-header {
+            position: absolute;
+            top: 40px;
+            left: 40px;
+            max-width: 500px;
+            pointer-events: all;
+        }
+        #engine-overlay .eo-mono {
+            font-family: var(--font-mono);
+            color: #3b82f6;
+            letter-spacing: 0.25em;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            margin-bottom: 0.8rem;
+            opacity: 0.9;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        #engine-overlay .eo-mono::before {
+            content: '';
+            display: block;
+            width: 24px;
+            height: 2px;
+            background: #3b82f6;
+            border-radius: 2px;
+        }
+        #engine-overlay .eo-title {
+            font-size: 2.4rem;
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+            letter-spacing: -0.03em;
+            text-shadow: 0 0 40px rgba(59, 130, 246, 0.3);
+            color: #f8fafc;
+        }
+        #engine-overlay .eo-sub {
+            color: #64748b;
+            font-weight: 300;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+        #engine-overlay .eo-close {
+            position: absolute;
+            top: 24px;
+            right: 24px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            border: 1px solid rgba(255,255,255,0.12);
+            background: rgba(8,6,16,0.8);
+            backdrop-filter: blur(12px);
+            color: #94a3b8;
+            font-size: 1.4rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            pointer-events: all;
+            z-index: 200;
+            transition: all 0.2s;
+        }
+        #engine-overlay .eo-close:hover {
+            background: rgba(255,255,255,0.1);
+            color: #fff;
+            transform: scale(1.1);
+        }
+        #engine-overlay .eo-tooltip {
+            position: fixed;
+            background: rgba(10, 8, 20, 0.95);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255,255,255,0.08);
+            padding: 8px 14px;
+            border-radius: 8px;
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: #fff;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.2s;
+            z-index: 50;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        #engine-overlay .eo-tooltip .eo-dot { width: 8px; height: 8px; border-radius: 50%; }
+        #engine-overlay .eo-panel {
+            position: fixed;
+            top: 0; right: 0;
+            width: 440px; max-width: 100vw;
+            height: 100vh;
+            background: rgba(8, 6, 16, 0.95);
+            backdrop-filter: blur(24px);
+            border-left: 1px solid rgba(255,255,255,0.08);
+            padding: 3.5rem 2.5rem;
+            transform: translateX(100%);
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            z-index: 100;
+            overflow-y: auto;
+            pointer-events: all;
+            box-shadow: -30px 0 60px rgba(0,0,0,0.8);
+        }
+        #engine-overlay .eo-panel.active { transform: translateX(0); }
+        #engine-overlay .eo-panel-close {
+            position: absolute; top: 1.5rem; right: 1.5rem;
+            background: rgba(255,255,255,0.05); border: none;
+            color: #64748b; font-size: 1.2rem;
+            width: 36px; height: 36px; border-radius: 50%;
+            cursor: pointer; transition: all 0.2s;
+            display: flex; align-items: center; justify-content: center;
+        }
+        #engine-overlay .eo-panel-close:hover { background: rgba(255,255,255,0.1); color: #fff; }
+        #engine-overlay .eo-panel-tag {
+            font-family: var(--font-mono); font-size: 0.65rem;
+            padding: 0.4rem 0.8rem; border-radius: 6px;
+            display: inline-block; margin-bottom: 1.5rem;
+            background: rgba(255,255,255,0.05); letter-spacing: 0.1em;
+            text-transform: uppercase; border: 1px solid transparent;
+        }
+        #engine-overlay .eo-panel-title { font-size: 2.2rem; font-weight: 500; margin-bottom: 0.4rem; color: #fff; letter-spacing:-0.03em; }
+        #engine-overlay .eo-panel-tech { font-family: var(--font-mono); margin-bottom: 2.5rem; font-size: 0.75rem; display: flex; align-items: center; gap:8px; }
+        #engine-overlay .eo-panel-tech::before { content:''; display:block; width:6px; height:6px; border-radius:50%; background:currentColor; }
+        #engine-overlay .eo-panel-desc { margin-bottom: 2.5rem; font-size: 1.05rem; color: #cbd5e1; line-height: 1.7; font-weight: 300; }
+        #engine-overlay .eo-section-title {
+            font-family: var(--font-mono); font-size: 0.7rem; text-transform: uppercase;
+            color: #64748b; margin-bottom: 1rem; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 0.5rem;
+            letter-spacing: 0.05em; display: flex; align-items: center; gap: 8px;
+        }
+        #engine-overlay .eo-flow { display: flex; flex-direction: column; gap: 0.8rem; margin-bottom: 3rem; font-size: 0.85rem; }
+        #engine-overlay .eo-flow-step { padding: 0.8rem 1rem; background: rgba(255,255,255,0.02); border-radius: 8px; border: 1px solid rgba(255,255,255,0.08); color: #e2e8f0; }
+        #engine-overlay .eo-flow-arrow { color: #64748b; margin-left: 1.2rem; font-size: 0.9rem; opacity: 0.5; }
+        #engine-overlay .eo-callout {
+            background: linear-gradient(135deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+            border-left: 3px solid currentColor;
+            padding: 1.5rem; border-radius: 0 8px 8px 0;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.2);
+        }
+        #engine-overlay .eo-callout h4 { margin-bottom: 0.5rem; color: #fff; font-size: 0.95rem; font-weight: 500; }
+        #engine-overlay .eo-callout p { color: #94a3b8; font-size: 0.9rem; line-height: 1.6; font-weight: 300; }
+
+        .explore-engine-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 20px;
+            padding: 12px 28px;
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 10px;
+            color: #38bdf8;
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            letter-spacing: 0.05em;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+        }
+        .explore-engine-btn:hover {
+            background: rgba(59, 130, 246, 0.2);
+            border-color: rgba(59, 130, 246, 0.5);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(59, 130, 246, 0.15);
+        }
+        .explore-engine-btn .arrow { transition: transform 0.3s; }
+        .explore-engine-btn:hover .arrow { transform: translateX(4px); }
+
+        @media (max-width: 768px) {
+            #engine-overlay .eo-header { top: 20px; left: 20px; right: 60px; }
+            #engine-overlay .eo-title { font-size: 1.5rem; }
+            #engine-overlay .eo-panel { width: 100%; border-left: none; }
+            .explore-engine-btn { display: none; }
+        }
+
         /* Features Grid */
         .features-grid {
             display: grid;
@@ -1900,6 +2099,9 @@
                 <div class="arch-mobile-node arch-mobile-node--purple"><div class="arch-mobile-title">Feedback &rarr; Distillation &rarr; Training</div><div class="arch-mobile-sub">Gemini Flash / Claude Opus &middot; DoRA fine-tuning &rarr; loops back to scorer</div></div>
             </div>
             <div class="arch-tip" id="arch-tip"></div>
+            <button class="explore-engine-btn" onclick="document.getElementById('engine-overlay').classList.add('active'); window.initEngineOverlay && window.initEngineOverlay();">
+                Explore Interactive Architecture <span class="arrow">&rarr;</span>
+            </button>
         </div>
 
         <!-- Agent Architecture — Animated Canvas Pipeline -->
@@ -4079,6 +4281,550 @@ document.addEventListener('keydown', function(e) {
     document.querySelector('.terminal').addEventListener('click', function() {
         input.focus();
     });
+})();
+</script>
+
+<!-- ══════════════════════════════════════════════════════════ -->
+<!-- ENGINE OVERLAY — Full Interactive Architecture Visualizer -->
+<!-- ══════════════════════════════════════════════════════════ -->
+<div id="engine-overlay">
+    <canvas id="engine-canvas"></canvas>
+    <div class="eo-ui">
+        <div class="eo-header">
+            <div class="eo-mono">System Architecture</div>
+            <h1 class="eo-title">StratOS Intelligence Engine</h1>
+            <p class="eo-sub">A self-improving pipeline. Hover to isolate specific data pathways. Click any node to inspect telemetry.</p>
+        </div>
+        <div class="eo-tooltip" id="eo-tooltip"><div class="eo-dot"></div><span id="eo-tt-text">Node Info</span></div>
+    </div>
+    <button class="eo-close" onclick="document.getElementById('engine-overlay').classList.remove('active');">&times;</button>
+    <aside class="eo-panel" id="eo-panel">
+        <button class="eo-panel-close" id="eo-panel-close-btn">&times;</button>
+        <span class="eo-panel-tag" id="eo-panel-tag">LAYER 1</span>
+        <h2 class="eo-panel-title" id="eo-panel-title">Node Name</h2>
+        <div class="eo-panel-tech" id="eo-panel-tech">file.js</div>
+        <p class="eo-panel-desc" id="eo-panel-desc">Description goes here.</p>
+        <div class="eo-section-title">Data Pipeline</div>
+        <div class="eo-flow" id="eo-panel-pipeline"></div>
+        <div class="eo-callout" id="eo-panel-callout">
+            <h4>Strategic Impact</h4>
+            <p id="eo-panel-impact">Impact description goes here.</p>
+        </div>
+    </aside>
+</div>
+
+<script>
+// ══════════════════════════════════════════════════════════
+// ENGINE OVERLAY — Optimized
+// ══════════════════════════════════════════════════════════
+(function() {
+    var initialized = false;
+    var BG = '#020106';
+
+    var N = {
+        cf:{t:'hub',l:'Cloudflare',s:'WAF/Tunnel',c:'#f58220',layer:0,r:35},
+        auth:{t:'hub',l:'Auth Gateway',s:'Token Sessions',c:'#94a3b8',layer:0,r:35},
+        onboard:{t:'pill',l:'Onboarding',s:'Profile Gen',c:'#10b981',layer:1},
+        config:{t:'pill',l:'Config Profile',s:'preferences',c:'#10b981',layer:1},
+        markets:{t:'pill',l:'Track Markets',s:'tickers',c:'#10b981',layer:1},
+        yt:{t:'pill',l:'Add YouTube',s:'channels',c:'#10b981',layer:1},
+        chat:{t:'pill',l:'Chat Input',s:'text/voice',c:'#10b981',layer:1},
+        browse:{t:'pill',l:'Browse Feed',s:'read/dismiss',c:'#10b981',layer:1},
+        orch:{t:'pill',l:'Scan Orch.',s:'Cron/Manual',c:'#0ea5e9',layer:2},
+        scrape:{t:'pill',l:'Scrape Engine',s:'RSS/Search',c:'#0ea5e9',layer:2},
+        mkt_fetch:{t:'pill',l:'Market Fetch',s:'yfinance',c:'#0ea5e9',layer:2},
+        extract:{t:'pill',l:'YT Extraction',s:'Whisper TTS',c:'#0ea5e9',layer:2},
+        scorer:{t:'hub',l:'AI Scorer',s:'V2.2 Local',c:'#3b82f6',layer:3,r:38},
+        brief:{t:'pill',l:'Briefing Gen',s:'Daily synth',c:'#3b82f6',layer:3},
+        context:{t:'hub',l:'Context Packer',s:'Vector/Hash',c:'#3b82f6',layer:3,r:34},
+        behav:{t:'pill',l:'Behavioral Hue',s:'Profile State',c:'#3b82f6',layer:3},
+        llm:{t:'hub',l:'LLM Provider',s:'Ollama/APIs',c:'#6366f1',layer:3,r:42},
+        db:{t:'hub',l:'SQLite Core',s:'WAL \u00b7 47 tbls',c:'#f59e0b',layer:4,r:55},
+        sse:{t:'hub',l:'SSE Bus',s:'Real-time',c:'#f59e0b',layer:4,r:38},
+        out_feed:{t:'pill',l:'Ranked Feed',s:'Dashboard',c:'#a78bfa',layer:5},
+        out_mkt:{t:'pill',l:'Market Dash',s:'Charts/Intel',c:'#a78bfa',layer:5},
+        out_yt:{t:'pill',l:'YouTube KB',s:'Translated',c:'#a78bfa',layer:5},
+        out_agent:{t:'hub',l:'Strat Agent',s:'6 Personas',c:'#a78bfa',layer:5,r:38},
+        rp_chat:{t:'pill',l:'RP Chat',s:'Cydonia 24B',c:'#a78bfa',layer:5},
+        gaming:{t:'pill',l:'Gaming Engine',s:'Scenarios',c:'#a78bfa',layer:5},
+        voice:{t:'pill',l:'Voice I/O',s:'Kokoro TTS',c:'#a78bfa',layer:5},
+        image:{t:'pill',l:'Image Gen',s:'ComfyUI',c:'#a78bfa',layer:5},
+        fb_click:{t:'pill',l:'Engagement',s:'Implicit',c:'#06b6d4',layer:6},
+        fb_rate:{t:'pill',l:'Explicit Rating',s:'Overrides',c:'#06b6d4',layer:6},
+        fb_chat:{t:'pill',l:'Intent Signals',s:'History',c:'#06b6d4',layer:6},
+        distill:{t:'hub',l:'Distillation',s:'Flash & Opus',c:'#ef4444',layer:6,r:38},
+        training:{t:'hub',l:'DoRA Training',s:'PyTorch/PEFT',c:'#f43f5e',layer:6,r:42}
+    };
+
+    // Pre-compute RGB strings once
+    function hexToRgb(hex) { return parseInt(hex.slice(1,3),16)+','+parseInt(hex.slice(3,5),16)+','+parseInt(hex.slice(5,7),16); }
+    var nodeKeys = Object.keys(N);
+    nodeKeys.forEach(function(id) { N[id]._rgb = hexToRgb(N[id].c); });
+
+    var LAYOUT = {
+        cf:{fx:0.04,fy:0.38},auth:{fx:0.12,fy:0.38},
+        onboard:{fx:0.22,fy:0.06},config:{fx:0.22,fy:0.14},markets:{fx:0.22,fy:0.24},
+        yt:{fx:0.22,fy:0.34},chat:{fx:0.22,fy:0.46},browse:{fx:0.22,fy:0.58},
+        orch:{fx:0.34,fy:0.14},scrape:{fx:0.34,fy:0.24},mkt_fetch:{fx:0.34,fy:0.34},extract:{fx:0.34,fy:0.46},
+        scorer:{fx:0.46,fy:0.20},brief:{fx:0.46,fy:0.32},context:{fx:0.46,fy:0.46},behav:{fx:0.46,fy:0.60},
+        llm:{fx:0.55,fy:0.38},
+        db:{fx:0.65,fy:0.26},sse:{fx:0.65,fy:0.58},
+        out_feed:{fx:0.78,fy:0.14},out_mkt:{fx:0.78,fy:0.24},out_yt:{fx:0.78,fy:0.34},
+        out_agent:{fx:0.78,fy:0.46},rp_chat:{fx:0.78,fy:0.56},gaming:{fx:0.78,fy:0.66},
+        voice:{fx:0.78,fy:0.76},image:{fx:0.88,fy:0.61},
+        fb_click:{fx:0.91,fy:0.14},fb_rate:{fx:0.91,fy:0.28},fb_chat:{fx:0.91,fy:0.46},
+        distill:{fx:0.91,fy:0.90},training:{fx:0.46,fy:0.90}
+    };
+
+    var Details = {
+        cf:{tech:"cloudflared tunnel \u2192 strat-os.net",desc:"Edge TLS termination, WAF managed rules, bot fight mode, DDoS absorption. All traffic encrypted before it reaches your network. Zero open ports on the host machine.",impact:"Enterprise-grade perimeter security for a self-hosted platform at $0/month."},
+        auth:{tech:"auth.py \u00b7 X-Auth-Token \u00b7 Google OAuth",desc:"Token-based session management with 7-day TTL. Google OAuth with auto-account creation and email linking. Rate limiting (10 login attempts per 5 minutes). PIN verification uses timing-safe comparison. Profile isolation enforced on every request.",impact:"Multi-user isolation without a multi-tenant database. Each profile gets its own config overlay, scan history, feedback data, and agent conversation."},
+        onboard:{tech:"submit_onboarding \u2192 generate_profile pipeline",desc:"LLM-conducted first-run setup. The agent extracts role, location, and interests through natural conversation, then hands structured data to the generate_profile pipeline which produces 13-15 targeted keywords per category plus relevant market tickers.",impact:"A new user goes from zero configuration to a fully personalized feed in under 2 minutes."},
+        config:{tech:"wizard.js \u2192 config.py \u2192 profile overlay (per-user)",desc:"Stores role, location, context string, dynamic categories with keywords, ticker watchlist, RSS sources, search provider preferences, UI state, and theme selection. Per-profile overlay system.",impact:"The context hash derived from this config is what makes the same article score 8.5 for one user and 0.0 for another."},
+        markets:{tech:"market.js \u2192 settings-tickers.js",desc:"User adds stock/crypto/commodity tickers to their watchlist. Supports any yfinance-compatible symbol.",impact:"Enables the market dashboard and allows the AI agent to correlate news articles with specific price movements."},
+        yt:{tech:"youtube.js \u2192 youtube-kb.js",desc:"User adds YouTube channels or individual video URLs for monitoring. Each video goes through the extraction pipeline (transcription + 7 AI lenses).",impact:"Turns inaccessible video content into searchable, structured intelligence in the knowledge base."},
+        chat:{tech:"agent.js \u2192 sendAgentMessage() \u2192 POST /api/agent-chat",desc:"Primary text/voice input interface. Supports typed messages, voice input via faster-whisper STT, $TICKER shorthand for market queries, and file uploads.",impact:"The entry point for all interactive intelligence queries. Every message generates intent signals that refine future scoring."},
+        browse:{tech:"feed.js \u2192 save/dismiss handlers \u2192 news_items table",desc:"User scrolls the ranked feed of scored articles. Each article shows relevance score (0-10), source, timestamp, and category. Save/dismiss actions are captured as implicit feedback.",impact:"The primary consumption interface AND the primary feedback generator."},
+        orch:{tech:"news.py \u00b7 /api/refresh-news \u00b7 cron (10:15 AM KWT)",desc:"Triggers and coordinates parallel news fetching. Manages ThreadPoolExecutor for concurrent source fetching. Handles deduplication (MD5 article IDs), error recovery, and progress reporting via SSE.",impact:"The scan is the heartbeat of the system. Each run ingests 100-300 raw articles."},
+        scrape:{tech:"news.py \u00b7 kuwait_scrapers.py \u00b7 extra_feeds.py \u00b7 serper_search.py",desc:"Parallel fetching from multiple source types: Serper API, DuckDuckGo fallback, RSS feeds, custom Kuwait scrapers, and extra feed sources.",impact:"Casts the widest possible net across the open web, then hands raw noise to the scorer for relevance filtering."},
+        mkt_fetch:{tech:"market.py \u00b7 yfinance \u00b7 5 intervals (1m/5m/1h/1d/1w)",desc:"Pulls OHLCV candlestick data for all tickers in the user\u2019s watchlist. Maintains 5 time intervals with TTL-based caching.",impact:"Provides the raw price data for the market dashboard charts and enables agent market queries."},
+        extract:{tech:"youtube_endpoints.py \u00b7 faster-whisper large-v3-turbo \u00b7 7 AI lenses",desc:"Full video processing pipeline: download audio \u2192 transcribe via faster-whisper \u2192 extract through 7 analytical lenses.",impact:"Converts a 45-minute YouTube video into searchable, structured intelligence in about 3 minutes."},
+        scorer:{tech:"scorer_adaptive.py \u00b7 stratos-scorer-v2.2 \u00b7 DoRA fine-tuned Qwen3.5-9B",desc:"Three-phase scoring pipeline. Phase 1: rule-based noise filter. Phase 2: batch LLM scoring. Phase 3: calibration re-score. MAE 0.914 against Opus holdout, 94.5% direction accuracy.",impact:"The core intelligence filter. Reduces 10,000+ daily signals to the 30 that actually matter for each specific user."},
+        brief:{tech:"briefing.py \u2192 LLM Provider \u2192 Qwen3.5-9B / Gemini Flash",desc:"Generates a daily intelligence briefing by synthesizing the top-scoring articles from the last 24 hours.",impact:"Saves the user 45 minutes of reading every morning. Distills 100+ scored articles into a 2-minute narrative."},
+        context:{tech:"agent.py \u00b7 context_compression.py",desc:"Assembles the LLM prompt window for every agent interaction. Packs user profile, behavioral state, recent article scores, conversation history, persona instructions, and tool definitions.",impact:"Reduces LLM context usage by ~70% while maintaining conversational coherence."},
+        behav:{tech:"behavioral.py \u00b7 /api/hue \u00b7 5-minute cache",desc:"Computes a 0-100 Intelligence Hue score from 5 dimensions: freshness, diversity, coverage, signal strength, and engagement.",impact:"The Psycho-Pass-inspired metric that quantifies feed health and dynamically adjusts agent behavior."},
+        llm:{tech:"llm_provider.py \u00b7 Ollama (localhost:11434) / Gemini Flash API",desc:"Central routing layer. Auto-detects environment: Ollama if reachable, Gemini Flash API otherwise. Supports both streaming and non-streaming modes.",impact:"Decouples the entire codebase from any specific model provider. Switch with one environment variable."},
+        db:{tech:"database.py \u00b7 WAL mode \u00b7 threading.local() \u00b7 47 tables",desc:"The central data store. WAL mode for concurrent reads during writes. Per-thread connections via threading.local(). ~390MB current size.",impact:"Total data sovereignty. No cloud database, no subscriptions, no data leaving the machine."},
+        sse:{tech:"sse.py \u00b7 Server-Sent Events \u00b7 per-profile channels",desc:"Real-time push notification system. Broadcasts events for scan progress, market data updates, agent chat token streaming, and more.",impact:"Makes the UI feel alive. Users see scan progress in real-time and agent responses stream token-by-token."},
+        out_feed:{tech:"feed.js \u00b7 card-based UI \u00b7 save/dismiss/expand",desc:"The primary intelligence consumption interface. Articles displayed as cards sorted by relevance score (0-10).",impact:"Where the user extracts actual strategic value from the system."},
+        out_mkt:{tech:"market.js \u00b7 fullscreen-chart.js \u00b7 Lightweight Charts",desc:"TradingView-style financial dashboard. Candlestick charts with 5 time intervals. Agent integration via $TICKER shorthand.",impact:"Visualizes the financial dimension of the intelligence feed."},
+        out_yt:{tech:"youtube-kb.js \u00b7 youtube.js \u00b7 translated lens output",desc:"Knowledge base interface for extracted YouTube content. Search across all processed videos by keyword, entity, or topic.",impact:"Bypasses YouTube\u2019s recommendation algorithm entirely."},
+        out_agent:{tech:"agent.js \u00b7 agent.py \u00b7 6 personas \u00b7 13 tools \u00b7 SSE streaming",desc:"The interactive intelligence assistant. 6 persona modes with tailored system prompts and 13 tools. Max 8 tool rounds per message.",impact:"The primary interactive interface. Turns passive intelligence consumption into active exploration."},
+        rp_chat:{tech:"rp_stream.py \u00b7 rp_chat.py \u00b7 Cydonia 24B + Claude Haiku 4.5",desc:"Dual-model roleplay system. Cydonia 24B for prose, Claude Haiku 4.5 for meta-control. 3-tier memory system with branching timelines.",impact:"A complete interactive fiction engine with two models in concert."},
+        gaming:{tech:"scenario_generator.py \u00b7 scenario_updater.py \u00b7 canon_import.py",desc:"Persistent world simulation. Categorized file tree architecture with 4-pass LLM scenario generation and selective context loading.",impact:"Enables persistent, canonical RPG experiences where the world remembers everything."},
+        voice:{tech:"tts.py \u00b7 stt.js \u00b7 Kokoro-82M \u00b7 Edge-TTS \u00b7 faster-whisper",desc:"Bidirectional voice processing. Kokoro-82M for 54 voices across 8 languages, Edge-TTS as cloud fallback. Faster-whisper for STT.",impact:"Enables hands-free intelligence consumption."},
+        image:{tech:"image_gen.py \u00b7 gpu_manager.py \u00b7 ComfyUI + CHROMA",desc:"AI image generation for character portraits and scene illustrations. GPU manager coordinates VRAM sharing between image gen and LLM inference.",impact:"Visually grounds the RP and gaming experiences."},
+        fb_click:{tech:"Event listeners \u00b7 news_items.read_time \u00b7 implicit signals",desc:"Passive behavioral tracking. Captures article opens, read time, category browsing patterns, save/dismiss ratio, and scroll depth.",impact:"The quiet half of the feedback loop. These signals feed into the behavioral hue calculation."},
+        fb_rate:{tech:"UI override buttons \u00b7 user_feedback table \u00b7 score disagreements",desc:"User directly overrides the AI\u2019s relevance score. Disagreements above a threshold are flagged for distillation.",impact:"The most powerful signal in the system. Each explicit disagreement can physically update the scorer model\u2019s weights."},
+        fb_chat:{tech:"conversations table \u00b7 agent history \u00b7 topic extraction",desc:"Captures what the user asks the agent about. Topic extraction reveals emerging interests, fading interests, and priority shifts.",impact:"Long-term preference signal that detects interest shifts over time."},
+        distill:{tech:"stage3_score.py \u00b7 distill.py \u00b7 Gemini Flash + Claude Opus",desc:"Takes disagreements and ambiguous articles, sends them to Gemini Flash for re-scoring. Generates ~9,500 training labels per day.",impact:"Transforms user feedback into structured training data at $6 per generation cycle."},
+        training:{tech:"train_lora.py \u00b7 PyTorch + PEFT \u00b7 DoRA \u00b7 ROCm 6.2",desc:"Fine-tunes the Qwen3.5-9B base model. DoRA method with bfloat16 precision on AMD RX 7900 XTX (24GB VRAM). Exports to GGUF for Ollama.",impact:"Closes the self-improvement loop. V1 flat (MAE >2.0), V2.1 disaster (MAE 3.244), V2.2 achieved MAE 0.914."}
+    };
+
+    var Edges = [
+        {f:'cf',t:'auth'},
+        {f:'auth',t:'onboard',curve:-60},{f:'auth',t:'config',curve:-40},{f:'auth',t:'markets',curve:-20},{f:'auth',t:'yt'},
+        {f:'auth',t:'chat',curve:20},{f:'auth',t:'browse',curve:40},
+        {f:'out_agent',t:'onboard',route:'top-return'},{f:'onboard',t:'config'},
+        {f:'config',t:'orch'},{f:'config',t:'behav',curve:80},
+        {f:'markets',t:'mkt_fetch'},{f:'yt',t:'extract'},
+        {f:'browse',t:'fb_click',route:'bottom'},{f:'browse',t:'fb_rate',route:'bottom'},
+        {f:'voice',t:'chat',route:'top-return'},
+        {f:'orch',t:'scrape'},
+        {f:'scrape',t:'db',curve:-50},{f:'mkt_fetch',t:'db',curve:-25},{f:'extract',t:'db',curve:25},
+        {f:'db',t:'scorer',curve:-40},{f:'scorer',t:'db'},
+        {f:'db',t:'context',curve:-20},{f:'context',t:'db'},
+        {f:'db',t:'behav',curve:40},{f:'behav',t:'db'},
+        {f:'db',t:'brief',curve:-30},{f:'brief',t:'db'},
+        {f:'chat',t:'context'},
+        {f:'context',t:'llm',curve:-20},{f:'brief',t:'llm',curve:20},
+        {f:'llm',t:'db',curve:-30},{f:'llm',t:'sse',curve:30},
+        {f:'llm',t:'out_agent',curve:20},{f:'llm',t:'rp_chat',curve:40},
+        {f:'behav',t:'out_agent',curve:60},
+        {f:'db',t:'sse',route:'right-arc'},
+        {f:'sse',t:'out_feed',curve:-80},{f:'sse',t:'out_mkt',curve:-50},{f:'sse',t:'out_yt',curve:-20},
+        {f:'sse',t:'out_agent'},{f:'sse',t:'rp_chat',curve:20},{f:'sse',t:'gaming',curve:40},
+        {f:'out_agent',t:'voice',route:'right-arc'},{f:'rp_chat',t:'voice',route:'right-arc'},
+        {f:'rp_chat',t:'image'},{f:'gaming',t:'image'},
+        {f:'out_feed',t:'fb_click'},{f:'out_feed',t:'fb_rate'},
+        {f:'out_agent',t:'fb_chat'},{f:'rp_chat',t:'fb_chat'},
+        {f:'fb_click',t:'behav',route:'top'},
+        {f:'fb_chat',t:'context',route:'bottom'},
+        {f:'fb_rate',t:'distill',route:'right-arc'},
+        {f:'distill',t:'training',route:'train-bus'},
+        {f:'training',t:'scorer',route:'train-up',prominent:true}
+    ];
+
+    // Pre-compute edge target RGB strings
+    Edges.forEach(function(e) {
+        e._rgb = e.prominent ? '244,63,94' : N[e.t]._rgb;
+    });
+
+    // Pre-compute adjacency map: nodeId -> Set of neighbor nodeIds
+    var adjacency = {};
+    nodeKeys.forEach(function(id) { adjacency[id] = new Set(); });
+    Edges.forEach(function(e) { adjacency[e.f].add(e.t); adjacency[e.t].add(e.f); });
+
+    var cv, X, W, H, dpr;
+    var activePathIds = new Set();
+    var hoveredNode = null, selectedNode = null;
+    var stars = [];
+    var particles = [];
+    var animId = null;
+    var lastTime = 0;
+    var bgGradient = null; // cached background gradient
+
+    var PI2 = Math.PI * 2;
+
+    function bz(a,b,c,d,t) { var u=1-t; return u*u*u*a+3*u*u*t*b+3*u*t*t*c+t*t*t*d; }
+
+    function getBezierCurve(p0,p1,p2,p3,steps) {
+        var pts = [];
+        for(var i=0;i<=steps;i++) {
+            var t=i/steps;
+            pts.push({x:bz(p0.x,p1.x,p2.x,p3.x,t),y:bz(p0.y,p1.y,p2.y,p3.y,t)});
+        }
+        return pts;
+    }
+
+    function resize() {
+        dpr = window.devicePixelRatio||1;
+        W = window.innerWidth; H = window.innerHeight;
+        cv.width = W*dpr; cv.height = H*dpr;
+        X.setTransform(dpr,0,0,dpr,0,0);
+        // Rebuild cached background gradient
+        bgGradient = X.createRadialGradient(W*0.4,H*0.4,0,W*0.5,H*0.5,W*0.7);
+        bgGradient.addColorStop(0,'rgba(59,130,246,0.04)');
+        bgGradient.addColorStop(1,'transparent');
+        calculateLayout();
+    }
+
+    function calculateLayout() {
+        var pW=125, pH=32;
+        var marginX = Math.max(0,(W-1400)/2);
+        var effW = Math.min(W,1400);
+
+        nodeKeys.forEach(function(id) {
+            var n=N[id], lay=LAYOUT[id];
+            n.cx = marginX+(lay.fx*effW);
+            n.cy = lay.fy*H;
+            if(n.t==='pill') { n.x=n.cx-pW/2; n.y=n.cy-pH/2; n.w=pW; n.h=pH; }
+        });
+
+        particles.length=0;
+
+        Edges.forEach(function(e,idx) {
+            var f=N[e.f], t=N[e.t];
+            var p0,p1,p2,p3;
+            var fR=f.t==='hub'?f.cx+f.r:f.cx+f.w/2, fL=f.t==='hub'?f.cx-f.r:f.cx-f.w/2;
+            var fT=f.t==='hub'?f.cy-f.r:f.cy-f.h/2, fB=f.t==='hub'?f.cy+f.r:f.cy+f.h/2;
+            var tR=t.t==='hub'?t.cx+t.r:t.cx+t.w/2, tL=t.t==='hub'?t.cx-t.r:t.cx-t.w/2;
+            var tT=t.t==='hub'?t.cy-t.r:t.cy-t.h/2, tB=t.t==='hub'?t.cy+t.r:t.cy+t.h/2;
+
+            if(e.route==='top'||e.route==='top-return') {
+                p0={x:f.cx,y:fT}; p3={x:t.cx,y:tT};
+                var arcY=Math.min(p0.y,p3.y)-60;
+                p1={x:p0.x+(p3.x>p0.x?50:-50),y:arcY}; p2={x:p3.x+(p0.x>p3.x?50:-50),y:arcY};
+            } else if(e.route==='bottom') {
+                p0={x:f.cx,y:fB}; p3={x:t.cx,y:tB};
+                var arcYb=Math.max(p0.y,p3.y)+60;
+                p1={x:p0.x+(p3.x>p0.x?50:-50),y:arcYb}; p2={x:p3.x+(p0.x>p3.x?50:-50),y:arcYb};
+            } else if(e.route==='right-arc') {
+                p0={x:fR,y:f.cy}; p3={x:tR,y:t.cy};
+                var arcX=Math.max(p0.x,p3.x)+60;
+                p1={x:arcX,y:p0.y}; p2={x:arcX,y:p3.y};
+            } else if(e.route==='train-bus') {
+                p0={x:fL,y:f.cy}; p3={x:tR,y:t.cy};
+                p1={x:p0.x-40,y:p0.y}; p2={x:p3.x+40,y:p3.y};
+            } else if(e.route==='train-up') {
+                p0={x:fL,y:f.cy}; p3={x:tL,y:t.cy};
+                var arcXu=Math.min(p0.x,p3.x)-70;
+                p1={x:arcXu,y:p0.y}; p2={x:arcXu,y:p3.y};
+            } else {
+                var isBack=f.cx>t.cx;
+                p0=isBack?{x:fL,y:f.cy}:{x:fR,y:f.cy};
+                p3=isBack?{x:tR,y:t.cy}:{x:tL,y:t.cy};
+                var dist=Math.abs(p3.x-p0.x), offset=e.curve||0;
+                p1={x:p0.x+(isBack?-dist*0.4:dist*0.4),y:p0.y+offset};
+                p2={x:p3.x+(isBack?dist*0.4:-dist*0.4),y:p3.y+offset};
+            }
+
+            // Reduced bezier steps: 28 instead of 45
+            e.pts=getBezierCurve(p0,p1,p2,p3,28);
+            var len=0;
+            for(var i=0;i<e.pts.length-1;i++) len+=Math.hypot(e.pts[i+1].x-e.pts[i].x,e.pts[i+1].y-e.pts[i].y);
+            e.len=len||100;
+
+            // Fewer particles per edge: /140 instead of /90
+            var pCount=Math.max(1,Math.floor(e.len/140));
+            for(var j=0;j<pCount;j++) particles.push({e:e,t:j/pCount,seed:idx*10+j});
+        });
+    }
+
+    function drawPill(n,state) {
+        var isAct=state==='active', isDim=state==='dimmed';
+        if(isDim) X.globalAlpha=0.15;
+        var cRgb=n._rgb, r=n.h/2;
+        // NO shadowBlur — use a simple border glow via strokeStyle
+        X.beginPath();
+        X.moveTo(n.x+r,n.y);X.lineTo(n.x+n.w-r,n.y);X.quadraticCurveTo(n.x+n.w,n.y,n.x+n.w,n.y+r);
+        X.lineTo(n.x+n.w,n.y+n.h-r);X.quadraticCurveTo(n.x+n.w,n.y+n.h,n.x+n.w-r,n.y+n.h);
+        X.lineTo(n.x+r,n.y+n.h);X.quadraticCurveTo(n.x,n.y+n.h,n.x,n.y+n.h-r);
+        X.lineTo(n.x,n.y+r);X.quadraticCurveTo(n.x,n.y,n.x+r,n.y);X.closePath();
+        X.fillStyle=isAct?'#1a2538':'#0a0d1c';
+        X.fill();
+        X.strokeStyle=isAct?n.c:'rgba('+cRgb+',0.4)';X.lineWidth=isAct?2:1;X.stroke();
+        // Connector dots
+        X.fillStyle=isAct?'#fff':n.c;
+        X.beginPath();X.arc(n.x+4,n.cy,2.5,0,PI2);X.fill();
+        X.beginPath();X.arc(n.x+n.w-4,n.cy,2.5,0,PI2);X.fill();
+        // Labels
+        X.textAlign='center';X.textBaseline='middle';
+        X.font='500 11px system-ui, sans-serif';X.fillStyle=isAct?'#fff':'#cbd5e1';
+        X.fillText(n.l,n.cx,n.cy-5);
+        X.font='9px "JetBrains Mono", monospace';X.fillStyle='rgba('+cRgb+','+(isAct?'1.0':'0.7')+')';
+        X.fillText(n.s,n.cx,n.cy+7);
+        X.globalAlpha=1;
+    }
+
+    function drawHub(n,state,time) {
+        var isAct=state==='active', isDim=state==='dimmed';
+        if(isDim) X.globalAlpha=0.15;
+        var cRgb=n._rgb;
+        // Dashed orbit ring
+        X.save();X.translate(n.cx,n.cy);X.rotate(time*0.0003);
+        X.beginPath();X.arc(0,0,n.r+5,0,PI2);
+        X.strokeStyle='rgba('+cRgb+','+(isAct?'0.8':'0.2')+')';
+        X.lineWidth=isAct?2.5:1.5;X.setLineDash([8,12]);X.stroke();X.setLineDash([]);X.restore();
+        // Soft glow for active — use gradient fill instead of shadowBlur
+        if(isAct) {
+            var gGlow=X.createRadialGradient(n.cx,n.cy,n.r*0.5,n.cx,n.cy,n.r*2.5);
+            gGlow.addColorStop(0,'rgba('+cRgb+',0.2)');gGlow.addColorStop(1,'transparent');
+            X.fillStyle=gGlow;X.beginPath();X.arc(n.cx,n.cy,n.r*2.5,0,PI2);X.fill();
+        }
+        // Hub body
+        X.beginPath();X.arc(n.cx,n.cy,n.r,0,PI2);
+        X.fillStyle=isAct?'#151e2e':'#0a0d1c';
+        X.fill();
+        X.strokeStyle=isAct?n.c:'rgba('+cRgb+',0.5)';X.lineWidth=isAct?2:1.5;X.stroke();
+        // Labels
+        X.textAlign='center';X.textBaseline='middle';
+        X.font='600 12px system-ui, sans-serif';X.fillStyle=isAct?'#fff':'#f8fafc';
+        X.fillText(n.l,n.cx,n.cy-6);
+        X.font='9px "JetBrains Mono", monospace';X.fillStyle='rgba('+cRgb+','+(isAct?'1.0':'0.7')+')';
+        X.fillText(n.s,n.cx,n.cy+10);
+        X.globalAlpha=1;
+    }
+
+    function drawEdge(e,state) {
+        var isAct=state==='active', isDim=state==='dimmed';
+        if(isDim) return; // Skip dimmed edges entirely
+        var pts=e.pts, cRgb=e._rgb;
+        var isP=e.prominent;
+        X.lineCap='round';X.lineJoin='round';
+        if(isAct) {
+            // Outer glow
+            X.strokeStyle='rgba('+cRgb+','+(isP?'0.25':'0.12')+')';
+            X.lineWidth=isP?20:10;
+            X.beginPath();for(var i=0;i<pts.length;i++) i?X.lineTo(pts[i].x,pts[i].y):X.moveTo(pts[i].x,pts[i].y);X.stroke();
+        }
+        // Core line
+        X.strokeStyle=isAct?'rgba('+cRgb+',0.8)':'rgba(255,255,255,0.08)';
+        X.lineWidth=isAct?(isP?2.5:1.5):0.7;
+        X.beginPath();for(var j=0;j<pts.length;j++) j?X.lineTo(pts[j].x,pts[j].y):X.moveTo(pts[j].x,pts[j].y);X.stroke();
+    }
+
+    function getConnectedNodes(nodeId) {
+        var conn=new Set([nodeId]),q=[nodeId];
+        while(q.length>0){var cur=q.shift();Edges.forEach(function(e){if(e.f===cur&&!conn.has(e.t)){conn.add(e.t);q.push(e.t);}});}
+        q=[nodeId];
+        while(q.length>0){var cur2=q.shift();Edges.forEach(function(e){if(e.t===cur2&&!conn.has(e.f)){conn.add(e.f);q.push(e.f);}});}
+        return conn;
+    }
+
+    function updateState(nodeId) {
+        if(!nodeId){activePathIds.clear();return;}
+        activePathIds=getConnectedNodes(nodeId);
+    }
+
+    function hitTest(mx,my) {
+        for(var i=0;i<nodeKeys.length;i++) {
+            var id=nodeKeys[i], n=N[id];
+            if(n.t==='pill') { if(mx>=n.x&&mx<=n.x+n.w&&my>=n.y&&my<=n.y+n.h) return id; }
+            else { if(Math.hypot(mx-n.cx,my-n.cy)<=n.r) return id; }
+        }
+        return null;
+    }
+
+    function render(time) {
+        if(!document.getElementById('engine-overlay').classList.contains('active')) {
+            animId=null; return;
+        }
+        var dt=Math.min((time-lastTime)/1000,0.1);
+        lastTime=time;
+
+        // Background — solid fill + cached gradient
+        X.fillStyle=BG;X.fillRect(0,0,W,H);
+        X.fillStyle=bgGradient;X.fillRect(0,0,W,H);
+
+        // Stars — batch by color, reduce per-star alpha changes
+        var i, s;
+        for(i=0;i<stars.length;i++) {
+            s=stars[i];
+            X.globalAlpha=s.a*(0.6+0.4*Math.sin(time*0.001*s.s+s.p));
+            X.fillStyle=s.c;
+            X.beginPath();X.arc(s.x*W,s.y*H,s.r,0,PI2);X.fill();
+        }
+        X.globalAlpha=1;
+
+        // Update particle positions — smooth speed (75px/s active, 30px/s idle)
+        var hasInteraction = selectedNode || hoveredNode;
+        for(i=0;i<particles.length;i++) {
+            var p=particles[i];
+            var isAct=selectedNode?
+                (activePathIds.has(p.e.f)&&activePathIds.has(p.e.t)):
+                (hoveredNode&&(p.e.f===hoveredNode||p.e.t===hoveredNode));
+            p.t += 30 / p.e.len * dt;
+            if(p.t>1) p.t-=1;
+        }
+
+        // Draw edges — 2-pass instead of 3
+        for(i=0;i<Edges.length;i++) {
+            var e=Edges[i], state='normal';
+            if(selectedNode) state=(activePathIds.has(e.f)&&activePathIds.has(e.t))?'active':'dimmed';
+            else if(hoveredNode) state=(e.f===hoveredNode||e.t===hoveredNode)?'active':'dimmed';
+            drawEdge(e,state);
+        }
+
+        // Draw particles — NO shadowBlur, NO compositeOperation change
+        // Use additive color approximation with bright fill only
+        for(i=0;i<particles.length;i++) {
+            var p=particles[i];
+            var isAct=selectedNode?
+                (activePathIds.has(p.e.f)&&activePathIds.has(p.e.t)):
+                (hoveredNode&&(p.e.f===hoveredNode||p.e.t===hoveredNode));
+            if(!isAct&&hasInteraction) continue;
+            var pe=p.e, target=p.t*pe.pts.length;
+            var idx=Math.min(Math.floor(target),pe.pts.length-2);
+            if(idx<0) continue;
+            var frac=target-idx;
+            var ptX=pe.pts[idx].x+(pe.pts[idx+1].x-pe.pts[idx].x)*frac;
+            var ptY=pe.pts[idx].y+(pe.pts[idx+1].y-pe.pts[idx].y)*frac;
+            var cRgb=pe._rgb;
+            var r=isAct?(pe.prominent?3.5:2.5):1.5;
+            // Outer glow — larger semi-transparent circle (cheap alternative to shadowBlur)
+            if(isAct) {
+                X.fillStyle='rgba('+cRgb+',0.3)';
+                X.beginPath();X.arc(ptX,ptY,r*3,0,PI2);X.fill();
+            }
+            // Core dot
+            X.fillStyle='rgba('+cRgb+',0.95)';
+            X.beginPath();X.arc(ptX,ptY,r,0,PI2);X.fill();
+            // White center for active
+            if(isAct) {
+                X.fillStyle='#fff';
+                X.beginPath();X.arc(ptX,ptY,r*0.4,0,PI2);X.fill();
+            }
+        }
+
+        // Draw nodes — use pre-computed adjacency instead of Edges.some()
+        for(i=0;i<nodeKeys.length;i++) {
+            var id=nodeKeys[i], n=N[id], nstate='normal';
+            if(selectedNode) nstate=activePathIds.has(id)?'active':'dimmed';
+            else if(hoveredNode) nstate=(id===hoveredNode||adjacency[hoveredNode].has(id))?'active':'dimmed';
+            if(n.t==='pill') drawPill(n,nstate);
+            else drawHub(n,nstate,time);
+        }
+
+        animId=requestAnimationFrame(render);
+    }
+
+    function openPanel(id) {
+        var n=N[id], d=Details[id], cRgb=n._rgb;
+        document.getElementById('eo-panel-tag').innerText='LAYER 0'+n.layer;
+        document.getElementById('eo-panel-tag').style.color=n.c;
+        document.getElementById('eo-panel-tag').style.borderColor='rgba('+cRgb+',0.3)';
+        document.getElementById('eo-panel-callout').style.borderColor=n.c;
+        document.getElementById('eo-panel-title').innerText=n.l;
+        document.getElementById('eo-panel-tech').innerText=d.tech;
+        document.getElementById('eo-panel-tech').style.color=n.c;
+        document.getElementById('eo-panel-desc').innerText=d.desc;
+        document.getElementById('eo-panel-impact').innerText=d.impact;
+
+        var up=[],down=[];
+        Edges.forEach(function(e) {
+            if(e.t===id&&activePathIds.has(e.f)) up.push(N[e.f].l);
+            if(e.f===id&&activePathIds.has(e.t)) down.push(N[e.t].l);
+        });
+
+        var flowHtml='';
+        if(up.length>0) flowHtml+='<div class="eo-flow-step">'+up[0]+(up.length>1?' ...':'')+'</div><div class="eo-flow-arrow">\u2193</div>';
+        flowHtml+='<div class="eo-flow-step" style="border-color:'+n.c+';background:rgba('+cRgb+',0.08);color:#fff;font-weight:500;">'+n.l+'</div>';
+        if(down.length>0) flowHtml+='<div class="eo-flow-arrow">\u2193</div><div class="eo-flow-step">'+down[0]+(down.length>1?' ...':'')+'</div>';
+        document.getElementById('eo-panel-pipeline').innerHTML=flowHtml;
+        document.getElementById('eo-panel').classList.add('active');
+        document.getElementById('eo-tooltip').style.opacity=0;
+    }
+
+    function closePanel() {
+        document.getElementById('eo-panel').classList.remove('active');
+        selectedNode=null;hoveredNode=null;updateState(null);
+    }
+
+    window.initEngineOverlay = function() {
+        if(initialized) {
+            resize();
+            lastTime=performance.now();
+            if(!animId) animId=requestAnimationFrame(render);
+            return;
+        }
+        initialized=true;
+
+        cv=document.getElementById('engine-canvas');
+        X=cv.getContext('2d',{alpha:false});
+
+        // 80 stars instead of 150
+        stars=[];
+        for(var i=0;i<80;i++) stars.push({
+            x:Math.random(),y:Math.random(),r:Math.random()*1.5+0.2,
+            a:Math.random()*0.4+0.05,s:Math.random()*2+0.5,
+            p:Math.random()*PI2,c:Math.random()<0.2?'#3b82f6':'#ffffff'
+        });
+
+        resize();
+
+        var tooltip=document.getElementById('eo-tooltip');
+        var ttText=document.getElementById('eo-tt-text');
+        var ttDot=tooltip.querySelector('.eo-dot');
+
+        cv.addEventListener('mousemove',function(e) {
+            var hit=hitTest(e.clientX,e.clientY);
+            if(hit!==hoveredNode&&!selectedNode){hoveredNode=hit;updateState(hit);cv.style.cursor=hit?'pointer':'default';}
+            if(hit){
+                tooltip.style.opacity=1;
+                tooltip.style.left=(e.clientX+15)+'px';tooltip.style.top=(e.clientY+15)+'px';
+                ttDot.style.backgroundColor=N[hit].c;ttDot.style.boxShadow='0 0 10px '+N[hit].c;
+                ttText.innerText=N[hit].l;
+            } else { tooltip.style.opacity=0; }
+        });
+
+        cv.addEventListener('mouseleave',function() {
+            if(!selectedNode){hoveredNode=null;updateState(null);}
+            tooltip.style.opacity=0;cv.style.cursor='default';
+        });
+
+        cv.addEventListener('click',function(e) {
+            var hit=hitTest(e.clientX,e.clientY);
+            if(hit){selectedNode=hit;updateState(hit);openPanel(hit);}
+            else{closePanel();}
+        });
+
+        document.getElementById('eo-panel-close-btn').addEventListener('click',closePanel);
+
+        window.addEventListener('resize',function() {
+            if(document.getElementById('engine-overlay').classList.contains('active')) resize();
+        });
+
+        document.addEventListener('keydown',function(e) {
+            if(e.key==='Escape'&&document.getElementById('engine-overlay').classList.contains('active')) {
+                if(document.getElementById('eo-panel').classList.contains('active')) closePanel();
+                else document.getElementById('engine-overlay').classList.remove('active');
+            }
+        });
+
+        lastTime=performance.now();
+        animId=requestAnimationFrame(render);
+    };
 })();
 </script>
 
